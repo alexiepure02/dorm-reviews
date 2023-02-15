@@ -1,11 +1,25 @@
-export default function Home() {
-  // const postUser = async () => {
-  //   await fetch("http://localhost:3000/api/hello", {
-  //     method: "POST",
-  //   });
-  // };
+"use client";
 
-  // postUser();
+import { NextPage } from "next";
+import { useSession, signIn, signOut } from "next-auth/react";
 
-  return <h1>Hello.</h1>;
-}
+const Home: NextPage = () => {
+  const { data: session } = useSession();
+  if (session) {
+    console.log(session);
+    return (
+      <>
+        Signed in as {session?.user?.email} <br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+    );
+  }
+  return (
+    <>
+      Not signed in <br />
+      <button onClick={() => signIn()}>Sign in</button>
+    </>
+  );
+};
+
+export default Home;
