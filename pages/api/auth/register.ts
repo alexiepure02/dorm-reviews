@@ -33,7 +33,10 @@ export default async function handler(
   const body = JSON.parse(req.body);
 
   console.log("entered.", body);
-  const hashedPassword = await bcrypt.hash(body.password, 12);
+  const hashedPassword = await bcrypt.hash(
+    body.password,
+    process.env.BCRYPT_SALT
+  );
   console.log("creating new user.");
 
   // create new User on MongoDB
