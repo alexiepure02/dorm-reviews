@@ -9,7 +9,7 @@ import Button from "@/components/Button";
 import { BiLockOpen, BiMailSend, BiUserPin } from "react-icons/bi";
 import { AiOutlineUser } from "react-icons/ai";
 
-export default function Login() {
+export default function RequestPasswordReset() {
   const router = useRouter();
 
   // react-hook-form
@@ -31,17 +31,10 @@ export default function Login() {
     await fetch("http://localhost:3000/api/auth/request-password-reset", {
       method: "POST",
       body: JSON.stringify(values.email),
-    })
-      .then((res) => console.log(res.json()))
-      .then((data) => {
-        console.log("error?", data);
-      });
-  };
-
-  const redirectToHome = () => {
-    // TODO: redirect to a success register page
-    console.log("rediect to home");
-    router.push("/");
+    }).then((res) => {
+      if (res.status === 200) router.push("/request-password-reset/succesful");
+      else console.log("mail failed to send.");
+    });
   };
 
   return (
@@ -60,8 +53,8 @@ export default function Login() {
         style={{ fill: "url(#orange-gradient)" }}
       />
       <p className="text-gray-2 text-center">
-        Ați uitat parola? Nu vă faceți griji, introduceți e-mailul dvs. și vă
-        vom trimite un link pentru a vă recupera parola.
+        Ați uitat parola? Nu vă faceți griji, introduceți adresa dumeavoastră de
+        mail și vă vom trimite un link pentru a vă recupera parola.
       </p>
       <Input
         id="email"

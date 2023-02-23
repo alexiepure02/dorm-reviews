@@ -11,7 +11,7 @@ export const sendEmail = async (
 ) => {
   try {
     console.log("creating transporter.");
-    const transporter = createTransport({
+    const transporter = await createTransport({
       service: "gmail",
       auth: {
         user: process.env.EMAIL_USER,
@@ -20,8 +20,11 @@ export const sendEmail = async (
     });
 
     console.log("compiling template.");
-    const source = fs.readFileSync(path.join(__dirname, template), "utf8");
-    const compiledTemplate = compile(source);
+    const source = await fs.readFileSync(
+      path.join(__dirname, template),
+      "utf8"
+    );
+    const compiledTemplate = await compile(source);
     const options = () => {
       return {
         subject: subject,
@@ -32,7 +35,7 @@ export const sendEmail = async (
     };
     console.log("sending email.");
     // Send email
-    transporter.sendMail(options(), (error, info) => {
+    await transporter.sendMail(options(), (error, info) => {
       if (error) {
         console.log("send email failed.", error);
       } else {

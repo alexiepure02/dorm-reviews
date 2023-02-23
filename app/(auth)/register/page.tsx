@@ -28,7 +28,11 @@ export default function Register() {
     username: string;
     email: string;
     password: string;
+    cpassword: string;
   }) => {
+    
+    // validate password
+
     console.log("calling api");
     await fetch("http://localhost:3000/api/auth/register", {
       method: "POST",
@@ -81,9 +85,9 @@ export default function Register() {
       />
 
       <Input
-        id="password"
+        id="cpassword"
         type="password"
-        placeholder="Parolă"
+        placeholder="Confirmă parola"
         register={register}
         Icon={BiLock}
       />

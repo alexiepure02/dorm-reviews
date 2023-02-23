@@ -4,10 +4,11 @@ import { FieldValues, UseFormRegister } from "react-hook-form";
 interface ButtonProps {
   type: "button" | "submit" | "reset";
   className?: string;
+  onClick?: () => void;
   children: ReactNode;
 }
 
-export default ({ type, className, children }: ButtonProps) => {
+export default ({ type, className, onClick, children }: ButtonProps) => {
   return (
     <button
       className={
@@ -15,6 +16,7 @@ export default ({ type, className, children }: ButtonProps) => {
         className
       }
       type={type}
+      onClick={onClick}
     >
       {children}
     </button>

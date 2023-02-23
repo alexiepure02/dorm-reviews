@@ -5,6 +5,7 @@ import User from "../../../common/models/User";
 import bcrypt from "bcrypt";
 import { randomBytes } from "crypto";
 import { sendEmail } from "../../../common/utils/email/sendEmail";
+import Token from "@/common/models/Token";
 
 interface ResponseData {
   error?: string;
@@ -31,7 +32,6 @@ export default async function handler(
   let user: any;
 
   const email = JSON.parse(req.body);
-  console.log("email: " + email);
 
   // @ts-ignore
   user = await User.findOne({
@@ -39,19 +39,29 @@ export default async function handler(
   });
 
   if (!user) {
-    throw new Error("User not found.");
+    res.status(404).json({ error: "User not found" });
   }
+
+  //@ts-ignore
+  let token = await Token.findOne({ userId: user._id });
+  if (token) await token.deleteOne();
 
   let resetToken = randomBytes(32).toString("hex");
   const hash = await bcrypt.hash(resetToken, Number(process.env.BCRYPT_SALT));
 
-  const link = `${process.env.CLIENT_URL}/passwordReset?token=${resetToken}&id=${user._id}`;
+  await new Token({
+    userId: user._id,
+    token: hash,
+    createdAt: Date.now(),
+  }).save();
+
+  const link = `${process.env.CLIENT_URL}/password-reset?token=${resetToken}&id=${user._id}`;
   await sendEmail(
     user.email,
     "Resetare Parolă",
     { name: user.name, link: link },
     "../../../../../common/utils/email/template/requestResetPassword.handlebars"
   );
-
-  return link;
+  console.log("exiting api request");
+  res.status(200).json({ msg: "Mail sent succesfully" });
 }
