@@ -1,5 +1,4 @@
-import { ButtonHTMLAttributes, ReactNode } from "react";
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import { ReactNode } from "react";
 
 interface ButtonProps {
   type: "button" | "submit" | "reset";
@@ -8,7 +7,12 @@ interface ButtonProps {
   children: ReactNode;
 }
 
-export default ({ type, className, onClick, children }: ButtonProps) => {
+export default ({
+  type = "button",
+  className,
+  onClick,
+  children,
+}: ButtonProps) => {
   return (
     <button
       className={

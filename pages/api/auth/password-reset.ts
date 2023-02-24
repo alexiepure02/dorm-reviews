@@ -3,44 +3,51 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../../lib/dbConnect";
 import User from "../../../common/models/User";
 import bcrypt from "bcrypt";
-import { randomBytes } from "crypto";
 import { sendEmail } from "../../../common/utils/email/sendEmail";
 import Token from "@/common/models/Token";
-
-interface ResponseData {
-  error?: string;
-  msg?: string;
-}
-
-const validateEmail = (email: string): boolean => {
-  const regEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-  return regEx.test(email);
-};
+import { ResponseData } from "@/common/Interfaces";
+import { passwordRegEx } from "@/common/Constants";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
-  // validate if it is a POST
   if (req.method !== "POST") {
     return res
-      .status(200)
+      .status(405)
       .json({ error: "This API call only accepts POST methods" });
   }
   await dbConnect();
   const body = JSON.parse(req.body);
-  console.log("body: " + body);
 
   //@ts-ignore
   let passwordResetToken = await Token.findOne({ userId: body.userId });
 
   if (!passwordResetToken) {
-    res.status(400).json({ error: "Invalid or expired password reset token" });
+    return res.status(400).json({
+      error: "Token de resetare a parolei este invalid sau a expirat",
+    });
   }
 
   const isValid = await bcrypt.compare(body.token, passwordResetToken.token);
-  if (!isValid) {
-    res.status(400).json({ error: "Invalid or expired password reset token" });
+
+  if (!isValid || !passwordResetToken) {
+    return res.status(400).json({
+      error: "Token de resetare a parolei este invalid sau a expirat",
+    });
+  }
+
+  if (!passwordRegEx.test(body.password)) {
+    return res.status(400).json({
+      error:
+        "Parola trebuie să conțină o literă, o cifră și un caracter special",
+    });
+  }
+
+  if (body.password !== body.cpassword) {
+    return res.status(400).json({
+      error: "Parola și parola de confirmare nu se potrivesc",
+    });
   }
 
   const hashedPassword = await bcrypt.hash(
@@ -59,12 +66,12 @@ export default async function handler(
 
   sendEmail(
     user.email,
-    "Password Reset Successfully",
+    "Parolă resetată cu success",
     {
-      name: user.name,
+      name: user.username,
     },
     "../../../../../common/utils/email/template/resetPassword.handlebars"
   );
-  await passwordResetToken.deleteOne();
-  res.status(200).json({ msg: "Password Reset Successfully" });
+  await passwordResetToken.deleteOne({ userId: body.userId });
+  return res.status(200).json({ msg: "Parola ta a fost resetată cu succes" });
 }

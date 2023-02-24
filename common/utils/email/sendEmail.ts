@@ -10,8 +10,7 @@ export const sendEmail = async (
   template: string
 ) => {
   try {
-    console.log("creating transporter.");
-    const transporter = await createTransport({
+    const transporter = createTransport({
       service: "gmail",
       auth: {
         user: process.env.EMAIL_USER,
@@ -19,12 +18,8 @@ export const sendEmail = async (
       },
     });
 
-    console.log("compiling template.");
-    const source = await fs.readFileSync(
-      path.join(__dirname, template),
-      "utf8"
-    );
-    const compiledTemplate = await compile(source);
+    const source = fs.readFileSync(path.join(__dirname, template), "utf8");
+    const compiledTemplate = compile(source);
     const options = () => {
       return {
         subject: subject,
@@ -33,26 +28,15 @@ export const sendEmail = async (
         to: email,
       };
     };
-    console.log("sending email.");
     // Send email
-    await transporter.sendMail(options(), (error, info) => {
+    transporter.sendMail(options(), (error, info) => {
       if (error) {
-        console.log("send email failed.", error);
+        console.log("failed to send email.", error);
       } else {
-        console.log("send email success!");
+        console.log("email sent succesfully!");
       }
     });
   } catch (error) {
     console.log(error);
   }
 };
-
-/*
-Example:
-sendEmail(
-  "youremail@gmail.com,
-  "Email subject",
-  { name: "Eze" },
-  "./templates/layouts/main.handlebars"
-);
-*/

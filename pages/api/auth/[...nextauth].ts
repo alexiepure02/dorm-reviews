@@ -1,5 +1,4 @@
-import NextAuth, { Awaitable } from "next-auth";
-import GithubProvider from "next-auth/providers/github";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../lib/mongodb";
@@ -10,10 +9,6 @@ import User from "@/common/models/User";
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
     // Email & Password
     CredentialsProvider({
       id: "credentials",
@@ -46,10 +41,8 @@ export default NextAuth({
         }
 
         if (!user) {
-          throw new Error("Email or username not found");
+          throw new Error("Contul introdus nu există");
         }
-
-        console.log("found user: ", user);
 
         const isPasswordCorrect = await compare(
           credentials?.password,
@@ -57,7 +50,7 @@ export default NextAuth({
         );
 
         if (!isPasswordCorrect) {
-          throw new Error("Password is incorrect");
+          throw new Error("Parola este incorectă");
         }
 
         return user;

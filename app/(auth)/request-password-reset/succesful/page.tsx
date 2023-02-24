@@ -1,23 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { signIn } from "next-auth/react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import Input from "@/components/Input";
 import Button from "@/components/Button";
-import { BiLockOpen, BiMailSend, BiUserPin } from "react-icons/bi";
-import { AiOutlineUser } from "react-icons/ai";
+import { BiMailSend } from "react-icons/bi";
 
 export default function RequestPasswordResetSuccesful() {
-  const router = useRouter();
-
-  const redirectToHome = () => {
-    // TODO: redirect to a success register page
-    console.log("rediect to home");
-    router.push("/");
-  };
-
   return (
     <div className="flex flex-col grow max-w-[360px] gap-4">
       <svg width="0" height="0">

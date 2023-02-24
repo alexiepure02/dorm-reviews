@@ -1,7 +1,6 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 import { IconType } from "react-icons";
-import { AiOutlineUser } from "react-icons/ai";
 import { BiHide, BiShow } from "react-icons/bi";
 
 interface InputProps {
@@ -11,6 +10,7 @@ interface InputProps {
   type: string;
   placeholder: string;
   register: UseFormRegister<FieldValues>; // declare register props
+  rules?: object;
 }
 
 export default ({
@@ -20,6 +20,7 @@ export default ({
   type,
   placeholder,
   register,
+  rules,
 }: InputProps) => {
   const [show, setShow] = useState(false);
 
@@ -34,6 +35,7 @@ export default ({
         type={show ? "text" : type}
         placeholder={placeholder}
         {...register(id)}
+        {...rules}
       />
 
       {type === "password" &&

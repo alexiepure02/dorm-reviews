@@ -1,59 +1,92 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../../lib/dbConnect";
 import User from "../../../common/models/User";
 import bcrypt from "bcrypt";
-
-interface ResponseData {
-  error?: string;
-  msg?: string;
-}
-
-const validateEmail = (email: string): boolean => {
-  const regEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-  return regEx.test(email);
-};
+import { sendEmail } from "@/common/utils/email/sendEmail";
+import { ResponseData } from "@/common/Interfaces";
+import { emailRegEx, passwordRegEx, usernameRegEx } from "@/common/Constants";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
-  // validate if it is a POST
   if (req.method !== "POST") {
     return res
-      .status(200)
+      .status(405)
       .json({ error: "This API call only accepts POST methods" });
   }
   await dbConnect();
 
-  console.log("entered.", req.body);
-  // hash password
-  console.log(req.body["password"]);
-
   const body = JSON.parse(req.body);
 
-  console.log("entered.", body);
+  if (!emailRegEx.test(body.email)) {
+    return res.status(400).json({ error: "Adresă de e-mail invalidă" });
+  }
+
+  let user: any;
+
+  //@ts-ignore
+  user = await User.findOne({
+    email: body.email,
+  });
+
+  if (user) {
+    return res.status(400).json({ error: "Adresă de e-mail deja folosită" });
+  }
+
+  //@ts-ignore
+  user = await User.findOne({
+    username: body.username,
+  });
+
+  if (user) {
+    return res.status(400).json({ error: "Nume de utilizator deja folosit" });
+  }
+
+  if (!usernameRegEx.test(body.username)) {
+    return res.status(400).json({ error: "Nume de utilizator invalid" });
+  }
+
+  if (!passwordRegEx.test(body.password)) {
+    return res.status(400).json({
+      error:
+        "Parola trebuie să conțină o literă, o cifră și un caracter special",
+    });
+  }
+
+  if (body.password !== body.cpassword) {
+    return res.status(400).json({
+      error: "Parola și parola de confirmare nu se potrivesc",
+    });
+  }
+
   const hashedPassword = await bcrypt.hash(
     body.password,
-    process.env.BCRYPT_SALT
+    Number(process.env.BCRYPT_SALT)
   );
-  console.log("creating new user.");
 
-  // create new User on MongoDB
   const newUser = new User({
     email: body.email,
     username: body.username,
     password: hashedPassword,
     image: "",
   });
-  console.log("saving new user.");
+
   newUser
     .save()
-    .then(() =>
-      res.status(200).json({ msg: "Successfuly created new User: " + newUser })
-    )
+    .then(() => {
+      sendEmail(
+        newUser.email,
+        "Cont creat cu succes",
+        {
+          name: newUser.username,
+        },
+        "../../../../../common/utils/email/template/accountCreated.handlebars"
+      );
+
+      return res.status(200).json({ msg: "Contul tău a fost creat cu succes" });
+    })
     .catch((err: string) => {
-      console.log(err);
       return res
         .status(400)
         .json({ error: "Error on '/api/register': " + err });

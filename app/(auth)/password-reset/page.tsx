@@ -1,22 +1,18 @@
 "use client";
 
-import Link from "next/link";
-import { signIn } from "next-auth/react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
-import { BiLock, BiLockOpen, BiMailSend, BiUserPin } from "react-icons/bi";
-import { AiOutlineUser } from "react-icons/ai";
+import { BiLock, BiLockOpen } from "react-icons/bi";
+import { useState } from "react";
 
 export default function Login() {
   const router = useRouter();
+  const [error, setError] = useState("");
 
   const token = useSearchParams().get("token");
   const id = useSearchParams().get("id");
-
-  console.log("token: ", token);
-  console.log("id: ", id);
 
   // react-hook-form
   const {
@@ -30,34 +26,22 @@ export default function Login() {
     password: string;
     cpassword: string;
   }) => {
-    console.log("entering on submit.");
-    console.log("password: ", values.password);
-    console.log("cpassword: ", values.cpassword);
-
-    // validate password
-
-    console.log("calling api");
     await fetch("http://localhost:3000/api/auth/password-reset", {
       method: "POST",
       body: JSON.stringify({
         token: token,
         userId: id,
         password: values.password,
+        cpassword: values.cpassword,
       }),
     })
       .then((res) => {
         if (res.status === 200) router.push("/password-reset/succesful");
-        else console.log("reset password failed.");
+        return res.json();
       })
       .then((data) => {
-        console.log("error?", data);
+        setError(data.error);
       });
-  };
-
-  const redirectToHome = () => {
-    // TODO: redirect to a success register page
-    console.log("rediect to home");
-    router.push("/");
   };
 
   return (
@@ -78,12 +62,14 @@ export default function Login() {
       <p className="text-gray-2 text-center">
         Introduceți noua parolă pentru a fi actualizată în sistemul nostru.
       </p>
+
       <Input
         id="password"
         type="password"
         placeholder="Parola nouă"
         register={register}
         Icon={BiLockOpen}
+        rules={{ required: true, minLength: 8, maxLength: 32 }}
       />
 
       <Input
@@ -92,7 +78,9 @@ export default function Login() {
         placeholder="Confirmă parola nouă"
         register={register}
         Icon={BiLock}
+        rules={{ required: true, minLength: 8, maxLength: 32 }}
       />
+      <p className="self-center text-red-500 text-center">{error}</p>
 
       <Button type="submit">Resetează parola</Button>
     </form>

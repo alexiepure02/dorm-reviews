@@ -1,16 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { signIn } from "next-auth/react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
-import { BiLockOpen, BiMailSend, BiUserPin } from "react-icons/bi";
+import { BiMailSend } from "react-icons/bi";
 import { AiOutlineUser } from "react-icons/ai";
+import { useState } from "react";
 
 export default function RequestPasswordReset() {
   const router = useRouter();
+  const [error, setError] = useState("");
 
   // react-hook-form
   const {
@@ -22,19 +23,19 @@ export default function RequestPasswordReset() {
 
   const onSubmit: SubmitHandler<FieldValues> = async (values: {
     email: string;
-    password: string;
   }) => {
-    console.log("entering on submit.");
-    console.log("email: ", values.email);
-
-    console.log("calling api");
     await fetch("http://localhost:3000/api/auth/request-password-reset", {
       method: "POST",
       body: JSON.stringify(values.email),
-    }).then((res) => {
-      if (res.status === 200) router.push("/request-password-reset/succesful");
-      else console.log("mail failed to send.");
-    });
+    })
+      .then((res) => {
+        if (res.status === 200)
+          router.push("/request-password-reset/succesful");
+        return res.json();
+      })
+      .then((data) => {
+        setError(data.error);
+      });
   };
 
   return (
@@ -62,7 +63,9 @@ export default function RequestPasswordReset() {
         placeholder="Email"
         register={register}
         Icon={AiOutlineUser}
+        rules={{ required: true }}
       />
+      <p className="self-center text-red-500 text-center">{error}</p>
 
       <Button type="submit">Trimite e-mail</Button>
       <Link

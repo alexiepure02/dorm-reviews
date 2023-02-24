@@ -1,9 +1,6 @@
 "use client";
 
-import Head from "next/head";
-// import Layout from '../layout/layout'
 import Link from "next/link";
-import Image from "next/image";
 // import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi";
 import { useState } from "react";
 // import { useFormik } from 'formik';
@@ -14,7 +11,8 @@ import { AiOutlineUser } from "react-icons/ai";
 import Button from "@/components/Button";
 
 export default function Register() {
-  const [show, setShow] = useState({ password: false, cpassword: false });
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
 
   // react-hook-form
   const {
@@ -22,6 +20,7 @@ export default function Register() {
     handleSubmit,
     watch,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>();
 
   const onSubmit: SubmitHandler<FieldValues> = async (values: {
@@ -30,17 +29,15 @@ export default function Register() {
     password: string;
     cpassword: string;
   }) => {
-    
-    // validate password
-
-    console.log("calling api");
     await fetch("http://localhost:3000/api/auth/register", {
       method: "POST",
       body: JSON.stringify(values),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("error?", data);
+        setError(data.error);
+        setSuccess(data.msg);
+        if (data.msg) reset();
       });
   };
 
@@ -59,6 +56,7 @@ export default function Register() {
         className="self-center w-40 h-40"
         style={{ fill: "url(#orange-gradient)" }}
       />
+      <p className="self-center bg-green-500 bg-opacity-50 px-2 ">{success}</p>
 
       <Input
         id="username"
@@ -66,6 +64,7 @@ export default function Register() {
         placeholder="Nume de utilizator"
         register={register}
         Icon={AiOutlineUser}
+        rules={{ required: true, minLength: 5, maxLength: 32 }}
       />
 
       <Input
@@ -74,6 +73,7 @@ export default function Register() {
         placeholder="Email"
         register={register}
         Icon={BiMailSend}
+        rules={{ required: true }}
       />
 
       <Input
@@ -82,6 +82,7 @@ export default function Register() {
         placeholder="Parolă"
         register={register}
         Icon={BiLockOpen}
+        rules={{ required: true, minLength: 8, maxLength: 32 }}
       />
 
       <Input
@@ -90,8 +91,9 @@ export default function Register() {
         placeholder="Confirmă parola"
         register={register}
         Icon={BiLock}
+        rules={{ required: true, minLength: 8, maxLength: 32 }}
       />
-
+      <p className="self-center text-red-500 text-center">{error}</p>
       <Button type="submit">Creează cont</Button>
       <Link
         href={"/login"}

@@ -8,9 +8,11 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import { BiLockOpen, BiUserPin } from "react-icons/bi";
 import { AiOutlineUser } from "react-icons/ai";
+import { useState } from "react";
 
 export default function Login() {
   const router = useRouter();
+  const [error, setError] = useState("");
 
   // react-hook-form
   const {
@@ -24,9 +26,6 @@ export default function Login() {
     email: string;
     password: string;
   }) => {
-    console.log("entering on submit.");
-    console.log("values: ", values.email, values.password);
-
     const res: any = await signIn("credentials", {
       redirect: false,
       email: values.email,
@@ -34,15 +33,7 @@ export default function Login() {
       callbackUrl: `${window.location.origin}`,
     });
 
-    console.log("after signIn");
-
-    res?.error ? console.log(res.error) : redirectToHome();
-  };
-
-  const redirectToHome = () => {
-    // TODO: redirect to a success register page
-    console.log("rediect to home");
-    router.push("/");
+    res?.error ? setError(res.error) : router.push("/");
   };
 
   return (
@@ -66,6 +57,7 @@ export default function Login() {
         placeholder="Nume de utilizator sau email"
         register={register}
         Icon={AiOutlineUser}
+        rules={{ required: true }}
       />
 
       <Input
@@ -74,13 +66,18 @@ export default function Login() {
         placeholder="Parolă"
         register={register}
         Icon={BiLockOpen}
+        rules={{ required: true }}
       />
-      <Link
-        href={"/request-password-reset"}
-        className="self-end text-gray-2 hover:text-primary-200"
-      >
-        Ai uitat parola?
-      </Link>
+
+      <div className="flex justify-between">
+        <p className=" text-red-500 text-center">{error}</p>
+        <Link
+          href={"/request-password-reset"}
+          className="text-gray-2 hover:text-primary-200"
+        >
+          Ai uitat parola?
+        </Link>
+      </div>
 
       <Button type="submit">Autentificare</Button>
       <Link
