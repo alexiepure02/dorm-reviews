@@ -6,24 +6,10 @@ import { useSession, signIn, signOut } from "next-auth/react";
 const Home: NextPage = () => {
   const { data: session } = useSession();
 
-  // if (session) {
-  //   console.log(session);
-  //   return (
-  //     <>
-  //       Signed in as {session?.user?.email} <br />
-  //       <button onClick={() => signOut()}>Sign out</button>
-  //     </>
-  //   );
-  // }
-  // return (
-  //   <>
-  //     Not signed in <br />
-  //     <button onClick={() => signIn()}>Sign in</button>
-  //   </>
-  // );
+  const filler = Array.from(Array(50).keys());
 
   return (
-    <>
+    <div className="bg-background">
       <h1>Home Page</h1>
       {session ? (
         <>
@@ -33,7 +19,10 @@ const Home: NextPage = () => {
       ) : (
         <button onClick={() => signIn()}>Sign in</button>
       )}
-    </>
+      {filler.map((item) => (
+        <p key={item}>{item}</p>
+      ))}
+    </div>
   );
 };
 

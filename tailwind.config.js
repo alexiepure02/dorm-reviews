@@ -13,7 +13,9 @@ module.exports = {
         "linear-2": "#EF9045",
         "gray-1": "#BDBDBD",
         "gray-2": "#757575",
+        "gray-3": "#484848",
         "input-stroke": "",
+
         primary: {
           100: "#EF9045",
           200: "#F19B58",

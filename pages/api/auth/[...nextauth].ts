@@ -68,6 +68,14 @@ export default NextAuth({
       }
       return session;
     },
+    async jwt({ token, account, user }) {
+      if (account) {
+        token.accessToken = account.access_token;
+        //@ts-ignore
+        token.name = user.username;
+      }
+      return token;
+    },
   },
   session: {
     strategy: "jwt",
