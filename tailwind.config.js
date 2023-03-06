@@ -15,6 +15,7 @@ module.exports = {
         "gray-2": "#757575",
         "gray-3": "#484848",
         "input-stroke": "",
+        "secondary-green": "#0E4550",
 
         primary: {
           100: "#EF9045",

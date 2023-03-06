@@ -6,7 +6,7 @@ import { useState } from "react";
 // import { useFormik } from 'formik';
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { BiLock, BiLockOpen, BiMailSend, BiUserPin } from "react-icons/bi";
-import Input from "@/components/Input";
+import FormInput from "@/components/FormInput";
 import { AiOutlineUser } from "react-icons/ai";
 import Button from "@/components/Button";
 
@@ -58,7 +58,7 @@ export default function Register() {
       />
       <p className="self-center bg-green-500 bg-opacity-50 px-2 ">{success}</p>
 
-      <Input
+      <FormInput
         id="username"
         type="text"
         placeholder="Nume de utilizator"
@@ -67,7 +67,7 @@ export default function Register() {
         rules={{ required: true, minLength: 5, maxLength: 32 }}
       />
 
-      <Input
+      <FormInput
         id="email"
         type="text"
         placeholder="Email"
@@ -76,7 +76,7 @@ export default function Register() {
         rules={{ required: true }}
       />
 
-      <Input
+      <FormInput
         id="password"
         type="password"
         placeholder="Parolă"
@@ -85,7 +85,7 @@ export default function Register() {
         rules={{ required: true, minLength: 8, maxLength: 32 }}
       />
 
-      <Input
+      <FormInput
         id="cpassword"
         type="password"
         placeholder="Confirmă parola"

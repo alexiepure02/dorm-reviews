@@ -4,7 +4,7 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import Input from "@/components/Input";
+import FormInput from "@/components/FormInput";
 import Button from "@/components/Button";
 import { BiLockOpen, BiUserPin } from "react-icons/bi";
 import { AiOutlineUser } from "react-icons/ai";
@@ -51,7 +51,7 @@ export default function Login() {
         className="self-center w-40 h-40"
         style={{ fill: "url(#orange-gradient)" }}
       />
-      <Input
+      <FormInput
         id="email"
         type="text"
         placeholder="Nume de utilizator sau email"
@@ -60,7 +60,7 @@ export default function Login() {
         rules={{ required: true }}
       />
 
-      <Input
+      <FormInput
         id="password"
         type="password"
         placeholder="Parolă"

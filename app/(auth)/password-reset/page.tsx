@@ -2,7 +2,7 @@
 
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
-import Input from "@/components/Input";
+import FormInput from "@/components/FormInput";
 import Button from "@/components/Button";
 import { BiLock, BiLockOpen } from "react-icons/bi";
 import { useState } from "react";
@@ -63,7 +63,7 @@ export default function Login() {
         Introduceți noua parolă pentru a fi actualizată în sistemul nostru.
       </p>
 
-      <Input
+      <FormInput
         id="password"
         type="password"
         placeholder="Parola nouă"
@@ -72,7 +72,7 @@ export default function Login() {
         rules={{ required: true, minLength: 8, maxLength: 32 }}
       />
 
-      <Input
+      <FormInput
         id="cpassword"
         type="password"
         placeholder="Confirmă parola nouă"

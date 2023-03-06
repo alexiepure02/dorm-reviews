@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import Input from "@/components/Input";
+import FormInput from "@/components/FormInput";
 import Button from "@/components/Button";
 import { BiMailSend } from "react-icons/bi";
 import { AiOutlineUser } from "react-icons/ai";
@@ -57,7 +57,7 @@ export default function RequestPasswordReset() {
         Ați uitat parola? Nu vă faceți griji, introduceți adresa dumeavoastră de
         mail și vă vom trimite un link pentru a vă recupera parola.
       </p>
-      <Input
+      <FormInput
         id="email"
         type="text"
         placeholder="Email"

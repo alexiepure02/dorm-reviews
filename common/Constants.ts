@@ -9,3 +9,8 @@ export const usernameRegEx =
 // 8 - 32 characters, at least one letter, one number and one special character
 export const passwordRegEx =
   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
+export const enum UNIVERSITY_CARD_TYPE_ENUM {
+  vertical = "vertical",
+  horizontal = "horizontal",
+}
