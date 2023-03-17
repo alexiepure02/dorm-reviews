@@ -16,7 +16,7 @@ module.exports = {
         "gray-3": "#484848",
         "input-stroke": "",
         "secondary-green": "#0E4550",
-
+        hover: "#E6E6E6",
         primary: {
           100: "#EF9045",
           200: "#F19B58",

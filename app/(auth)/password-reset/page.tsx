@@ -11,8 +11,8 @@ export default function Login() {
   const router = useRouter();
   const [error, setError] = useState("");
 
-  const token = useSearchParams().get("token");
-  const id = useSearchParams().get("id");
+  const token = useSearchParams()?.get("token");
+  const id = useSearchParams()?.get("id");
 
   // react-hook-form
   const {

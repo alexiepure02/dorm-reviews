@@ -1,16 +1,27 @@
-interface ReviewCardProps {}
 import { useState } from "react";
-import { Rating } from "react-simple-star-rating";
+import { BiDownArrow, BiUpArrow } from "react-icons/bi";
+import Rating from "./Rating";
 
-export default ({}: ReviewCardProps) => {
-  const [rating, setRating] = useState(3.5);
-
-  // Catch Rating value
-  const handleRating = (rate: number) => {
-    setRating(rate);
-
-    // other logic
+interface ReviewCardProps {
+  reviewId: number;
+  expandedId: number;
+  handleExpand: (id: number) => void;
+}
+export default ({ reviewId, expandedId, handleExpand }: ReviewCardProps) => {
+  const review = {
+    id: 1,
+    name: "John Doe",
+    overallRating: 3.6,
+    comment:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+    room: 5,
+    bathroom: 3,
+    kitchen: 4.7,
+    location: 2,
   };
+
+  // other logic
+
   // Optinal callback functions
   // const onPointerEnter = () => console.log("Enter");
   // const onPointerLeave = () => console.log("Leave");
@@ -18,45 +29,31 @@ export default ({}: ReviewCardProps) => {
   //   console.log(value, index);
 
   return (
-    <div className="flex flex-col shadow-lg rounded-2xl px-9 py-6 gap-2">
-      <div className="flex gap-4">
-        <img
-          src="avatar.svg"
-          alt="Avatar"
-          className="align-middle w-12 h-12 rounded-full"
-        />
-
-        <div>
-          <h1 className=" text-xl">John Doe</h1>
-          <Rating
-            onClick={handleRating}
-            // onPointerEnter={onPointerEnter}
-            // onPointerLeave={onPointerLeave}
-            //onPointerMove={onPointerMove}
-            initialValue={rating}
-            SVGstyle={{
-              display: "inline",
-              width: "16px",
-              height: "16px",
-            }}
-            transition={true}
-            /* Available Props */
-            SVGclassName="w-12"
-            readonly={true}
-            allowFraction={true}
-            showTooltip={true}
-            allowTitleTag={false}
+    <div className="flex flex-col shadow-lg rounded-2xl px-4 sm:px-9 py-6 gap-4">
+      <div className="flex">
+        <div className="flex gap-4">
+          <img
+            src="avatar.svg"
+            alt="Avatar"
+            className="align-middle w-14 h-14 rounded-full"
           />
+          <div>
+            <h1 className=" text-xl">{review.name}</h1>
+            <Rating initialValue={review.overallRating} showTooltip={true} />
+          </div>
+        </div>
+        <div
+          className="self-start p-2 ml-auto rounded-full transition duration-200 hover:bg-hover cursor-pointer"
+          onClick={() => handleExpand(reviewId)}
+        >
+          {expandedId === reviewId ? (
+            <BiUpArrow className="w-5 h-5" />
+          ) : (
+            <BiDownArrow className="w-5 h-5" />
+          )}
         </div>
       </div>
-      <p className="text-lg">
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged
-      </p>
+      <p className=" text-lg">{review.comment}</p>
       <div className="flex gap-4">
         <img
           src="dorm.jpg"
@@ -82,6 +79,32 @@ export default ({}: ReviewCardProps) => {
           className="align-middle w-14 h-14 cursor-pointer"
           onClick={() => console.log("open dorm pic.")}
         />
+      </div>
+      <div
+        className={` overflow-hidden transition-[max-height] duration-300 ${
+          expandedId === reviewId ? " max-h-52" : "max-h-0"
+        }`}
+        id="collapseExample"
+        data-te-collapse-item
+      >
+        <div className="flex flex-col gap-2 w-64">
+          <div className="flex items-center justify-between">
+            <h1 className="text-lg">Cameră</h1>
+            <Rating initialValue={review.room} showTooltip={true} />
+          </div>
+          <div className="flex items-center justify-between">
+            <h1 className="text-lg">Baie</h1>
+            <Rating initialValue={review.bathroom} showTooltip={true} />
+          </div>
+          <div className="flex items-center justify-between">
+            <h1 className="text-lg">Bucătărie</h1>
+            <Rating initialValue={review.kitchen} showTooltip={true} />
+          </div>
+          <div className="flex items-center justify-between">
+            <h1 className="text-lg">Locație</h1>
+            <Rating initialValue={review.location} showTooltip={true} />
+          </div>
+        </div>
       </div>
     </div>
   );

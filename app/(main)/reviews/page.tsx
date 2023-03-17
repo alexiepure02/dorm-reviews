@@ -2,6 +2,7 @@
 
 import Input from "@/components/Input";
 import ReviewCard from "@/components/ReviewCard";
+import ReviewCardsList from "@/components/ReviewCardsList";
 import { NextPage } from "next";
 import { IconBaseProps } from "react-icons";
 import { BiSearchAlt } from "react-icons/bi";
@@ -25,12 +26,8 @@ const Reviews: NextPage = () => {
       </div>
       <div className="container mx-auto flex flex-col gap-4 py-10 px-8">
         <h1 className=" text-5xl">Recenzile Tale</h1>
-        <div className="grid lg:grid-cols-1 xl:grid-cols-2 gap-8">
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
+        <div className="flex flex-col gap-8">
+          <ReviewCardsList />
         </div>
       </div>
     </>

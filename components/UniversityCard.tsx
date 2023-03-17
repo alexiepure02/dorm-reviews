@@ -15,7 +15,12 @@ export default ({ type }: UniversityCardProps) => {
   }
 
   return (
-    <div className={"flex shadow-lg rounded-2xl gap-2 " + typeClassName}>
+    <div
+      className={
+        "flex shadow-lg rounded-2xl gap-2 cursor-pointer transition duration-500 hover:bg-hover hover:-translate-y-2 " +
+        typeClassName
+      }
+    >
       <img src="university.jpg" alt="University" className="rounded-t-2xl" />
       <div className="flex flex-col p-6 gap-1">
         <h1 className="text-4xl font-semibold text-secondary-green">

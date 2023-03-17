@@ -19,7 +19,7 @@ export default function RequestPasswordResetSuccesful() {
       />
       <p className="text-gray-2 text-center">Ai resetat parola cu succes.</p>
 
-      <Button type="button">
+      <Button>
         <Link href={"/login"}>Înapoi la autentificare</Link>
       </Button>
     </div>

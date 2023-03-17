@@ -21,7 +21,7 @@ export default function RequestPasswordResetSuccesful() {
         Mail-ul pentru resetarea parolei a fost trimis cu succes.
       </p>
 
-      <Button type="button">
+      <Button>
         <Link href={"/login"}>Înapoi la autentificare</Link>
       </Button>
     </div>

@@ -68,10 +68,10 @@ export default () => {
                 pathname === "/account" && "text-primary-100"
               }`}
             />
-            {session.user.name}
+            {session.user?.name}
           </Link>
         ) : (
-          <Button type="button" className="w-[200px]">
+          <Button className="w-[200px]">
             <Link href={"/login"}>Autentificare</Link>
           </Button>
         )}
