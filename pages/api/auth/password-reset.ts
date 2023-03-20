@@ -20,7 +20,6 @@ export default async function handler(
   await dbConnect();
   const body = JSON.parse(req.body);
 
-  //@ts-ignore
   let passwordResetToken = await Token.findOne({ userId: body.userId });
 
   if (!passwordResetToken) {
@@ -61,7 +60,6 @@ export default async function handler(
     { new: true }
   );
 
-  //@ts-ignore
   const user = await User.findById({ _id: body.userId });
 
   sendEmail(

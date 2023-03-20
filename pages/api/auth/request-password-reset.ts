@@ -28,7 +28,6 @@ export default async function handler(
     return res.status(400).json({ error: "Adresă de e-mail invalidă" });
   }
 
-  // @ts-ignore
   user = await User.findOne({
     email: email,
   });
@@ -39,7 +38,6 @@ export default async function handler(
       .json({ error: "Contul cu adresa de e-mail introdusă nu există" });
   }
 
-  //@ts-ignore
   let token = await Token.findOne({ userId: user._id });
   if (token) await token.deleteOne();
 

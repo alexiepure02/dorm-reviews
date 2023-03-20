@@ -24,19 +24,21 @@ export default NextAuth({
         },
       },
       async authorize(credentials) {
+        if (!credentials) {
+          return;
+        }
+
         await dbConnect();
 
         let user: any;
 
-        if (credentials?.email.indexOf("@") < 0) {
-          // @ts-ignore
+        if (credentials.email.indexOf("@") < 0) {
           user = await User.findOne({
-            username: credentials?.email,
+            username: credentials.email,
           });
         } else {
-          // @ts-ignore
           user = await User.findOne({
-            email: credentials?.email,
+            email: credentials.email,
           });
         }
 
@@ -45,7 +47,7 @@ export default NextAuth({
         }
 
         const isPasswordCorrect = await compare(
-          credentials?.password,
+          credentials.password,
           user.password
         );
 
@@ -63,14 +65,15 @@ export default NextAuth({
   adapter: MongoDBAdapter(clientPromise),
   callbacks: {
     session: async ({ session, token }) => {
-      if (session?.user) {
+      if (token.sub && session?.user) {
         session.user.id = token.sub;
       }
       return session;
     },
     async jwt({ token, account, user }) {
-      if (account) {
+      if (user && account) {
         token.accessToken = account.access_token;
+        // console.log("username exists on user: ", user.username);
         //@ts-ignore
         token.name = user.username;
       }

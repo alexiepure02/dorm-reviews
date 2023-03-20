@@ -1,14 +1,14 @@
 import { model, models, Schema } from "mongoose";
 
-const dormSchema = new Schema(
+const universitySchema = new Schema(
   {
     name: {
       type: String,
       required: true,
+      unique: true,
     },
-    university: { type: Schema.Types.ObjectId, ref: "University" },
     city: { type: Schema.Types.ObjectId, ref: "City" },
-    address: {
+    description: {
       type: String,
       required: true,
     },
@@ -16,5 +16,5 @@ const dormSchema = new Schema(
   { timestamps: true }
 );
 
-const Dorm = models.Dorm || model("Dorm", dormSchema);
-export default Dorm;
+const University = models.University || model("University", universitySchema);
+export default University;

@@ -1,33 +1,42 @@
-import mongoose from "mongoose";
-import { Review } from "../types/review";
+import { model, models, Schema } from "mongoose";
 
-const reviewSchema = new mongoose.Schema(
+const reviewSchema = new Schema(
   {
-    userId: {
-      type: Number,
-      required: true,
-    },
+    user: { type: Schema.Types.ObjectId, ref: "User" },
+    dorm: { type: Schema.Types.ObjectId, ref: "Dorm" },
     likes: {
       type: Number,
       required: true,
     },
-    room: {
+    roomRating: {
       type: Number,
       required: true,
     },
-    bathroom: {
+    roomComment: {
+      type: String,
+    },
+    bathRating: {
       type: Number,
       required: true,
     },
-    kitchen: {
+    bathComment: {
+      type: String,
+    },
+    kitchenRating: {
       type: Number,
       required: true,
     },
-    location: {
+    kitchenComment: {
+      type: String,
+    },
+    locationRating: {
       type: Number,
       required: true,
     },
-    overall: {
+    locationComment: {
+      type: String,
+    },
+    overallRating: {
       type: Number,
       required: true,
     },
@@ -39,7 +48,5 @@ const reviewSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<Review & mongoose.Document>(
-  "Review",
-  reviewSchema
-);
+const Review = models.Review || model("Review", reviewSchema);
+export default Review;

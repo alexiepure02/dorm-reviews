@@ -25,7 +25,6 @@ export default async function handler(
 
   let user: any;
 
-  //@ts-ignore
   user = await User.findOne({
     email: body.email,
   });
@@ -34,7 +33,6 @@ export default async function handler(
     return res.status(400).json({ error: "Adresă de e-mail deja folosită" });
   }
 
-  //@ts-ignore
   user = await User.findOne({
     username: body.username,
   });
@@ -72,7 +70,7 @@ export default async function handler(
     image: "",
   });
 
-  newUser
+  return newUser
     .save()
     .then(() => {
       sendEmail(
