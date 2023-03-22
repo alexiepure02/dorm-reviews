@@ -90,7 +90,7 @@ export default async function handler(
       return newDorm
         .save()
         .then(() => {
-          return res.status(200).json(newDorm);
+          return res.status(201).json(newDorm);
         })
         .catch((err: string) => {
           return res

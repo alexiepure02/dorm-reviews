@@ -59,7 +59,7 @@ export default async function handler(
       return newUniversity
         .save()
         .then(() => {
-          return res.status(200).json(newUniversity);
+          return res.status(201).json(newUniversity);
         })
         .catch((err: string) => {
           return res
