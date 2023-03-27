@@ -15,7 +15,7 @@ const Home: NextPage = () => {
   return (
     <>
       <img
-        src="./home-bg.png"
+        src="home-bg.png"
         className="absolute w-full h-screen object-cover -z-50 -top-0.5"
       />
       <div className="h-full container mx-auto px-9">

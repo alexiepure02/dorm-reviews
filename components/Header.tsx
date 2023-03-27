@@ -11,7 +11,7 @@ export default () => {
   return (
     <header className="sticky top-0 bg-white flex justify-between px-8 py-3 m-0 z-50 rounded-b-md shadow-md">
       <Link href={"/"} className="flex gap-4 items-center cursor-pointer">
-        <img src={"/logo.svg"} className="w-14 h-16" />
+        <img src="logo.svg" className="w-14 h-16" />
         <h1 className="font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-linear-1 to-linear-2">
           Căminul Tău
         </h1>
@@ -31,14 +31,14 @@ export default () => {
           Recenzii
         </Link>
         <Link
-          href={"/locations"}
+          href={"/map"}
           className={`flex gap-2 font-semibold hover:text-primary-100 ${
-            pathname === "/locations" && "text-primary-100"
+            pathname === "/map" && "text-primary-100"
           }`}
         >
           <BiMapAlt
             className={`w-6 h-6 text-gray-3 ${
-              pathname === "/locations" && "text-primary-100"
+              pathname === "/map" && "text-primary-100"
             }`}
           />
           Hartă

@@ -9,7 +9,7 @@ export default function AuthLayout({
     <html lang="en">
       <body className="w-screen h-screen bg-background">
         <img
-          src="/auth-bg.png"
+          src="auth-bg.png"
           className="fixed min-w-screen min-h-screen -z-50"
         />
         <div className="flex h-full items-center justify-between">
