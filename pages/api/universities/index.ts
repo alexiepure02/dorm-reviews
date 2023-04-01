@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/dbConnect";
 import University from "@/common/models/University";
-import City from "@/common/models/City";
+import Location from "@/common/models/Location";
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,22 +11,27 @@ export default async function handler(
     case "GET":
       await dbConnect();
 
-      const { city } = req.query;
+      const { location } = req.query;
 
       let universities: any[];
 
-      if (city) {
-        const searchedCity = await City.findOne({ name: city });
+      if (location) {
+        const searchedLocation = await Location.findOne({ name: location });
 
-        if (!searchedCity) {
+        if (!searchedLocation) {
           return res.status(400).json({
-            error: `City with the name '${city}' not found`,
+            error: `Location with the name '${location}' not found`,
           });
         }
 
-        universities = await University.find({ city: searchedCity.id });
+        universities = await University.find({
+          location: searchedLocation.id,
+        }).populate("location", "name -_id");
       } else {
-        universities = await University.find();
+        universities = await University.find().populate(
+          "location",
+          "name -_id"
+        );
       }
 
       if (universities.length) {
@@ -45,14 +50,14 @@ export default async function handler(
           error: `University with the name '${body.name}' already exists`,
         });
 
-      if (!(await City.findById(body.city)))
+      if (!(await Location.findById(body.location)))
         return res.status(400).json({
-          error: `Unable to create university: City with the id '${body.city}' not found`,
+          error: `Unable to create university: Location with the id '${body.location}' not found`,
         });
 
       const newUniversity = new University({
         name: body.name,
-        city: body.city,
+        location: body.location,
         description: body.description,
       });
 

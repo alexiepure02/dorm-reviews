@@ -7,7 +7,7 @@ const dormSchema = new Schema(
       required: true,
     },
     university: { type: Schema.Types.ObjectId, ref: "University" },
-    city: { type: Schema.Types.ObjectId, ref: "City" },
+    location: { type: Schema.Types.ObjectId, ref: "Location" },
     address: {
       type: String,
       required: true,

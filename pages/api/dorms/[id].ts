@@ -13,7 +13,7 @@ export default async function handler(
       const { id } = req.query;
 
       const dorm = await Dorm.findById(id)
-        .populate("city")
+        .populate("location")
         .populate("university");
 
       if (dorm) {

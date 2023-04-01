@@ -13,7 +13,7 @@ export default async function handler(
 
       const { id } = req.query;
 
-      const university = await University.findById(id).populate("city");
+      const university = await University.findById(id).populate("location");
 
       if (university) {
         return res.status(200).json(university);

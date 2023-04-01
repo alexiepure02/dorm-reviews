@@ -1,6 +1,6 @@
 import { model, models, Schema } from "mongoose";
 
-const citySchema = new Schema(
+const locationSchema = new Schema(
   {
     name: {
       type: String,
@@ -11,9 +11,13 @@ const citySchema = new Schema(
       type: String,
       required: true,
     },
+    position: {
+      type: [],
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
-const City = models.City || model("City", citySchema);
-export default City;
+const Location = models.Location || model("Location", locationSchema);
+export default Location;

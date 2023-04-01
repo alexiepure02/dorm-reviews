@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/dbConnect";
-import City from "@/common/models/City";
+import Location from "@/common/models/Location";
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,39 +10,42 @@ export default async function handler(
     case "GET":
       await dbConnect();
 
-      const cities = await City.find();
+      const locations = await Location.find();
 
-      if (cities.length) {
-        return res.status(200).json(cities);
+      if (locations.length) {
+        return res.status(200).json(locations);
       }
 
-      return res.status(404).json({ error: "No cities found" });
+      return res.status(404).json({ error: "No locations found" });
 
     case "POST":
       await dbConnect();
 
       const body = req.body;
 
-      if (await City.findOne({ name: body.name })) {
-        return res
-          .status(400)
-          .json({ error: `City with the name '${body.name}' already exists` });
+      if (await Location.findOne({ name: body.name })) {
+        return res.status(400).json({
+          error: `Location with the name '${body.name}' already exists`,
+        });
       }
 
-      const newCity = new City({
+      console.log(body);
+
+      const newLocation = new Location({
         name: body.name,
         description: body.description,
+        position: body.position,
       });
 
-      return newCity
+      return newLocation
         .save()
         .then(() => {
-          return res.status(201).json(newCity);
+          return res.status(201).json(newLocation);
         })
         .catch((err: string) => {
           return res
             .status(400)
-            .json({ error: "Error on '/api/cities': " + err });
+            .json({ error: "Error on '/api/locations': " + err });
         });
 
     default:

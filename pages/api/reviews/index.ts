@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/dbConnect";
 import University from "@/common/models/University";
-import City from "@/common/models/City";
+import Location from "@/common/models/Location";
 import User from "@/common/models/User";
 import Dorm from "@/common/models/Dorm";
 import Review from "@/common/models/Review";

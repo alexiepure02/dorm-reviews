@@ -31,14 +31,14 @@ export default () => {
           Recenzii
         </Link>
         <Link
-          href={"/map"}
+          href={"/locations"}
           className={`flex gap-2 font-semibold hover:text-primary-100 ${
-            pathname === "/map" && "text-primary-100"
+            pathname === "/locations" && "text-primary-100"
           }`}
         >
           <BiMapAlt
             className={`w-6 h-6 text-gray-3 ${
-              pathname === "/map" && "text-primary-100"
+              pathname === "/locations" && "text-primary-100"
             }`}
           />
           Hartă

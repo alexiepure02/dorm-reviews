@@ -14,3 +14,7 @@ export const enum UNIVERSITY_CARD_TYPE_ENUM {
   vertical = "vertical",
   horizontal = "horizontal",
 }
+
+export const COORDINATES_ROMANIA_CENTER: [number, number] = [
+  46.017579, 24.872295,
+];

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/dbConnect";
 import Dorm from "@/common/models/Dorm";
-import City from "@/common/models/City";
+import Location from "@/common/models/Location";
 import University from "@/common/models/University";
 
 export default async function handler(
@@ -12,16 +12,16 @@ export default async function handler(
     case "GET":
       await dbConnect();
 
-      const { city, university } = req.query;
+      const { location, university } = req.query;
 
       let dorms: any[];
 
-      const searchedCity = await City.findOne({ name: city });
+      const searchedLocation = await Location.findOne({ name: location });
 
-      if (city && !searchedCity) {
+      if (location && !searchedLocation) {
         return res
           .status(400)
-          .json({ error: `City with the name '${city}' not found` });
+          .json({ error: `Location with the name '${location}' not found` });
       }
 
       const searchedUniversity = await University.findOne({ name: university });
@@ -32,15 +32,15 @@ export default async function handler(
         });
       }
 
-      if (searchedCity && searchedUniversity) {
+      if (searchedLocation && searchedUniversity) {
         dorms = await Dorm.find({
-          city: searchedCity.id,
+          location: searchedLocation.id,
           university: searchedUniversity.id,
         });
-      } else if (!searchedCity && searchedUniversity) {
+      } else if (!searchedLocation && searchedUniversity) {
         dorms = await Dorm.find({ university: searchedUniversity.id });
-      } else if (searchedCity && !searchedUniversity) {
-        dorms = await Dorm.find({ city: searchedCity.id });
+      } else if (searchedLocation && !searchedUniversity) {
+        dorms = await Dorm.find({ location: searchedLocation.id });
       } else {
         dorms = await Dorm.find();
       }
@@ -62,11 +62,11 @@ export default async function handler(
           .json({ error: `Dorm with the name '${body.name}' already exists` });
       }
 
-      const foundCity = await City.findOne({ name: body.city });
+      const foundLocation = await Location.findOne({ name: body.location });
 
-      if (!foundCity) {
+      if (!foundLocation) {
         return res.status(400).json({
-          error: `Unable to create dorm: City with the id '${body.city}' not found`,
+          error: `Unable to create dorm: Location with the id '${body.location}' not found`,
         });
       }
 
@@ -83,7 +83,7 @@ export default async function handler(
       const newDorm = new Dorm({
         name: body.name,
         university: foundUniversity.id,
-        city: foundCity.id,
+        location: foundLocation.id,
         address: body.address,
       });
 

@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/dbConnect";
-import City from "@/common/models/City";
+import Location from "@/common/models/Location";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,15 +12,15 @@ export default async function handler(
 
       const { id } = req.query;
 
-      const city = await City.findById(id);
+      const location = await Location.findById(id);
 
-      if (city) {
-        return res.status(200).json(city);
+      if (location) {
+        return res.status(200).json(location);
       }
 
       return res
         .status(404)
-        .json({ error: `No city found with the id '${id}'` });
+        .json({ error: `No location found with the id '${id}'` });
 
     default:
       res.setHeader("Allow", ["GET"]);

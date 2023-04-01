@@ -45,10 +45,10 @@ const Home: NextPage = () => {
             Cele mai populare universități din țară..
           </p>
           <div className="grid py-8 gap-8 items-center justify-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {/* <UniversityCard type={UNIVERSITY_CARD_TYPE_ENUM.vertical} />
             <UniversityCard type={UNIVERSITY_CARD_TYPE_ENUM.vertical} />
             <UniversityCard type={UNIVERSITY_CARD_TYPE_ENUM.vertical} />
-            <UniversityCard type={UNIVERSITY_CARD_TYPE_ENUM.vertical} />
-            <UniversityCard type={UNIVERSITY_CARD_TYPE_ENUM.vertical} />
+            <UniversityCard type={UNIVERSITY_CARD_TYPE_ENUM.vertical} /> */}
           </div>
         </div>
       </div>
