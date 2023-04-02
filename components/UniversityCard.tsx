@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { BiMapPin } from "react-icons/bi";
 import { UNIVERSITY_CARD_TYPE_ENUM } from "../common/Constants";
 
@@ -18,7 +18,6 @@ export default ({ type, university }: UniversityCardProps) => {
     typeClassName = "items-center";
   }
   const router = useRouter();
-  const pathname = usePathname();
 
   const goToUniversity = () => router.push("universities/" + university._id);
 

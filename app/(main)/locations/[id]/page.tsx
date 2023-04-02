@@ -34,14 +34,16 @@ export default async function Page({ params }) {
         <p className=" max-w-lg">{location.description}</p>
       </div>
       <div className="flex gap-9">
-        {universities.map((university: any, index) =>
+        {universities.map((university: any, index: number) =>
           index < 3 ? (
             <UniversityCard
+              key={index}
               type={UNIVERSITY_CARD_TYPE_ENUM.vertical}
               university={university}
             />
           ) : (
             <UniversityCard
+              key={index}
               type={UNIVERSITY_CARD_TYPE_ENUM.horizontal}
               university={university}
             />

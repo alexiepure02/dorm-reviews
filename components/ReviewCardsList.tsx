@@ -1,8 +1,13 @@
-interface ReviewCardProps {}
+"use client";
+
 import { useState } from "react";
 import ReviewCard from "./ReviewCard";
 
-export default ({}: ReviewCardProps) => {
+interface ReviewCardProps {
+  reviews: any;
+}
+
+export default ({ reviews }: ReviewCardProps) => {
   const [expandedId, setExpandedId] = useState(-1);
 
   const handleExpand = (id: number) => {
@@ -12,10 +17,10 @@ export default ({}: ReviewCardProps) => {
 
   return (
     <div className="flex flex-col gap-8">
-      {Array.from({ length: 20 }, (_, index: number) => (
+      {reviews.map((review: any, index: number) => (
         <ReviewCard
           key={index}
-          reviewId={index}
+          review={review}
           expandedId={expandedId}
           handleExpand={handleExpand}
         />

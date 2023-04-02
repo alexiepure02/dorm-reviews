@@ -1,13 +1,8 @@
 "use client";
 
 import Button from "@/components/Button";
-import Input from "@/components/Input";
-import ReviewCard from "@/components/ReviewCard";
-import ReviewCardsList from "@/components/ReviewCardsList";
 import { NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
-import { IconBaseProps } from "react-icons";
-import { BiSearchAlt } from "react-icons/bi";
 
 const Reviews: NextPage = () => {
   const { data: session } = useSession();
