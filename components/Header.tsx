@@ -1,7 +1,9 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BiBuildings, BiMapAlt, BiPencil, BiUser } from "react-icons/bi";
+import { BiBed, BiBuildings, BiMapAlt, BiPencil, BiUser } from "react-icons/bi";
+import { MdOutlineBed, MdOutlineBedroomParent } from "react-icons/md";
+
 import Button from "./Button";
 
 export default () => {
@@ -56,6 +58,20 @@ export default () => {
           />
           Universități
         </Link>
+        <Link
+          href={"/universities"}
+          className={`flex gap-2 font-semibold hover:text-primary-100 ${
+            pathname === "/dorms" && "text-primary-100"
+          }`}
+        >
+          <MdOutlineBed
+            className={`w-6 h-6 text-gray-3 ${
+              pathname === "/dorms" && "text-primary-100"
+            }`}
+          />
+          Cămine
+        </Link>
+
         {session ? (
           <Link
             href={"/account"}

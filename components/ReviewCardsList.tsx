@@ -16,7 +16,7 @@ export default ({ reviews }: ReviewCardProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="container mx-auto flex flex-col break-words gap-8">
       {reviews.map((review: any, index: number) => (
         <ReviewCard
           key={index}

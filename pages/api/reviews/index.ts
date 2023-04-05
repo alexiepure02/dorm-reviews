@@ -38,13 +38,19 @@ export default async function handler(
         reviews = await Review.find({
           user: searchedUser.id,
           dorm: searchedDorm.id,
-        });
+        }).populate("user", "-password");
       } else if (!searchedUser && searchedDorm) {
-        reviews = await Review.find({ dorm: searchedDorm.id });
+        reviews = await Review.find({ dorm: searchedDorm.id }).populate(
+          "user",
+          "-password"
+        );
       } else if (searchedUser && !searchedDorm) {
-        reviews = await Review.find({ user: searchedUser.id });
+        reviews = await Review.find({ user: searchedUser.id }).populate(
+          "user",
+          "-password"
+        );
       } else {
-        reviews = await Review.find();
+        reviews = await Review.find().populate("user", "-password");
       }
 
       if (reviews.length) {

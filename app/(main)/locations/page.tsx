@@ -18,9 +18,9 @@ export default async function Page() {
   const locations = await getLocations();
 
   return (
-    <div className="flex flex-col xl:flex-row items-start justify-center bg-background p-6 md:p-10 lg:p-14">
+    <div className="flex flex-col xl:flex-row items-start justify-center bg-background gap-4 p-6 md:p-10 lg:p-14">
       <div className="flex flex-col gap-6 pb-4 xl:pb-0">
-        <div className="flex gap-4">
+        <div className="flex items-end gap-4">
           <BiMapAlt className="w-9 h-9" />
           <h1 className=" text-4xl font-medium">Hartă</h1>
         </div>
