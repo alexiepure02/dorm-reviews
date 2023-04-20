@@ -20,9 +20,7 @@ export default ({ review, expandedId, handleExpand }: ReviewCardProps) => {
           />
           <div>
             <h1 className=" text-xl">{review.user.username}</h1>
-            <CustomRating
-              initialRating={review.overallRating}
-            />
+            <CustomRating rating={review.overallRating} />
           </div>
         </div>
         <div
@@ -70,33 +68,25 @@ export default ({ review, expandedId, handleExpand }: ReviewCardProps) => {
         id="collapseExample"
         data-te-collapse-item
       >
-        <div className="flex flex-col gap-2 w-64">
-          <div className="flex items-center justify-between">
-            <h1 className="text-lg">Cameră</h1>
-            <CustomRating
-              initialRating={review.roomRating}
-            />
+        <div className="flex flex-col gap-2 w-full">
+          <div className="w-64 flex items-center justify-between">
+            <h1 className="text-lg font-bold">Cameră</h1>
+            <CustomRating rating={review.roomRating} />
           </div>
           <p>{review.roomComment}</p>
-          <div className="flex items-center justify-between">
-            <h1 className="text-lg">Baie</h1>
-            <CustomRating
-              initialRating={review.bathRating}
-            />
+          <div className="w-64 flex items-center justify-between">
+            <h1 className="text-lg font-bold">Baie</h1>
+            <CustomRating rating={review.bathRating} />
           </div>
           <p>{review.bathComment}</p>
-          <div className="flex items-center justify-between">
-            <h1 className="text-lg">Bucătărie</h1>
-            <CustomRating
-              initialRating={review.kitchenRating}
-            />
+          <div className="w-64 flex items-center justify-between">
+            <h1 className="text-lg font-bold">Bucătărie</h1>
+            <CustomRating rating={review.kitchenRating} />
           </div>
           <p>{review.kitchenComment}</p>
-          <div className="flex items-center justify-between">
-            <h1 className="text-lg">Locație</h1>
-            <CustomRating
-              initialRating={review.locationRating}
-            />
+          <div className="w-64 flex items-center justify-between">
+            <h1 className="text-lg font-bold">Locație</h1>
+            <CustomRating rating={review.locationRating} />
           </div>
           <p>{review.locationComment}</p>
         </div>

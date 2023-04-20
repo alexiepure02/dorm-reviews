@@ -62,7 +62,7 @@ export default async function handler(
     case "POST":
       await dbConnect();
 
-      const body = req.body;
+      const body = JSON.parse(req.body);
 
       const foundUser = await User.findOne({ username: body.username });
 

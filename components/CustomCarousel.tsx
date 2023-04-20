@@ -2,19 +2,46 @@
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+import { PropsWithChildren, ReactChild, ReactElement, ReactNode } from "react";
 
-export default function CustomCarousel() {
+interface CustomCarouselProps {
+  selectedItem?: number;
+  onChange?: (index: number) => void;
+  emulateTouch?: boolean;
+  infiniteLoop?: boolean;
+  showIndicators?: boolean;
+  showArrows?: boolean;
+  showThumbs?: boolean;
+  dynamicHeight?: boolean;
+  children: any; // won't work for ReactNode, and asks for ReactChild[] which is deprecated
+}
+
+export default function CustomCarousel({
+  selectedItem,
+  onChange,
+  emulateTouch = true,
+  infiniteLoop = true,
+  showIndicators = true,
+  showArrows = true,
+  showThumbs = true,
+  dynamicHeight = false,
+  children,
+}: CustomCarouselProps) {
   return (
     <Carousel
       // centerMode
       // centerSlidePercentage={80}
-      emulateTouch
-      infiniteLoop
+      selectedItem={selectedItem}
+      onChange={onChange}
+      emulateTouch={emulateTouch}
+      infiniteLoop={infiniteLoop}
+      showIndicators={showIndicators}
+      showArrows={showArrows}
+      showThumbs={showThumbs}
       showStatus={false}
+      dynamicHeight={dynamicHeight}
     >
-      <img src="/university2.jpg" />
-      <img src="/university2.jpg" />
-      <img src="/university2.jpg" />
+      {children}
     </Carousel>
   );
 }

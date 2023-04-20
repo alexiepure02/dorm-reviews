@@ -43,12 +43,16 @@ export default async function Page({ params }) {
             <p className="xl:max-w-lg">{university.description}</p>
           </div>
           <div className="max-w-4xl w-full xl:w-[55%]">
-            <CustomCarousel />
+            <CustomCarousel>
+              <img src="/university2.jpg" />
+              <img src="/university2.jpg" />
+              <img src="/university2.jpg" />
+            </CustomCarousel>
           </div>
         </div>
       </div>
       <div className="container mx-auto flex flex-col w-full justify-between">
-        <h1 className="text-4xl font-medium">Recenzii</h1>
+        <h1 className="text-4xl font-medium">Cămine</h1>
         <div className="flex justify-between gap-9 py-12">
           {dorms.map((dorm: any, index: number) => (
             <DormCard key={index} dorm={dorm} />

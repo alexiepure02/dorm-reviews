@@ -1,17 +1,25 @@
+"use client";
+
+import { useState } from "react";
+import { Controller, FieldValues, UseFormRegister } from "react-hook-form";
 import { AiFillStar } from "react-icons/ai";
 
 interface RatingProps {
   rating: number;
+  onClick: (rating: number) => void;
   variant?: number;
-  disableTooltip?: boolean;
   decimals?: number;
+  disableTooltip?: boolean;
 }
 export default ({
   rating,
+  onClick,
   variant = 3,
-  disableTooltip = false,
   decimals = 0,
+  disableTooltip = false,
 }: RatingProps) => {
+  const [hover, setHover] = useState(0);
+
   let starClassName: string;
   let tooltipFontSize: string;
 
@@ -41,11 +49,15 @@ export default ({
         return (
           <button
             type="button"
-            disabled
             key={index}
             className={`${starClassName} ${
-              index <= rating ? "text-yellow-500" : "text-gray-400"
+              index <= (hover || rating) ? "text-yellow-500" : "text-gray-400"
             }`}
+            onClick={() => {
+              onClick(index);
+            }}
+            onMouseEnter={() => setHover(index)}
+            onMouseLeave={() => setHover(rating)}
           >
             <AiFillStar className="w-full h-full" />
           </button>

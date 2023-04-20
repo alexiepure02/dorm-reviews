@@ -58,19 +58,6 @@ export default () => {
           />
           Universități
         </Link>
-        <Link
-          href={"/universities"}
-          className={`flex gap-2 font-semibold hover:text-primary-100 ${
-            pathname === "/dorms" && "text-primary-100"
-          }`}
-        >
-          <MdOutlineBed
-            className={`w-6 h-6 text-gray-3 ${
-              pathname === "/dorms" && "text-primary-100"
-            }`}
-          />
-          Cămine
-        </Link>
 
         {session ? (
           <Link

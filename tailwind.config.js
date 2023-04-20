@@ -11,6 +11,8 @@ module.exports = {
         background: "#FDF4EC",
         "linear-1": "#F64C18",
         "linear-2": "#EF9045",
+        "linear-1-pale": "#F98B69",
+        "linear-2-pale": "#F5B786",
         "gray-1": "#BDBDBD",
         "gray-2": "#757575",
         "gray-3": "#484848",
