@@ -1,13 +1,13 @@
-import { BiMapAlt, BiSearchAlt } from "react-icons/bi";
-import "leaflet/dist/leaflet.css";
+import { BiBuildings } from "react-icons/bi";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
 const CustomMap = dynamic(() => import("@/components/map/CustomMap"), {
   ssr: false,
 });
 
-async function getLocations() {
-  const res = await fetch("http://localhost:3000/api/locations");
+async function getUniversities() {
+  const res = await fetch("http://localhost:3000/api/universities");
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
@@ -15,18 +15,38 @@ async function getLocations() {
 }
 
 export default async function Page() {
-  const locations = await getLocations();
+  const universities = await getUniversities();
 
   return (
-    <div className="flex flex-col xl:flex-row items-start justify-center bg-background p-6 md:p-10 lg:p-14">
-      <div className="flex flex-col gap-6 pb-4 xl:pb-0">
-        <div className="flex gap-4">
-          {/* <BiMapAlt className="w-9 h-9" /> */}
-          <h1 className=" text-4xl font-medium">Universități</h1>
+    <>
+      <div className="flex flex-col justify-center">
+        <div className="flex flex-col items-center bg-background gap-4 p-6 md:p-10 lg:p-14">
+          <div className="flex items-end gap-4">
+            <BiBuildings className="w-9 h-9" />
+            <h1 className=" text-4xl font-medium">Universități</h1>
+          </div>
+          <p className=" max-w-lg">
+            Aici poți găsi o listă completă a tuturor universităților din
+            România.
+          </p>
         </div>
-        <p className=" max-w-lg">Listă cu universitățile de top din țară</p>
+        {/* <div className="container mx-auto flex justify-center 2xl:justify-start p-4">
+          <h1 className="text-4xl font-medium">Universități</h1>
+        </div>
+        <UniversityCardsList universities={universities} /> */}
+        <div className="container mx-auto flex flex-col items-start">
+          {universities.map((university: any, index: number) => {
+            return (
+              <Link
+                href={"/universities/" + university._id}
+                className="hover:underline text-lg"
+              >
+                {university.name}
+              </Link>
+            );
+          })}
+        </div>
       </div>
-      {/* <CustomMap locations={locations} /> */}
-    </div>
+    </>
   );
 }

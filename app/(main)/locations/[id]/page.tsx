@@ -1,5 +1,6 @@
 import { UNIVERSITY_CARD_TYPE_ENUM } from "@/common/Constants";
 import UniversityCard from "@/components/UniversityCard";
+import UniversityCardsList from "@/components/UniversityCardsList";
 import { MdOutlineLocationCity } from "react-icons/md";
 
 async function getLocationById(id: string) {
@@ -25,31 +26,18 @@ export default async function Page({ params }) {
   const universities = await getUniversitiesByLocation(location.name);
 
   return (
-    <div className="flex flex-col xl:flex-row items-start justify-center bg-background gap-4 p-6 md:p-10 lg:p-14">
-      <div className="flex flex-col gap-6 pb-4 xl:pb-0">
+    <div className="flex flex-col justify-center">
+      <div className="flex flex-col items-center bg-background gap-4 p-6 md:p-10 lg:p-14">
         <div className="flex items-end gap-4">
           <MdOutlineLocationCity className="w-9 h-9" />
           <h1 className=" text-4xl font-medium">{location.name}</h1>
         </div>
         <p className=" max-w-lg">{location.description}</p>
       </div>
-      <div className="flex gap-9">
-        {universities.map((university: any, index: number) =>
-          index < 3 ? (
-            <UniversityCard
-              key={index}
-              type={UNIVERSITY_CARD_TYPE_ENUM.vertical}
-              university={university}
-            />
-          ) : (
-            <UniversityCard
-              key={index}
-              type={UNIVERSITY_CARD_TYPE_ENUM.horizontal}
-              university={university}
-            />
-          )
-        )}
+      <div className="container mx-auto flex justify-center 2xl:justify-start p-4">
+        <h1 className="text-4xl font-medium">Universități</h1>
       </div>
+      <UniversityCardsList universities={universities} />
     </div>
   );
 }

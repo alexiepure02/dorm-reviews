@@ -1,6 +1,7 @@
 import { UNIVERSITY_CARD_TYPE_ENUM } from "@/common/Constants";
 import CustomCarousel from "@/components/CustomCarousel";
 import DormCard from "@/components/DormCard";
+import DormCardsList from "@/components/DormCardsList";
 import UniversityCard from "@/components/UniversityCard";
 import { BiBuildings, BiMapPin } from "react-icons/bi";
 import { MdOutlineLocationCity } from "react-icons/md";
@@ -32,7 +33,7 @@ export default async function Page({ params }) {
       <div className="bg-background">
         <div className="container mx-auto flex flex-col xl:flex-row justify-between gap-8 p-6 md:p-10 lg:p-14">
           <div className="flex flex-col gap-6 pb-4 xl:pb-0">
-            <div className="flex gap-4">
+            <div className="flex items-center gap-4">
               <BiBuildings className="w-9 h-9" />
               <h1 className="text-4xl font-medium">{university.name}</h1>
             </div>
@@ -51,14 +52,10 @@ export default async function Page({ params }) {
           </div>
         </div>
       </div>
-      <div className="container mx-auto flex flex-col w-full justify-between">
+      <div className="container mx-auto flex justify-center sm:justify-start p-4">
         <h1 className="text-4xl font-medium">Cămine</h1>
-        <div className="flex justify-between gap-9 py-12">
-          {dorms.map((dorm: any, index: number) => (
-            <DormCard key={index} dorm={dorm} />
-          ))}
-        </div>
       </div>
+      <DormCardsList dorms={dorms} />
     </>
   );
 }

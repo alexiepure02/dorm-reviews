@@ -11,11 +11,16 @@ interface UniversityCardProps {
 
 export default ({ type, university }: UniversityCardProps) => {
   let typeClassName: string;
+  let imageClassName: string;
 
   if (type === UNIVERSITY_CARD_TYPE_ENUM.vertical) {
     typeClassName = "max-w-[342px] flex-col";
+    imageClassName = "rounded-t-2xl";
   } else {
-    typeClassName = "items-center";
+    typeClassName =
+      "max-w-[342px] flex-col sm:flex-row sm:max-w-[741px] sm:items-center";
+    imageClassName = "rounded-t-2xl sm:w-1/3 sm:rounded-l-2xl";
+    university.description = "";
   }
   const router = useRouter();
 
@@ -29,9 +34,9 @@ export default ({ type, university }: UniversityCardProps) => {
       }
       onClick={goToUniversity}
     >
-      <img src="/university.jpg" alt="University" className="rounded-t-2xl" />
+      <img src="/university.jpg" alt="University" className={imageClassName} />
       <div className="flex flex-col p-6 gap-1">
-        <h1 className="text-3xl font-semibold text-secondary-green">
+        <h1 className="text-2xl sm:text-3xl font-semibold text-secondary-green">
           {university.name}
         </h1>
         <div className="flex items-center gap-2 text-gray-3">
