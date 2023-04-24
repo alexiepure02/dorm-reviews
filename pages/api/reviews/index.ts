@@ -14,9 +14,14 @@ export default async function handler(
     case "GET":
       await dbConnect();
 
-      const { user, dorm } = req.query;
+      const { user, dorm, page, limit } = req.query;
 
+      console.log("params: page:", page, " limit:", limit);
+
+      let pageParam: number = page !== undefined ? +page : 0;
+      let limitParam: number = limit !== undefined ? +limit : 10;
       let reviews: any[];
+      let countReviews: number;
 
       const searchedUser = await User.findOne({ username: user }, "-password");
 
@@ -38,23 +43,44 @@ export default async function handler(
         reviews = await Review.find({
           user: searchedUser.id,
           dorm: searchedDorm.id,
-        }).populate("user", "-password");
+        })
+          .populate("user", "-password")
+          .limit(limitParam * 1)
+          .skip((pageParam) * limitParam);
+
+        countReviews = await Review.count({
+          user: searchedUser.id,
+          dorm: searchedDorm.id,
+        });
       } else if (!searchedUser && searchedDorm) {
-        reviews = await Review.find({ dorm: searchedDorm.id }).populate(
-          "user",
-          "-password"
-        );
+        reviews = await Review.find({ dorm: searchedDorm.id })
+          .populate("user", "-password")
+          .limit(limitParam * 1)
+          .skip((pageParam) * limitParam);
+
+        countReviews = await Review.count({
+          dorm: searchedDorm.id,
+        });
       } else if (searchedUser && !searchedDorm) {
-        reviews = await Review.find({ user: searchedUser.id }).populate(
-          "user",
-          "-password"
-        );
+        reviews = await Review.find({ user: searchedUser.id })
+          .populate("user", "-password")
+          .limit(limitParam * 1)
+          .skip((pageParam) * limitParam);
+
+        countReviews = await Review.count({
+          user: searchedUser.id,
+        });
       } else {
-        reviews = await Review.find().populate("user", "-password");
+        reviews = await Review.find()
+          .populate("user", "-password")
+          .limit(limitParam * 1)
+          .skip((pageParam) * limitParam);
+
+        countReviews = await Review.count({});
       }
 
       if (reviews.length) {
-        return res.status(200).json(reviews);
+        return res.status(200).json({ reviews, countReviews });
       }
 
       return res.status(404).json({ error: "No reviews found" });
@@ -62,7 +88,7 @@ export default async function handler(
     case "POST":
       await dbConnect();
 
-      const body = JSON.parse(req.body);
+      const body = req.body;
 
       const foundUser = await User.findOne({ username: body.username });
 
