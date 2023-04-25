@@ -1,5 +1,6 @@
 "use client";
 
+import fetcher from "@/common/utils/functions";
 import Input from "@/components/Input";
 import Pagination from "@/components/Pagination";
 import ReviewCard from "@/components/ReviewCard";
@@ -10,18 +11,8 @@ import { useState } from "react";
 import { IconBaseProps } from "react-icons";
 import { BiSearchAlt } from "react-icons/bi";
 import useSWR from "swr";
- 
-async function fetcher<JSON = any>(
-  input: RequestInfo,
-  init?: RequestInit
-): Promise<JSON> {
-  const res = await fetch(input, init);
-  return res.json();
-}
 
-interface ReviewsSection {}
-
-export default function ReviewsSection({}: ReviewsSection) {
+export default function ReviewsSection() {
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const limit = 3;
@@ -35,12 +26,12 @@ export default function ReviewsSection({}: ReviewsSection) {
 
   if (
     data &&
-    data.countReviews !== pageCount &&
-    data.countReviews !== undefined
+    data.countReviews !== undefined &&
+    data.countReviews !== pageCount
   )
     setPageCount(data.countReviews);
 
-  data && data.reviews !== undefined && (data.reviews = undefined);
+  // if (data && data.reviews !== undefined) data.reviews = undefined;
 
   const handlePage = (page: number) => setPage(page);
 
@@ -49,11 +40,11 @@ export default function ReviewsSection({}: ReviewsSection) {
       <div className="container mx-auto flex justify-center 2xl:justify-start p-4">
         <h1 className="text-4xl font-medium">Recenziile tale</h1>
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center gap-8 pb-8">
         {data ? (
           data.reviews !== undefined ? (
             <>
-              <ReviewCardsList reviews={data.reviews} />
+              <ReviewCardsList reviews={data.reviews} showDormNames />
               <Pagination
                 canPreviousPage={true}
                 canNextPage={true}

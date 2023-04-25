@@ -1,5 +1,6 @@
 "use client";
 
+import fetcher from "@/common/utils/functions";
 import Input from "@/components/Input";
 import Pagination from "@/components/Pagination";
 import ReviewCard from "@/components/ReviewCard";
@@ -11,14 +12,6 @@ import { IconBaseProps } from "react-icons";
 import { BiSearchAlt } from "react-icons/bi";
 import useSWR from "swr";
 import AddReviewButton from "./AddReviewButton";
-
-async function fetcher<JSON = any>(
-  input: RequestInfo,
-  init?: RequestInit
-): Promise<JSON> {
-  const res = await fetch(input, init);
-  return res.json();
-}
 
 interface ReviewsSection {
   dorm: any;

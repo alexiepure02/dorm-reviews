@@ -5,8 +5,14 @@ interface ReviewCardProps {
   review: any;
   expandedId: number;
   handleExpand: (id: number) => void;
+  showDormName: boolean;
 }
-export default ({ review, expandedId, handleExpand }: ReviewCardProps) => {
+export default ({
+  review,
+  expandedId,
+  handleExpand,
+  showDormName,
+}: ReviewCardProps) => {
   const handleExpandClick = () => handleExpand(review._id);
 
   return (
@@ -19,7 +25,12 @@ export default ({ review, expandedId, handleExpand }: ReviewCardProps) => {
             className="align-middle w-14 h-14 rounded-full"
           />
           <div>
-            <h1 className=" text-xl">{review.user.username}</h1>
+            <div className="flex gap-2">
+              <h1 className="text-xl font-semibold">
+                {review.user.username}
+                {showDormName && " - " + review.dorm.name}
+              </h1>
+            </div>
             <CustomRating rating={review.overallRating} />
           </div>
         </div>

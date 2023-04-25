@@ -45,8 +45,9 @@ export default async function handler(
           dorm: searchedDorm.id,
         })
           .populate("user", "-password")
+          .populate("dorm", "name")
           .limit(limitParam * 1)
-          .skip((pageParam) * limitParam);
+          .skip(pageParam * limitParam);
 
         countReviews = await Review.count({
           user: searchedUser.id,
@@ -55,8 +56,9 @@ export default async function handler(
       } else if (!searchedUser && searchedDorm) {
         reviews = await Review.find({ dorm: searchedDorm.id })
           .populate("user", "-password")
+          .populate("dorm", "name")
           .limit(limitParam * 1)
-          .skip((pageParam) * limitParam);
+          .skip(pageParam * limitParam);
 
         countReviews = await Review.count({
           dorm: searchedDorm.id,
@@ -64,8 +66,9 @@ export default async function handler(
       } else if (searchedUser && !searchedDorm) {
         reviews = await Review.find({ user: searchedUser.id })
           .populate("user", "-password")
+          .populate("dorm", "name")
           .limit(limitParam * 1)
-          .skip((pageParam) * limitParam);
+          .skip(pageParam * limitParam);
 
         countReviews = await Review.count({
           user: searchedUser.id,
@@ -73,8 +76,9 @@ export default async function handler(
       } else {
         reviews = await Review.find()
           .populate("user", "-password")
+          .populate("dorm", "name")
           .limit(limitParam * 1)
-          .skip((pageParam) * limitParam);
+          .skip(pageParam * limitParam);
 
         countReviews = await Review.count({});
       }

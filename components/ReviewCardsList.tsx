@@ -5,9 +5,10 @@ import ReviewCard from "./ReviewCard";
 
 interface ReviewCardProps {
   reviews: any;
+  showDormNames?: boolean;
 }
 
-export default ({ reviews }: ReviewCardProps) => {
+export default ({ reviews, showDormNames = false }: ReviewCardProps) => {
   const [expandedId, setExpandedId] = useState(-1);
 
   const handleExpand = (id: number) => {
@@ -23,6 +24,7 @@ export default ({ reviews }: ReviewCardProps) => {
           review={review}
           expandedId={expandedId}
           handleExpand={handleExpand}
+          showDormName={showDormNames}
         />
       ))}
     </div>
