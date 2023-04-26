@@ -18,27 +18,39 @@ interface CustomMapProps {
 }
 
 export default ({ locations }: CustomMapProps) => {
+  const width = 1000;
+  const height = Math.floor(width / 1.78);
+
   return (
-    <MapContainer
-      center={COORDINATES_ROMANIA_CENTER}
-      zoom={7}
-      // scrollWheelZoom={false}
-      // dragging={false}
-      // zoomControl={false}
-      style={{ height: "700px", width: "900px" }}
+    <div
+      className={`h-[${(height * 2) / 3}px] md:h-[${height}px] w-[${width}px]`}
     >
-      <TileLayer
-        // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      {locations.map((location, index) => (
-        <CustomMarker
-          key={index}
-          position={location.position}
-          id={location._id}
-          name={location.name}
+      <MapContainer
+        center={COORDINATES_ROMANIA_CENTER}
+        zoom={6}
+        // scrollWheelZoom={false}
+        // dragging={false}
+        // zoomControl={false}
+        style={{
+          minHeight: "100%",
+          height: "100%",
+          minWidth: "100%",
+          width: "100%",
+        }}
+      >
+        <TileLayer
+          // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-      ))}
-    </MapContainer>
+        {locations.map((location, index) => (
+          <CustomMarker
+            key={index}
+            position={location.position}
+            id={location._id}
+            name={location.name}
+          />
+        ))}
+      </MapContainer>
+    </div>
   );
 };

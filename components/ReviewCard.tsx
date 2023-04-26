@@ -31,7 +31,7 @@ export default ({
                 {showDormName && " - " + review.dorm.name}
               </h1>
             </div>
-            <CustomRating rating={review.overallRating} />
+            <CustomRating rating={review.overallRating} decimals={1} />
           </div>
         </div>
         <div
@@ -45,14 +45,8 @@ export default ({
           )}
         </div>
       </div>
-      <p className=" text-lg text-ellipsis">{review.comment}</p>
+      {review.comment}
       <div className="flex gap-4">
-        <img
-          src="/dorm.jpg"
-          alt="Dorm"
-          className="align-middle w-14 h-14 cursor-pointer"
-          onClick={() => console.log("open dorm pic.")}
-        />
         <img
           src="/dorm.jpg"
           alt="Dorm"

@@ -39,7 +39,7 @@ export default function ReviewsSection({ dorm }: ReviewsSection) {
   return (
     <>
       <div className="container mx-auto">
-        <div className="flex w-full justify-between p-4">
+        <div className="flex w-full justify-between gap-2 p-4">
           <h1 className="text-4xl font-medium">Recenzii</h1>
           <AddReviewButton />
         </div>
