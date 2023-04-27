@@ -1,15 +1,8 @@
 import Input from "@/components/Input";
-import Pagination from "@/components/Pagination";
-import ReviewCard from "@/components/ReviewCard";
-import ReviewCardsList from "@/components/ReviewCardsList";
-import { NextPage } from "next";
-import { useSearchParams } from "next/navigation";
-import { use } from "react";
-import { IconBaseProps } from "react-icons";
 import { BiSearchAlt } from "react-icons/bi";
 import ReviewsSection from "./ReviewsSection";
 
-export default function Page({ searchParams }) {
+export default function Page() {
   return (
     <>
       <div className="h-[500px] flex flex-col items-center justify-center text-center gap-8 bg-background px-9">

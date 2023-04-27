@@ -1,3 +1,5 @@
+"use client";
+
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -84,9 +86,9 @@ export default () => {
             {session.user?.name}
           </Link>
         ) : ( */}
-          <Button className="w-[200px] mt-6">
-            <Link href={"/login"}>Autentificare</Link>
-          </Button>
+        <Button className="w-[200px] mt-6">
+          <Link href={"/login"}>Autentificare</Link>
+        </Button>
         {/* )} */}
       </Menu>
     </div>

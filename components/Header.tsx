@@ -1,8 +1,9 @@
-import { useSession, signIn, signOut } from "next-auth/react";
+"use client";
+
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BiBed, BiBuildings, BiMapAlt, BiPencil, BiUser } from "react-icons/bi";
-import { MdOutlineBed, MdOutlineBedroomParent } from "react-icons/md";
+import { BiBuildings, BiMapAlt, BiPencil, BiUser } from "react-icons/bi";
 
 import Button from "./Button";
 import Sidebar from "./Sidebar";

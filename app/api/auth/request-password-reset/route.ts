@@ -1,31 +1,25 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
-import dbConnect from "../../../lib/dbConnect";
-import User from "../../../common/models/User";
+import dbConnect from "@/lib/dbConnect";
+import User from "@/common/models/User";
 import bcrypt from "bcrypt";
 import { randomBytes } from "crypto";
-import { sendEmail } from "../../../common/utils/email/sendEmail";
+import { sendEmail } from "@/common/utils/email/sendEmail";
 import Token from "@/common/models/Token";
-import { ResponseData } from "@/common/Interfaces";
 import { emailRegEx } from "@/common/Constants";
+import { NextResponse } from "next/server";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
-) {
-  if (req.method !== "POST") {
-    return res
-      .status(405)
-      .json({ error: "This API call only accepts POST methods" });
-  }
+export async function POST(request: Request) {
   await dbConnect();
 
   let user: any;
 
-  const email = JSON.parse(req.body);
+  const email = await request.json();
 
   if (!emailRegEx.test(email)) {
-    return res.status(400).json({ error: "Adresă de e-mail invalidă" });
+    return NextResponse.json(
+      { error: "Adresă de e-mail invalidă" },
+      { status: 400 }
+    );
   }
 
   user = await User.findOne({
@@ -33,9 +27,10 @@ export default async function handler(
   });
 
   if (!user) {
-    return res
-      .status(404)
-      .json({ error: "Contul cu adresa de e-mail introdusă nu există" });
+    return NextResponse.json(
+      { error: "Contul cu adresa de e-mail introdusă nu există" },
+      { status: 404 }
+    );
   }
 
   let token = await Token.findOne({ userId: user._id });
@@ -58,5 +53,5 @@ export default async function handler(
     "../../../../../common/utils/email/template/requestResetPassword.handlebars"
   );
 
-  return res.status(200).json({ msg: "Mail sent succesfully" });
+  return NextResponse.json({ msg: "Mail sent succesfully" });
 }

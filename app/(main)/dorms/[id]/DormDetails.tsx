@@ -1,8 +1,5 @@
-"use client";
-
 import CustomCarousel from "@/components/CustomCarousel";
 import DormMeans from "@/components/DormMeans";
-import { useSearchParams } from "next/navigation";
 import { BiMapPin } from "react-icons/bi";
 import { MdOutlineBed } from "react-icons/md";
 

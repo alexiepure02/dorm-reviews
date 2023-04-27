@@ -4,12 +4,9 @@ import { UNIVERSITY_CARD_TYPE_ENUM } from "@/common/Constants";
 import Input from "@/components/Input";
 import UniversityCard from "@/components/UniversityCard";
 import { NextPage } from "next";
-import { useSession, signIn, signOut } from "next-auth/react";
 import { BiSearchAlt } from "react-icons/bi";
 
 const Home: NextPage = () => {
-  const { data: session } = useSession();
-
   const filler = Array.from(Array(50).keys());
 
   return (
