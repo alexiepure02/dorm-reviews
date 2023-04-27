@@ -18,13 +18,8 @@ interface CustomMapProps {
 }
 
 export default ({ locations }: CustomMapProps) => {
-  const width = 1000;
-  const height = Math.floor(width / 1.78);
-
   return (
-    <div
-      className={`h-[${(height * 2) / 3}px] md:h-[${height}px] w-[${width}px]`}
-    >
+    <div className="h-[374px] md:h-[561px] w-[1000px]">
       <MapContainer
         center={COORDINATES_ROMANIA_CENTER}
         zoom={6}

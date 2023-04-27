@@ -13,9 +13,9 @@ interface DormDetailsProps {
 
 export default function DormDetails({ dorm, means }: DormDetailsProps) {
   return (
-    <div>
+    <>
       <div className="bg-background">
-        <div className="container mx-auto flex flex-col xl:flex-row items-start justify-between gap-8 p-6 md:p-10 lg:p-14">
+        <div className="container mx-auto flex flex-col xl:flex-row justify-between gap-8 p-6 md:p-10 lg:p-14">
           <div className="flex flex-col justify-center gap-6 pb-4 xl:pb-0">
             <div className="flex gap-4">
               <MdOutlineBed className="w-9 h-9" />
@@ -42,6 +42,6 @@ export default function DormDetails({ dorm, means }: DormDetailsProps) {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

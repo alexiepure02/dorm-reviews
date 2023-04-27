@@ -34,7 +34,7 @@ export default async function Page({ params }) {
         </div>
         <p className=" max-w-lg">{location.description}</p>
       </div>
-      <div className="container mx-auto flex justify-center 2xl:justify-start p-4">
+      <div className="container mx-auto flex justify-center 2xl:justify-start p-4 pb-6">
         <h1 className="text-4xl font-medium">Universități</h1>
       </div>
       <UniversityCardsList universities={universities} />

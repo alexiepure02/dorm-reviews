@@ -4,6 +4,7 @@ import DormCard from "@/components/DormCard";
 import DormCardsList from "@/components/DormCardsList";
 import UniversityCard from "@/components/UniversityCard";
 import { BiBuildings, BiMapPin } from "react-icons/bi";
+import { FaUniversity } from "react-icons/fa";
 import { MdOutlineLocationCity } from "react-icons/md";
 
 async function getUniversityById(id: string) {
@@ -33,8 +34,8 @@ export default async function Page({ params }) {
       <div className="bg-background">
         <div className="container mx-auto flex flex-col xl:flex-row justify-between gap-8 p-6 md:p-10 lg:p-14">
           <div className="flex flex-col gap-6 pb-4 xl:pb-0">
-            <div className="flex items-center gap-4">
-              <BiBuildings className="w-9 h-9" />
+            <div className="flex gap-4">
+              <FaUniversity className="w-9 h-9" />
               <h1 className="text-4xl font-medium">{university.name}</h1>
             </div>
             <div className="flex items-center gap-2">
