@@ -19,7 +19,6 @@ async function getDormById(id: string) {
 }
 
 export default async function Page({ params }) {
-  // will have to update to Next 13.3 and use useParams so I no longer get error
   const { dorm, means } = await getDormById(params.id);
   
   return (

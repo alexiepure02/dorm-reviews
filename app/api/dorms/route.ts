@@ -52,6 +52,7 @@ export async function GET(request: Request) {
 
   return NextResponse.json({ error: "No dorms found" }, { status: 404 });
 }
+
 export async function POST(request: Request) {
   await dbConnect();
 

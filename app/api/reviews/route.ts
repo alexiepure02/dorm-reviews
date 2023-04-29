@@ -47,7 +47,7 @@ export async function GET(request: Request) {
     })
       .populate("user", "-password")
       .populate("dorm", "name")
-      .limit(limitParam * 1)
+      .limit(limitParam)
       .skip(pageParam * limitParam);
 
     countReviews = await Review.count({
@@ -58,7 +58,7 @@ export async function GET(request: Request) {
     reviews = await Review.find({ dorm: searchedDorm.id })
       .populate("user", "-password")
       .populate("dorm", "name")
-      .limit(limitParam * 1)
+      .limit(limitParam)
       .skip(pageParam * limitParam);
 
     countReviews = await Review.count({
@@ -68,7 +68,7 @@ export async function GET(request: Request) {
     reviews = await Review.find({ user: searchedUser.id })
       .populate("user", "-password")
       .populate("dorm", "name")
-      .limit(limitParam * 1)
+      .limit(limitParam)
       .skip(pageParam * limitParam);
 
     countReviews = await Review.count({
@@ -78,7 +78,7 @@ export async function GET(request: Request) {
     reviews = await Review.find()
       .populate("user", "-password")
       .populate("dorm", "name")
-      .limit(limitParam * 1)
+      .limit(limitParam)
       .skip(pageParam * limitParam);
 
     countReviews = await Review.count({});

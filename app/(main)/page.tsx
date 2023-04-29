@@ -1,13 +1,7 @@
-"use client";
-
-import { UNIVERSITY_CARD_TYPE_ENUM } from "@/common/Constants";
-import Input from "@/components/Input";
-import UniversityCard from "@/components/UniversityCard";
+import SearchInput from "@/components/SearchInput";
 import { NextPage } from "next";
-import { BiSearchAlt } from "react-icons/bi";
 
 const Home: NextPage = () => {
-  const filler = Array.from(Array(50).keys());
 
   return (
     <>
@@ -19,21 +13,12 @@ const Home: NextPage = () => {
         <div className="h-screen">
           <div className="h-2/3 flex flex-col items-center justify-center text-center gap-8 text-white">
             <div className="flex flex-col gap-4 ">
-              {/* <h1 className="text-6xl tracking-tight font-bold">
-                Bine ai venit
-              </h1> */}
               <h1 className="text-8xl tracking-tight font-bold">Căminul Tău</h1>
             </div>
             <p className="max-w-2xl">
               Some catchy phrase or like a slogan or something..
             </p>
-            <Input
-              Icon={BiSearchAlt}
-              id="search"
-              type="text"
-              placeholder="Caută un cămin"
-              classNameDiv="w-full max-w-3xl text-black"
-            />
+            <SearchInput />
           </div>
         </div>
         <div className="flex flex-col gap-2 py-10">
