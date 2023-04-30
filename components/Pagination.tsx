@@ -73,7 +73,7 @@ export default ({
   }, [pageCount, pageIndex]);
 
   return (
-    <ul className="flex gap-2">
+    <ul className="flex gap-2 self-center">
       <li>
         <Button2
           content={

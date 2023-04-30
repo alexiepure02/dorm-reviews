@@ -30,11 +30,7 @@ export async function GET(request: Request) {
     universities = await University.find().populate("location", "name -_id");
   }
 
-  if (universities.length) {
-    return NextResponse.json(universities);
-  }
-
-  return NextResponse.json({ error: "No universities found" }, { status: 404 });
+  return NextResponse.json(universities);
 }
 
 export async function POST(request: Request) {

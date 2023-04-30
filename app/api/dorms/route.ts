@@ -46,11 +46,7 @@ export async function GET(request: Request) {
     dorms = await Dorm.find();
   }
 
-  if (dorms.length) {
-    return NextResponse.json(dorms);
-  }
-
-  return NextResponse.json({ error: "No dorms found" }, { status: 404 });
+  return NextResponse.json(dorms);
 }
 
 export async function POST(request: Request) {

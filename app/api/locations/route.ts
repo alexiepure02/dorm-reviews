@@ -7,11 +7,7 @@ export async function GET() {
 
   const locations = await Location.find();
 
-  if (locations.length) {
-    return NextResponse.json(locations);
-  }
-
-  return NextResponse.json({ error: "No locations found" }, { status: 404 });
+  return NextResponse.json(locations);
 }
 
 export async function POST(request: Request) {

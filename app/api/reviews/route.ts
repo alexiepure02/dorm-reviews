@@ -83,12 +83,8 @@ export async function GET(request: Request) {
 
     countReviews = await Review.count({});
   }
-
-  if (reviews.length) {
-    return NextResponse.json({ reviews, countReviews });
-  }
-
-  return NextResponse.json({ error: "No reviews found" }, { status: 404 });
+  
+  return NextResponse.json({ reviews, countReviews });
 }
 
 export async function POST(request: Request, { params }) {

@@ -19,6 +19,7 @@ export default function ReviewsSection() {
 
   const searchParams = useSearchParams();
   const user = searchParams.get("user");
+
   const { data, error, isLoading } = useSWR<any>(
     `http://localhost:3000/api/reviews?user=${user}&page=${page}&limit=${limit}`,
     fetcher
@@ -31,8 +32,6 @@ export default function ReviewsSection() {
   )
     setPageCount(data.countReviews);
 
-  // if (data && data.reviews !== undefined) data.reviews = undefined;
-
   const handlePage = (page: number) => setPage(page);
 
   return (
@@ -41,26 +40,17 @@ export default function ReviewsSection() {
         <h1 className="text-4xl font-medium">Recenziile tale</h1>
       </div>
       <div className="flex flex-col items-center gap-8 pb-8">
-        {data ? (
-          data.reviews !== undefined ? (
-            <>
-              <ReviewCardsList reviews={data.reviews} showDormNames />
-              <Pagination
-                canPreviousPage={true}
-                canNextPage={true}
-                pageCount={Math.ceil(pageCount / limit)}
-                pageIndex={page}
-                gotoPage={handlePage}
-              />
-            </>
-          ) : (
-            <h1>
-              Încă nu ai evaluat niciun cămin. Lasă o recenzie căminului în care
-              ai locuit și aceasta va apărea aici.
-            </h1>
-          )
+        {!isLoading ? (
+          <ReviewCardsList
+            reviews={data.reviews}
+            showDormNames
+            page={page}
+            pageCount={pageCount}
+            limit={limit}
+            handlePage={handlePage}
+          />
         ) : (
-          <p>Loading...</p>
+          <h1>Loading...</h1>
         )}
       </div>
     </>

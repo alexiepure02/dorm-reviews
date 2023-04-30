@@ -45,26 +45,17 @@ export default function ReviewsSection({ dorm }: ReviewsSection) {
         </div>
       </div>
       <div className="flex flex-col items-center gap-8 pb-8">
-        {data ? (
-          data.reviews !== undefined ? (
-            <>
-              <ReviewCardsList reviews={data.reviews} />
-              <Pagination
-                canPreviousPage={true}
-                canNextPage={true}
-                pageCount={Math.ceil(pageCount / limit)}
-                pageIndex={page}
-                gotoPage={handlePage}
-              />
-            </>
-          ) : (
-            <h1 className="px-4 text-center">
-              Acest cămin nu are încă recenzii. Fii tu primul care lasă o
-              recenzie.
-            </h1>
-          )
+        {!isLoading ? (
+          <ReviewCardsList
+            reviews={data.reviews}
+            showDormNames
+            page={page}
+            pageCount={pageCount}
+            limit={limit}
+            handlePage={handlePage}
+          />
         ) : (
-          <p>Loading...</p>
+          <h1>Loading...</h1>
         )}
       </div>
     </>
