@@ -3,12 +3,12 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
-import { MdCancel, MdClear } from "react-icons/md";
+import { MdClear } from "react-icons/md";
 import Turnstone from "turnstone";
 
 const styles = {
   input:
-    "w-full h-12 border border-primary-800 py-2 pl-10 pr-7 text-xl outline-none rounded-md",
+    "w-full h-12 border border-primary-800 py-2 pl-10 pr-7 text-xl outline-none rounded-md focus:border-primary-100",
   // inputFocus:
   //   "w-full h-12 border-x-0 border-t-0 border-b py-2 pl-10 pr-7 text-xl outline-none sm:rounded sm:border",
   query: "text-gray-3 placeholder-gray-2",
@@ -17,7 +17,7 @@ const styles = {
   clearButton:
     "absolute inset-y-0 right-0 w-8 inline-flex items-center justify-center text-gray-3 hover:text-gray-1",
   listbox:
-    "w-full bg-white sm:border sm:border-primary-100 sm:rounded text-left sm:mt-2 p-2 sm:drop-shadow-xl",
+    "w-full bg-white border border-primary-100 sm:rounded text-left mt-2 p-2 drop-shadow-xl",
   groupHeading:
     "cursor-default mt-2 mb-0.5 px-1.5 uppercase text-sm text-primary-100 text-bold",
   item: "cursor-pointer p-1.5 text-lg overflow-ellipsis overflow-hidden",
@@ -49,7 +49,7 @@ const listbox = [
   {
     id: "universities",
     name: "Universități",
-    ratio: 2,
+    ratio: 3,
     displayField: "name",
     data: async (query: string) => {
       const response = await fetch(
@@ -58,27 +58,33 @@ const listbox = [
         )}&limit=${maxItems}`
       );
       const array = await response.json();
-      return array.map((item: any) => ({ ...item, type: "universities" }));
+      return array.map((item: any) => ({
+        ...item,
+        name: item.name + ", " + item.location.name,
+        type: "universities",
+      }));
     },
     searchType: "contains",
   },
   {
     id: "dorms",
     name: "Cămine",
-    ratio: 2,
+    ratio: 5,
     displayField: "name",
     data: async (query: string) => {
       const response = await fetch(
         `/api/dorms/search?query=${encodeURIComponent(query)}&limit=${maxItems}`
       );
       const array = await response.json();
-      return array.map((item: any) => ({ ...item, type: "dorms" }));
+      return array.map((item: any) => ({
+        ...item,
+        name: item.name + ", " + item.university.name,
+        type: "dorms",
+      }));
     },
     searchType: "contains",
   },
 ];
-
-const Cancel = () => <MdCancel type="cancel" className="w-8 h-8" />;
 
 const Clear = () => <MdClear type="clear" className="w-6 h-6" />;
 
@@ -87,12 +93,12 @@ export default () => {
   const router = useRouter();
 
   const containerStyles = hasFocus
-    ? "text-gray-3 fixed block w-full h-full top-0 left-0 bg-white z-50 overflow-auto sm:relative sm:w-6/12 sm:h-auto sm:top-auto sm:left-auto sm:bg-transparent sm:z-auto sm:overflow-visible"
-    : "text-gray-3 relative w-11/12 sm:w-6/12";
+    ? "text-gray-3 relative w-full lg:w-8/12 xl:6/12 bg-transparent overflow-visible"
+    : "text-gray-3 relative w-full lg:w-8/12 xl:6/12";
 
   const iconDisplayStyle = hasFocus
-    ? "hidden text-crystal-600"
-    : "inline-flex text-oldsilver-400";
+    ? "inline-flex text-gray-3"
+    : "inline-flex text-gray-2";
 
   const onBlur = () => setHasFocus(false);
   const onFocus = () => setHasFocus(true);
@@ -103,15 +109,15 @@ export default () => {
   return (
     <div className={containerStyles}>
       <span
-        className={`absolute w-10 h-12 inset-y-0 left-0 items-center justify-center z-10 sm:inline-flex ${iconDisplayStyle}`}
+        className={`absolute w-10 h-12 inset-y-0 left-0 items-center justify-center z-10 inline-flex ${iconDisplayStyle}`}
       >
         <BiSearchAlt className="w-6 h-6" />
       </span>
       <Turnstone
         autoFocus={true}
-        cancelButton={true}
+        cancelButton={false}
         clearButton={true}
-        debounceWait={250}
+        debounceWait={150}
         id="autocomplete"
         listbox={listbox}
         listboxIsImmutable={true}
@@ -122,7 +128,6 @@ export default () => {
         onFocus={onFocus}
         placeholder="Caută un cămin"
         styles={styles}
-        Cancel={Cancel}
         Clear={Clear}
         onSelect={onSelect}
       />
