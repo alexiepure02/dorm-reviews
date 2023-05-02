@@ -18,3 +18,13 @@ export const enum UNIVERSITY_CARD_TYPE_ENUM {
 export const COORDINATES_ROMANIA_CENTER: [number, number] = [
   46.017579, 24.872295,
 ];
+
+export const enum ORDER_BY_ENUM {
+  overallRating = "overallRating",
+  createdAt = "createdAt",
+}
+
+export const enum ORDER_ENUM {
+  asc = "asc",
+  desc = "desc",
+}

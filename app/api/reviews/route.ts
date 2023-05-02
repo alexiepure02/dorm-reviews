@@ -3,6 +3,7 @@ import User from "@/common/models/User";
 import Dorm from "@/common/models/Dorm";
 import Review from "@/common/models/Review";
 import { NextResponse } from "next/server";
+import { ORDER_BY_ENUM, ORDER_ENUM } from "@/common/Constants";
 
 export async function GET(request: Request) {
   await dbConnect();
@@ -10,11 +11,11 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const user = searchParams.get("user");
   const dorm = searchParams.get("dorm");
-  const page = searchParams.get("page");
-  const limit = searchParams.get("limit");
+  const page = +(searchParams.get("page") || 0);
+  const limit = +(searchParams.get("limit") || 10);
+  const orderBy = searchParams.get("orderBy") || ORDER_BY_ENUM.createdAt;
+  const order = searchParams.get("order") || ORDER_ENUM.desc;
 
-  let pageParam: number = page !== null ? +page : 0;
-  let limitParam: number = limit !== null ? +limit : 10;
   let reviews: any[];
   let countReviews: number;
 
@@ -40,50 +41,58 @@ export async function GET(request: Request) {
     );
   }
 
+  let searchCriteria: any;
+  const sortCriteria = {};
+
   if (searchedUser && searchedDorm) {
-    reviews = await Review.find({
+    searchCriteria = {
       user: searchedUser.id,
       dorm: searchedDorm.id,
-    })
-      .populate("user", "-password")
-      .populate("dorm", "name")
-      .limit(limitParam)
-      .skip(pageParam * limitParam);
-
-    countReviews = await Review.count({
-      user: searchedUser.id,
-      dorm: searchedDorm.id,
-    });
+    };
   } else if (!searchedUser && searchedDorm) {
-    reviews = await Review.find({ dorm: searchedDorm.id })
-      .populate("user", "-password")
-      .populate("dorm", "name")
-      .limit(limitParam)
-      .skip(pageParam * limitParam);
-
-    countReviews = await Review.count({
+    searchCriteria = {
       dorm: searchedDorm.id,
-    });
+    };
   } else if (searchedUser && !searchedDorm) {
-    reviews = await Review.find({ user: searchedUser.id })
-      .populate("user", "-password")
-      .populate("dorm", "name")
-      .limit(limitParam)
-      .skip(pageParam * limitParam);
-
-    countReviews = await Review.count({
-      user: searchedUser.id,
-    });
+    searchCriteria = { user: searchedUser.id };
   } else {
-    reviews = await Review.find()
-      .populate("user", "-password")
-      .populate("dorm", "name")
-      .limit(limitParam)
-      .skip(pageParam * limitParam);
-
-    countReviews = await Review.count({});
+    searchCriteria = {};
   }
-  
+
+  if (
+    !(
+      orderBy === ORDER_BY_ENUM.overallRating ||
+      orderBy === ORDER_BY_ENUM.createdAt
+    )
+  ) {
+    return NextResponse.json(
+      {
+        error: `Order by '${orderBy}' is not valid`,
+      },
+      { status: 400 }
+    );
+  }
+
+  if (!(order === ORDER_ENUM.asc || order === ORDER_ENUM.desc)) {
+    return NextResponse.json(
+      {
+        error: `Order '${order}' not valid`,
+      },
+      { status: 400 }
+    );
+  }
+
+  sortCriteria[orderBy] = order;
+
+  reviews = await Review.find(searchCriteria)
+    .populate("user", "-password")
+    .populate("dorm", "name")
+    .limit(limit)
+    .skip(page * limit)
+    .sort(sortCriteria);
+
+  countReviews = await Review.count(searchCriteria);
+
   return NextResponse.json({ reviews, countReviews });
 }
 

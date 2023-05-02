@@ -10,7 +10,10 @@ export default () => {
   const handleAddReviewClick = () => router.push(pathname + "/add-review");
 
   return (
-    <Button className="px-4 justify-self-end" onClick={handleAddReviewClick}>
+    <Button
+      className="px-8 text-lg font-semibold"
+      onClick={handleAddReviewClick}
+    >
       Adaugă o Recenzie
     </Button>
   );
