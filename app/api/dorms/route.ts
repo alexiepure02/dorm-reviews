@@ -3,6 +3,7 @@ import Dorm from "@/common/models/Dorm";
 import Location from "@/common/models/Location";
 import University from "@/common/models/University";
 import { NextResponse } from "next/server";
+import Review from "@/common/models/Review";
 
 export async function GET(request: Request) {
   await dbConnect();
@@ -33,20 +34,43 @@ export async function GET(request: Request) {
     );
   }
 
+  let searchCriteria: any;
+
   if (searchedLocation && searchedUniversity) {
-    dorms = await Dorm.find({
+    searchCriteria = {
       location: searchedLocation.id,
       university: searchedUniversity.id,
-    });
+    };
   } else if (!searchedLocation && searchedUniversity) {
-    dorms = await Dorm.find({ university: searchedUniversity.id });
+    searchCriteria = { university: searchedUniversity.id };
   } else if (searchedLocation && !searchedUniversity) {
-    dorms = await Dorm.find({ location: searchedLocation.id });
+    searchCriteria = { location: searchedLocation.id };
   } else {
-    dorms = await Dorm.find();
+    searchCriteria = {};
   }
 
-  return NextResponse.json(dorms);
+  dorms = await Dorm.find(searchCriteria);
+
+  const dormsExtended = await Promise.all(
+    dorms.map(async (dorm) => {
+      const reviews = await Review.find(
+        { dorm: dorm._id },
+        {
+          overallRating: 1,
+        }
+      );
+      if (reviews.length) {
+        const generalRating =
+          reviews.reduce((total, review) => total + review.overallRating, 0) /
+          reviews.length;
+
+        return { dorm, numberOfReviews: reviews.length, generalRating };
+      }
+      return { dorm, numberOfReviews: 0, generalRating: 0 };
+    })
+  );
+
+  return NextResponse.json(dormsExtended);
 }
 
 export async function POST(request: Request) {

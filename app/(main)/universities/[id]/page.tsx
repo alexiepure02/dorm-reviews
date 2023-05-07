@@ -1,11 +1,7 @@
-import { UNIVERSITY_CARD_TYPE_ENUM } from "@/common/Constants";
 import CustomCarousel from "@/components/CustomCarousel";
-import DormCard from "@/components/DormCard";
 import DormCardsList from "@/components/DormCardsList";
-import UniversityCard from "@/components/UniversityCard";
-import { BiBuildings, BiMapPin } from "react-icons/bi";
+import { BiMapPin } from "react-icons/bi";
 import { FaUniversity } from "react-icons/fa";
-import { MdOutlineLocationCity } from "react-icons/md";
 
 async function getUniversityById(id: string) {
   const res = await fetch("http://localhost:3000/api/universities/" + id);
