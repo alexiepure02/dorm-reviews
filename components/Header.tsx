@@ -25,12 +25,12 @@ export default () => {
         <div className="hidden md:flex gap-8 items-center">
           <Link
             href={"/reviews?user=" + session?.user?.name}
-            className={`flex gap-2 font-semibold hover:text-primary-100 ${
+            className={`flex gap-2 font-semibold text-gray-3 hover:text-primary-100 ${
               pathname === "/reviews" && "text-primary-100"
             }`}
           >
             <BiPencil
-              className={`w-6 h-6 text-gray-3 ${
+              className={`w-6 h-6 ${
                 pathname === "/reviews" && "text-primary-100"
               }`}
             />
@@ -38,12 +38,12 @@ export default () => {
           </Link>
           <Link
             href={"/locations"}
-            className={`flex gap-2 font-semibold hover:text-primary-100 ${
+            className={`flex gap-2 font-semibold text-gray-3 hover:text-primary-100 ${
               pathname === "/locations" && "text-primary-100"
             }`}
           >
             <BiMapAlt
-              className={`w-6 h-6 text-gray-3 ${
+              className={`w-6 h-6 ${
                 pathname === "/locations" && "text-primary-100"
               }`}
             />
@@ -51,32 +51,36 @@ export default () => {
           </Link>
           <Link
             href={"/universities"}
-            className={`flex gap-2 font-semibold hover:text-primary-100 ${
+            className={`flex gap-2 font-semibold text-gray-3 hover:text-primary-100 ${
               pathname === "/universities" && "text-primary-100"
             }`}
           >
             <BiBuildings
-              className={`w-6 h-6 text-gray-3 ${
+              className={`w-6 h-6 ${
                 pathname === "/universities" && "text-primary-100"
               }`}
             />
             Universități
           </Link>
 
-          {session ? (
-            <Link
-              href={"/account"}
-              className={`flex gap-2 font-semibold hover:text-primary-100 ${
-                pathname === "/account" && "text-primary-100"
-              }`}
-            >
-              <BiUser
-                className={`w-6 h-6 text-gray-3 ${
+          {session !== null ? (
+            session !== undefined ? (
+              <Link
+                href={"/account"}
+                className={`flex gap-2 font-semibold text-gray-3 hover:text-primary-100 ${
                   pathname === "/account" && "text-primary-100"
                 }`}
-              />
-              {session.user?.name}
-            </Link>
+              >
+                <BiUser
+                  className={`w-6 h-6 text-gray-3 ${
+                    pathname === "/account" && "text-primary-100"
+                  }`}
+                />
+                {session.user?.name}
+              </Link>
+            ) : (
+              <BiUser className="w-6 h-6 text-gray-3" />
+            )
           ) : (
             <Button className="w-[200px]">
               <Link href={"/login"}>Autentificare</Link>
