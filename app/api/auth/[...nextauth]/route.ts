@@ -82,9 +82,11 @@ const handler = NextAuth({
   },
   session: {
     strategy: "jwt",
+    maxAge: 3 * 60 * 60, // 3 hours
   },
   jwt: {
     secret: process.env.NEXTAUTH_JWT_SECRET,
+    maxAge: 3 * 60 * 60,
   },
   secret: process.env.NEXTAUTH_SECRET,
 });
