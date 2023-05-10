@@ -16,10 +16,15 @@ export default ({ type, university }: UniversityCardProps) => {
   if (type === UNIVERSITY_CARD_TYPE_ENUM.vertical) {
     typeClassName = "max-w-[342px] flex-col";
     imageClassName = "rounded-t-2xl";
+
+    university.description =
+      university.description.substring(0, university.description.indexOf(".")) +
+      ".";
   } else {
     typeClassName =
       "max-w-[342px] flex-col sm:flex-row sm:max-w-[741px] sm:items-center";
     imageClassName = "rounded-t-2xl sm:w-1/3 sm:rounded-l-2xl";
+
     university.description = "";
   }
   const router = useRouter();

@@ -1,8 +1,8 @@
 import SearchInput from "@/components/SearchInput";
+import TopUniversities from "@/components/TopUniversities";
 import { NextPage } from "next";
 
 const Home: NextPage = () => {
-
   return (
     <>
       <img
@@ -21,17 +21,13 @@ const Home: NextPage = () => {
             <SearchInput />
           </div>
         </div>
-        <div className="flex flex-col gap-2 py-10">
+        <div className="flex flex-col gap-2 py-4">
           <h1 className="text-5xl">Universități</h1>
           <p className="max-w-screen-md">
             Cele mai populare universități din țară..
           </p>
-          <div className="grid py-8 gap-8 items-center justify-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {/* <UniversityCard type={UNIVERSITY_CARD_TYPE_ENUM.vertical} />
-            <UniversityCard type={UNIVERSITY_CARD_TYPE_ENUM.vertical} />
-            <UniversityCard type={UNIVERSITY_CARD_TYPE_ENUM.vertical} />
-            <UniversityCard type={UNIVERSITY_CARD_TYPE_ENUM.vertical} /> */}
-          </div>
+          {/* @ts-expect-error Server Component */}
+          <TopUniversities />
         </div>
       </div>
     </>
