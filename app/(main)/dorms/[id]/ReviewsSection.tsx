@@ -4,6 +4,7 @@ import { ORDER_BY_ENUM, ORDER_ENUM } from "@/common/Constants";
 import fetcher from "@/common/utils/functions";
 import ReviewCardsList from "@/components/ReviewCardsList";
 import SortSelect from "@/components/SortSelect";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import useSWR from "swr";
 import AddReviewButton from "./AddReviewButton";
@@ -18,6 +19,8 @@ export default function ReviewsSection({ dorm }: ReviewsSection) {
   const [orderBy, setOrderBy] = useState(ORDER_BY_ENUM.createdAt);
   const [order, setOrder] = useState(ORDER_ENUM.desc);
   const limit = 3;
+
+  const { data: session } = useSession();
 
   const { data, error, isLoading } = useSWR<any>(
     `http://localhost:3000/api/reviews?dorm=${dorm}&page=${page}&limit=${limit}&orderBy=${orderBy}&order=${order}`,
@@ -37,11 +40,11 @@ export default function ReviewsSection({ dorm }: ReviewsSection) {
 
   return (
     <>
-      <div className="container mx-auto">
+      <div className="max-w-screen-2xl 2xl:mx-auto">
         <div className="flex w-full justify-between gap-2 p-4">
           <div className="flex gap-6">
             <h1 className="text-4xl font-medium">Recenzii</h1>
-            <AddReviewButton />
+            {session && <AddReviewButton />}
           </div>
           <SortSelect
             handleOrderBy={handleOrderBy}

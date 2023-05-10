@@ -34,7 +34,7 @@ export default async function Page() {
           <h1 className="text-4xl font-medium">Universități</h1>
         </div>
         <UniversityCardsList universities={universities} /> */}
-        <div className="container mx-auto flex flex-col items-start">
+        <div className="flex flex-col items-center px-4">
           {universities.map((university: any, index: number) => {
             return (
               <Link

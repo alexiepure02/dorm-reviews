@@ -46,7 +46,7 @@ export default ({
         </div>
       </div>
       {review.comment}
-      <div className="flex gap-4">
+      {/* <div className="flex gap-4">
         <img
           src="/dorm.jpg"
           alt="Dorm"
@@ -65,7 +65,7 @@ export default ({
           className="align-middle w-14 h-14 cursor-pointer"
           onClick={() => console.log("open dorm pic.")}
         />
-      </div>
+      </div> */}
       <div
         className={` overflow-hidden transition-[max-height] duration-300 ${
           expandedId === review._id ? " max-h-full" : "max-h-0"

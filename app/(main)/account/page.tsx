@@ -7,8 +7,6 @@ import { signOut, useSession } from "next-auth/react";
 const Reviews: NextPage = () => {
   const { data: session } = useSession();
 
-  console.log(session);
-
   return (
     <div className="flex flex-col gap-6 items-center justify-center h-52">
       {session !== null ? (

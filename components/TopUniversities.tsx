@@ -17,7 +17,7 @@ export default async function TopUniversities() {
   const universities = await getTopUniversities(TOP_UNIVERSITIES_NUMBER);
 
   return (
-    <div className="grid py-8 gap-8 items-stretch md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid py-8 gap-8 items-stretch justify-items-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {universities.map((university: any) => (
         <UniversityCard
           type={UNIVERSITY_CARD_TYPE_ENUM.vertical}

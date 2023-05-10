@@ -5,9 +5,8 @@ interface UniversityCardProps {
 }
 
 export default ({ universities }: UniversityCardProps) => {
-  console.log(universities);
   return (
-    <div className="container mx-auto flex flex-col items-center 2xl:grid 2xl:grid-cols-2 gap-8 px-4 pb-8">
+    <div className="max-w-screen-2xl 2xl:mx-auto flex flex-col items-center 2xl:grid 2xl:grid-cols-2 gap-8 px-4 pb-8">
       {universities.length ? (
         universities.map((university: any, index: number) => (
           <UniversityCard university={university} />

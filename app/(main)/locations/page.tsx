@@ -20,7 +20,7 @@ export default async function Page() {
 
   return (
     <>
-      <div className="flex flex-col xl:flex-row xl:items-start xl:justify-center bg-background gap-4 p-4 md:p-8 lg:p-12">
+      <div className="flex flex-col xl:flex-row xl:items-start xl:justify-center bg-background gap-4 py-8 px-4 md:px-8 lg:px-12">
         <div className="flex flex-col gap-6 pb-4 xl:pb-0">
           <div className="flex items-end gap-4">
             <BiMapAlt className="w-9 h-9" />
@@ -36,8 +36,8 @@ export default async function Page() {
           <CustomMap locations={locations} />
         </div>
       </div>
-      <div className="container mx-auto flex flex-col items-start py-8 px-4">
-        {locations.map((location) => (
+      <div className="max-w-screen-2xl 2xl:mx-auto flex flex-col items-start py-8 px-4 md:px-8 lg:px-12">
+        {locations.map((location: any) => (
           <Link
             href={"/locations/" + location._id}
             className="hover:underline text-lg"

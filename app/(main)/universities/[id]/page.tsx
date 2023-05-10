@@ -28,7 +28,7 @@ export default async function Page({ params }) {
   return (
     <>
       <div className="bg-background">
-        <div className="container mx-auto flex flex-col xl:flex-row justify-between gap-8 p-6 md:p-10 lg:p-14">
+        <div className="max-w-screen-2xl 2xl:mx-auto flex flex-col xl:flex-row justify-between gap-8 py-8 px-4 md:px-8 lg:px-12">
           <div className="flex flex-col gap-6 pb-4 xl:pb-0">
             <div className="flex gap-4">
               <FaUniversity className="w-9 h-9" />
@@ -40,7 +40,7 @@ export default async function Page({ params }) {
             </div>
             <p className="xl:max-w-lg">{university.description}</p>
           </div>
-          <div className="max-w-4xl w-full xl:w-[55%]">
+          <div className="max-w-4xl xl:w-[55%]">
             <CustomCarousel>
               <img src="/university2.jpg" />
               <img src="/university2.jpg" />
@@ -49,9 +49,9 @@ export default async function Page({ params }) {
           </div>
         </div>
       </div>
-      <div className="container mx-auto flex justify-center sm:justify-start p-4">
-        <h1 className="text-4xl font-medium">Cămine</h1>
-      </div>
+      <h1 className="text-4xl font-medium max-w-screen-2xl 2xl:mx-auto py-8 px-4 md:px-8 lg:px-12">
+        Cămine
+      </h1>
       <DormCardsList dorms={dorms} />
     </>
   );

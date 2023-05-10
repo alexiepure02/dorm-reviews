@@ -4,6 +4,7 @@ import { ORDER_BY_ENUM, ORDER_ENUM } from "@/common/Constants";
 import fetcher from "@/common/utils/functions";
 import ReviewCardsList from "@/components/ReviewCardsList";
 import SortSelect from "@/components/SortSelect";
+import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import useSWR from "swr";
@@ -15,8 +16,8 @@ export default function ReviewsSection() {
   const [order, setOrder] = useState(ORDER_ENUM.desc);
   const limit = 3;
 
-  const searchParams = useSearchParams();
-  const user = searchParams.get("user");
+  const { data: session } = useSession();
+  const user = session?.user?.name;
 
   const { data, error, isLoading } = useSWR<any>(
     `http://localhost:3000/api/reviews?user=${user}&page=${page}&limit=${limit}&orderBy=${orderBy}&order=${order}`,
@@ -36,7 +37,7 @@ export default function ReviewsSection() {
 
   return (
     <>
-      <div className="container mx-auto">
+      <div className="max-w-screen-2xl 2xl:mx-auto">
         <div className="flex w-full justify-between gap-2 p-4">
           <h1 className="text-4xl font-medium">Recenziile tale</h1>
           <SortSelect
@@ -47,17 +48,21 @@ export default function ReviewsSection() {
         </div>
       </div>
       <div className="flex flex-col items-center gap-8 pb-8">
-        {!isLoading ? (
-          <ReviewCardsList
-            reviews={data.reviews}
-            showDormNames
-            page={page}
-            pageCount={pageCount}
-            limit={limit}
-            handlePage={handlePage}
-          />
+        {user ? (
+          !isLoading ? (
+            <ReviewCardsList
+              reviews={data.reviews}
+              showDormNames
+              page={page}
+              pageCount={pageCount}
+              limit={limit}
+              handlePage={handlePage}
+            />
+          ) : (
+            <h1>Se încarcă...</h1>
+          )
         ) : (
-          <h1>Se încarcă...</h1>
+          <h1>Conectează-te cu un cont pentru a putea lăsa recenzii.</h1>
         )}
       </div>
     </>

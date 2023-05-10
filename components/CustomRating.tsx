@@ -17,7 +17,7 @@ export default ({
 
   switch (variant) {
     case 1:
-      starClassName = "w-8 h-8 sm:w-12 sm:h-12";
+      starClassName = "w-12 h-12";
       tooltipFontSize = "text-4xl";
       break;
     case 2:
