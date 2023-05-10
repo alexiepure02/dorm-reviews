@@ -34,7 +34,7 @@ export default () => {
                 pathname === "/reviews" && "text-primary-100"
               }`}
             />
-            Recenzii
+            Recenziile mele
           </Link>
           <Link
             href="/locations"

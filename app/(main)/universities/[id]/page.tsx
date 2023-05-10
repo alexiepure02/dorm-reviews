@@ -3,6 +3,11 @@ import DormCardsList from "@/components/DormCardsList";
 import { BiMapPin } from "react-icons/bi";
 import { FaUniversity } from "react-icons/fa";
 
+export async function generateMetadata({ params, searchParams }) {
+  const university = await getUniversityById(params.id);
+  return { title: university.name + " - Căminul Tău" };
+}
+
 async function getUniversityById(id: string) {
   const res = await fetch("http://localhost:3000/api/universities/" + id);
   if (!res.ok) {

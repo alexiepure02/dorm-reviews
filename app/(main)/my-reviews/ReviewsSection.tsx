@@ -39,7 +39,7 @@ export default function ReviewsSection() {
     <>
       <div className="max-w-screen-2xl 2xl:mx-auto">
         <div className="flex w-full justify-between gap-2 p-4">
-          <h1 className="text-4xl font-medium">Recenziile tale</h1>
+          <h1 className="text-4xl font-medium">Recenziile mele</h1>
           <SortSelect
             handleOrderBy={handleOrderBy}
             handleOrder={handleOrder}

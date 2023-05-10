@@ -3,6 +3,10 @@ import SearchInput from "@/components/SearchInput";
 import { BiSearchAlt } from "react-icons/bi";
 import ReviewsSection from "./ReviewsSection";
 
+export const metadata = {
+  title: "Recenziile mele - Căminul Tău",
+};
+
 export default function Page() {
   return (
     <>

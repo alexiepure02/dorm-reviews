@@ -1,10 +1,9 @@
 import { BiBuildings } from "react-icons/bi";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 
-const CustomMap = dynamic(() => import("@/components/map/CustomMap"), {
-  ssr: false,
-});
+export const metadata = {
+  title: "Universități - Căminul Tău",
+};
 
 async function getUniversities() {
   const res = await fetch("http://localhost:3000/api/universities");

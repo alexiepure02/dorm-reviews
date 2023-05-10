@@ -1,14 +1,10 @@
-import { UNIVERSITY_CARD_TYPE_ENUM } from "@/common/Constants";
-import Button from "@/components/Button";
-import CustomCarousel from "@/components/CustomCarousel";
-import CustomRating from "@/components/CustomRating";
-import DormCard from "@/components/DormCard";
-import ReviewCardsList from "@/components/ReviewCardsList";
-import { BiMapPin } from "react-icons/bi";
-import { MdOutlineBed } from "react-icons/md";
-import AddReviewButton from "./AddReviewButton";
 import DormDetails from "./DormDetails";
 import ReviewsSection from "./ReviewsSection";
+
+export async function generateMetadata({ params, searchParams }) {
+  const dorm = await getDormById(params.id);
+  return { title: dorm.dorm.name + " - Căminul Tău" };
+}
 
 async function getDormById(id: string) {
   const res = await fetch("http://localhost:3000/api/dorms/" + id);
@@ -20,7 +16,7 @@ async function getDormById(id: string) {
 
 export default async function Page({ params }) {
   const { dorm, means } = await getDormById(params.id);
-  
+
   return (
     <>
       <DormDetails dorm={dorm} means={means} />

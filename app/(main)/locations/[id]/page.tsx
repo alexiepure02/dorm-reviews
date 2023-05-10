@@ -3,6 +3,11 @@ import UniversityCard from "@/components/UniversityCard";
 import UniversityCardsList from "@/components/UniversityCardsList";
 import { MdOutlineLocationCity } from "react-icons/md";
 
+export async function generateMetadata({ params, searchParams }) {
+  const location = await getLocationById(params.id);
+  return { title: location.name + " - Căminul Tău" };
+}
+
 async function getLocationById(id: string) {
   const res = await fetch("http://localhost:3000/api/locations/" + id);
   if (!res.ok) {

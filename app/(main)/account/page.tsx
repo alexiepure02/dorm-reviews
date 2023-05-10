@@ -1,30 +1,12 @@
-"use client";
-
-import Button from "@/components/Button";
 import { NextPage } from "next";
-import { signOut, useSession } from "next-auth/react";
+import AccountSection from "./AccountSection";
+
+export const metadata = {
+  title: "Cont - Căminul Tău",
+};
 
 const Reviews: NextPage = () => {
-  const { data: session } = useSession();
-
-  return (
-    <div className="flex flex-col gap-6 items-center justify-center h-52">
-      {session !== null ? (
-        session !== undefined ? (
-          <>
-            <h1>You're logged in as: {session.user?.name}</h1>
-            <Button className="w-52" onClick={() => signOut()}>
-              Sign out
-            </Button>
-          </>
-        ) : (
-          <h1>Loading...</h1>
-        )
-      ) : (
-        <h1>You're not logged in.</h1>
-      )}
-    </div>
-  );
+  return <AccountSection />;
 };
 
 export default Reviews;

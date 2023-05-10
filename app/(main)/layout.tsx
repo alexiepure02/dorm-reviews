@@ -2,6 +2,10 @@ import Header from "@/components/Header";
 import "../globals.css";
 import SessionProvider from "./SessionProvider";
 
+export const metadata = {
+  title: "Acasă - Căminul Tău",
+};
+
 export default function RootLayout({
   children,
 }: {

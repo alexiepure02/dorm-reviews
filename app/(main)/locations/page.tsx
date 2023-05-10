@@ -3,6 +3,10 @@ import "leaflet/dist/leaflet.css";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Hartă - Căminul Tău",
+};
+
 const CustomMap = dynamic(() => import("@/components/map/CustomMap"), {
   ssr: false,
 });
