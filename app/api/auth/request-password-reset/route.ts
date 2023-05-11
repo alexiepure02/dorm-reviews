@@ -1,10 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import dbConnect from "@/lib/dbConnect";
-import User from "@/common/models/User";
+import User from "@/common/models/user";
 import bcrypt from "bcrypt";
 import { randomBytes } from "crypto";
 import { sendEmail } from "@/common/utils/email/sendEmail";
-import Token from "@/common/models/Token";
+import Token from "@/common/models/token";
 import { emailRegEx } from "@/common/Constants";
 import { NextResponse } from "next/server";
 

@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
-import Dorm from "@/common/models/Dorm";
-import Review from "@/common/models/Review";
+import Dorm from "@/common/models/dorm";
+import Review from "@/common/models/review";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request, { params }) {

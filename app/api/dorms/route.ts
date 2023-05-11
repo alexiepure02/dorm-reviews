@@ -1,9 +1,9 @@
 import dbConnect from "@/lib/dbConnect";
-import Dorm from "@/common/models/Dorm";
-import Location from "@/common/models/Location";
-import University from "@/common/models/University";
+import Dorm from "@/common/models/dorm";
+import Location from "@/common/models/location";
 import { NextResponse } from "next/server";
-import Review from "@/common/models/Review";
+import Review from "@/common/models/review";
+import University from "@/common/models/university";
 
 export async function GET(request: Request) {
   await dbConnect();

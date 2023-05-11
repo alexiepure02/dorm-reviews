@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
-import User from "@/common/models/User";
-import Dorm from "@/common/models/Dorm";
-import Review from "@/common/models/Review";
+import User from "@/common/models/user";
+import Dorm from "@/common/models/dorm";
+import Review from "@/common/models/review";
 import { NextResponse } from "next/server";
 import { ORDER_BY_ENUM, ORDER_ENUM } from "@/common/Constants";
 

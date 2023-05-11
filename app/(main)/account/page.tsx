@@ -1,12 +1,9 @@
-import { NextPage } from "next";
 import AccountSection from "./AccountSection";
 
 export const metadata = {
   title: "Cont - Căminul Tău",
 };
 
-const Reviews: NextPage = () => {
+export default async function Page() {
   return <AccountSection />;
-};
-
-export default Reviews;
+}

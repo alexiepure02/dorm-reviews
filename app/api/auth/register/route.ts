@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
-import User from "@/common/models/User";
+import User from "@/common/models/user";
 import bcrypt from "bcrypt";
 import { sendEmail } from "@/common/utils/email/sendEmail";
 import { emailRegEx, passwordRegEx, usernameRegEx } from "@/common/Constants";

@@ -4,7 +4,7 @@ import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "@/lib/mongodb";
 import dbConnect from "@/lib/dbConnect";
 import { compare } from "bcrypt";
-import User from "@/common/models/User";
+import User from "@/common/models/user";
 
 const handler = NextAuth({
   // Configure one or more authentication providers
