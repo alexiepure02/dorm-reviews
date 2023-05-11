@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
-import University from "@/common/models/university";
-import Location from "@/common/models/location";
+import University from "@/common/models/University";
+import Location from "@/common/models/Location";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
