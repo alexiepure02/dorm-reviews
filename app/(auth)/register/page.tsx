@@ -29,7 +29,7 @@ export default function Register() {
     password: string;
     cpassword: string;
   }) => {
-    await fetch(`${process.env.CLIENT_URL}/api/auth/register`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
       method: "POST",
       body: JSON.stringify(values),
     })

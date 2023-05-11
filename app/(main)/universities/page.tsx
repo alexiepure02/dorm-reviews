@@ -6,7 +6,7 @@ export const metadata = {
 };
 
 async function getUniversities() {
-  const res = await fetch(`${process.env.CLIENT_URL}/api/universities`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/universities`);
   if (!res.ok) {
     return null;
   }

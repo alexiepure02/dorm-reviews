@@ -45,7 +45,7 @@ export async function POST(request: Request) {
     createdAt: Date.now(),
   }).save();
 
-  const link = `${process.env.CLIENT_URL}/password-reset?token=${resetToken}&id=${user._id}`;
+  const link = `${process.env.NEXT_PUBLIC_API_URL}/password-reset?token=${resetToken}&id=${user._id}`;
   await sendEmail(
     user.email,
     "Resetare Parolă",
