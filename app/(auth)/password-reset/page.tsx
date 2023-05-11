@@ -26,7 +26,7 @@ export default function Login() {
     password: string;
     cpassword: string;
   }) => {
-    await fetch("http://localhost:3000/api/auth/password-reset", {
+    await fetch("/api/auth/password-reset", {
       method: "POST",
       body: JSON.stringify({
         token: token,

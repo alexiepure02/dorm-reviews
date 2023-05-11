@@ -105,7 +105,7 @@ export default ({ dorm }: ReviewFormProps) => {
 
     // console.log(session?.user?.name);
 
-    // await fetch("http://localhost:3000/api/reviews", {
+    // await fetch("/api/reviews", {
     //   method: "POST",
     //   body: JSON.stringify({
     //     username: session?.user?.name,

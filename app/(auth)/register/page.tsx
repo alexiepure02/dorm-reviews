@@ -29,7 +29,7 @@ export default function Register() {
     password: string;
     cpassword: string;
   }) => {
-    await fetch("http://localhost:3000/api/auth/register", {
+    await fetch("/api/auth/register", {
       method: "POST",
       body: JSON.stringify(values),
     })

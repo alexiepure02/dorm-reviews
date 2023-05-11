@@ -23,7 +23,7 @@ export default function ReviewsSection({ dorm }: ReviewsSection) {
   const { data: session } = useSession();
 
   const { data, error, isLoading } = useSWR<any>(
-    `http://localhost:3000/api/reviews?dorm=${dorm}&page=${page}&limit=${limit}&orderBy=${orderBy}&order=${order}`,
+    `/api/reviews?dorm=${dorm}&page=${page}&limit=${limit}&orderBy=${orderBy}&order=${order}`,
     fetcher
   );
 
@@ -43,8 +43,7 @@ export default function ReviewsSection({ dorm }: ReviewsSection) {
       <div className="max-w-screen-2xl 2xl:mx-auto">
         <div className="flex w-full justify-between gap-2 p-4">
           <div className="flex items-center gap-6">
-            <h1 className="text-4xl font-medium">
-              Recenzii</h1>
+            <h1 className="text-4xl font-medium">Recenzii</h1>
             {session && <AddReviewButton />}
           </div>
           <SortSelect

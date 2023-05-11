@@ -20,7 +20,7 @@ export default function ReviewsSection() {
   const user = session?.user?.name;
 
   const { data, error, isLoading } = useSWR<any>(
-    `http://localhost:3000/api/reviews?user=${user}&page=${page}&limit=${limit}&orderBy=${orderBy}&order=${order}`,
+    `/api/reviews?user=${user}&page=${page}&limit=${limit}&orderBy=${orderBy}&order=${order}`,
     fetcher
   );
 

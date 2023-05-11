@@ -6,7 +6,7 @@ export const metadata = {
 };
 
 async function getUniversities() {
-  const res = await fetch("http://localhost:3000/api/universities");
+  const res = await fetch("/api/universities");
   if (!res.ok) {
     return null;
   }

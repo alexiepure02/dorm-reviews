@@ -11,7 +11,7 @@ const CustomMap = dynamic(() => import("@/components/map/CustomMap"), {
 });
 
 async function getLocations() {
-  const res = await fetch("http://localhost:3000/api/locations");
+  const res = await fetch("/api/locations");
   if (!res.ok) {
     return null;
   }

@@ -1,7 +1,7 @@
 import ReviewForm from "./ReviewForm";
 
 async function getDormById(id: string) {
-  const res = await fetch("http://localhost:3000/api/dorms/" + id);
+  const res = await fetch("/api/dorms/" + id);
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }

@@ -9,7 +9,7 @@ export async function generateMetadata({ params, searchParams }) {
 }
 
 async function getUniversityById(id: string) {
-  const res = await fetch("http://localhost:3000/api/universities/" + id);
+  const res = await fetch("/api/universities/" + id);
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
@@ -17,9 +17,7 @@ async function getUniversityById(id: string) {
 }
 
 async function getDormsByUniversity(university: string) {
-  const res = await fetch(
-    "http://localhost:3000/api/dorms?university=" + university
-  );
+  const res = await fetch("/api/dorms?university=" + university);
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
