@@ -23,7 +23,7 @@ export default function ReviewsSection({ dorm }: ReviewsSection) {
   const { data: session } = useSession();
 
   const { data, error, isLoading } = useSWR<any>(
-    `/api/reviews?dorm=${dorm}&page=${page}&limit=${limit}&orderBy=${orderBy}&order=${order}`,
+    `${process.env.CLIENT_URL}/api/reviews?dorm=${dorm}&page=${page}&limit=${limit}&orderBy=${orderBy}&order=${order}`,
     fetcher
   );
 

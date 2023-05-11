@@ -24,7 +24,7 @@ export default function RequestPasswordReset() {
   const onSubmit: SubmitHandler<FieldValues> = async (values: {
     email: string;
   }) => {
-    await fetch("/api/auth/request-password-reset", {
+    await fetch(`${process.env.CLIENT_URL}/api/auth/request-password-reset`, {
       method: "POST",
       body: JSON.stringify(values.email),
     })

@@ -2,7 +2,9 @@ import { UNIVERSITY_CARD_TYPE_ENUM } from "@/common/Constants";
 import UniversityCard from "./UniversityCard";
 
 async function getTopUniversities(limit: number) {
-  const res = await fetch(`/api/universities/top?limit=${limit}`);
+  const res = await fetch(
+    `${process.env.CLIENT_URL}/api/universities/top?limit=${limit}`
+  );
   if (!res.ok) {
     return null;
   }
