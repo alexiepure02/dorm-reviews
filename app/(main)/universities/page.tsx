@@ -34,16 +34,18 @@ export default async function Page() {
         </div>
         <UniversityCardsList universities={universities} /> */}
         <div className="flex flex-col items-center px-4">
-          {universities.map((university: any, index: number) => {
-            return (
-              <Link
-                href={"/universities/" + university._id}
-                className="hover:underline text-lg"
-              >
-                {university.name}
-              </Link>
-            );
-          })}
+          {universities &&
+            //@ts-ignore
+            universities.map((university: any, index: number) => {
+              return (
+                <Link
+                  href={"/universities/" + university._id}
+                  className="hover:underline text-lg"
+                >
+                  {university.name}
+                </Link>
+              );
+            })}
         </div>
       </div>
     </>

@@ -1,6 +1,6 @@
 "use client";
 
-import { MapContainer, Popup, TileLayer, Tooltip } from "react-leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import CustomMarker from "./CustomMarker";

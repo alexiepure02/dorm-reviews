@@ -1,5 +1,4 @@
 import { BiMapAlt, BiSearchAlt } from "react-icons/bi";
-import "leaflet/dist/leaflet.css";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
@@ -37,18 +36,20 @@ export default async function Page() {
           </p>
         </div>
         <div className="flex justify-center">
-          <CustomMap locations={locations} />
+          {locations && <CustomMap locations={locations} />}
         </div>
       </div>
       <div className="max-w-screen-2xl 2xl:mx-auto flex flex-col items-start py-8 px-4 md:px-8 lg:px-12">
-        {locations.map((location: any) => (
-          <Link
-            href={"/locations/" + location._id}
-            className="hover:underline text-lg"
-          >
-            {location.name}
-          </Link>
-        ))}
+        {locations &&
+          //@ts-ignore
+          locations.map((location: any) => (
+            <Link
+              href={"/locations/" + location._id}
+              className="hover:underline text-lg"
+            >
+              {location.name}
+            </Link>
+          ))}
       </div>
     </>
   );
