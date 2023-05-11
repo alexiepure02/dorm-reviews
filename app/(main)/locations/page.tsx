@@ -1,7 +1,6 @@
 import { BiMapAlt, BiSearchAlt } from "react-icons/bi";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { checkEnvironment } from "@/common/utils/checkEnvironment";
 
 export const metadata = {
   title: "Hartă - Căminul Tău",
@@ -12,7 +11,7 @@ const CustomMap = dynamic(() => import("@/components/map/CustomMap"), {
 });
 
 async function getLocations() {
-  const res = await fetch(`${checkEnvironment()}/api/locations`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/locations`);
   if (!res.ok) {
     return null;
   }

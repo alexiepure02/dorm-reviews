@@ -1,13 +1,12 @@
 import { BiBuildings } from "react-icons/bi";
 import Link from "next/link";
-import { checkEnvironment } from "@/common/utils/checkEnvironment";
 
 export const metadata = {
   title: "Universități - Căminul Tău",
 };
 
 async function getUniversities() {
-  const res = await fetch(`${checkEnvironment()}/api/universities`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/universities`);
   // const res = await fetch(`undefined/api/universities`);
   if (!res.ok) {
     return null;

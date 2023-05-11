@@ -9,7 +9,6 @@ import { BiLock, BiLockOpen, BiMailSend, BiUserPin } from "react-icons/bi";
 import FormInput from "@/components/FormInput";
 import { AiOutlineUser } from "react-icons/ai";
 import Button from "@/components/Button";
-import { checkEnvironment } from "@/common/utils/checkEnvironment";
 
 export default function Register() {
   const [success, setSuccess] = useState("");
@@ -30,7 +29,7 @@ export default function Register() {
     password: string;
     cpassword: string;
   }) => {
-    await fetch(`${checkEnvironment()}/api/auth/register`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
       method: "POST",
       body: JSON.stringify(values),
     })

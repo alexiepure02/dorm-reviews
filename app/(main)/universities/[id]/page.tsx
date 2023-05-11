@@ -1,4 +1,3 @@
-import { checkEnvironment } from "@/common/utils/checkEnvironment";
 import CustomCarousel from "@/components/CustomCarousel";
 import DormCardsList from "@/components/DormCardsList";
 import { BiMapPin } from "react-icons/bi";
@@ -10,7 +9,7 @@ export async function generateMetadata({ params, searchParams }) {
 }
 
 async function getUniversityById(id: string) {
-  const res = await fetch(`${checkEnvironment()}/api/universities/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/universities/${id}`);
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
@@ -19,7 +18,7 @@ async function getUniversityById(id: string) {
 
 async function getDormsByUniversity(university: string) {
   const res = await fetch(
-    `${checkEnvironment()}/api/dorms?university=${university}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/dorms?university=${university}`
   );
   if (!res.ok) {
     throw new Error("Failed to fetch data");

@@ -6,7 +6,6 @@ import FormInput from "@/components/FormInput";
 import Button from "@/components/Button";
 import { BiLock, BiLockOpen } from "react-icons/bi";
 import { useState } from "react";
-import { checkEnvironment } from "@/common/utils/checkEnvironment";
 
 export default function Login() {
   const router = useRouter();
@@ -27,7 +26,7 @@ export default function Login() {
     password: string;
     cpassword: string;
   }) => {
-    await fetch(`${checkEnvironment()}/api/auth/password-reset`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/password-reset`, {
       method: "POST",
       body: JSON.stringify({
         token: token,
