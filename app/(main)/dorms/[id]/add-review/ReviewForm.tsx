@@ -97,13 +97,13 @@ export default ({ dorm }: ReviewFormProps) => {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log("room: ", roomRating, roomComment);
-    console.log("bath: ", bathRating, bathComment);
-    console.log("kitchen: ", kitchenRating, kitchenComment);
-    console.log("location: ", locationRating, locationComment);
-    console.log("comment: ", comment);
+    // console.log("room: ", roomRating, roomComment);
+    // console.log("bath: ", bathRating, bathComment);
+    // console.log("kitchen: ", kitchenRating, kitchenComment);
+    // console.log("location: ", locationRating, locationComment);
+    // console.log("comment: ", comment);
 
-    console.log(session?.user?.name);
+    // console.log(session?.user?.name);
 
     // await fetch("http://localhost:3000/api/reviews", {
     //   method: "POST",

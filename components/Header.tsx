@@ -26,12 +26,12 @@ export default () => {
           <Link
             href="/my-reviews"
             className={`flex gap-2 font-semibold text-gray-3 hover:text-primary-100 ${
-              pathname === "/reviews" && "text-primary-100"
+              pathname === "/my-reviews" && "text-primary-100"
             }`}
           >
             <BiPencil
               className={`w-6 h-6 ${
-                pathname === "/reviews" && "text-primary-100"
+                pathname === "/my-reviews" && "text-primary-100"
               }`}
             />
             Recenziile mele

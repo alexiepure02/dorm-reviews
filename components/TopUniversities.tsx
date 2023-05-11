@@ -6,7 +6,7 @@ async function getTopUniversities(limit: number) {
     `http://localhost:3000/api/universities/top?limit=${limit}`
   );
   if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    return null;
   }
   return res.json();
 }
@@ -18,12 +18,13 @@ export default async function TopUniversities() {
 
   return (
     <div className="grid py-8 gap-8 items-stretch justify-items-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {universities.map((university: any) => (
-        <UniversityCard
-          type={UNIVERSITY_CARD_TYPE_ENUM.vertical}
-          university={university}
-        />
-      ))}
+      {universities &&
+        universities.map((university: any) => (
+          <UniversityCard
+            type={UNIVERSITY_CARD_TYPE_ENUM.vertical}
+            university={university}
+          />
+        ))}
     </div>
   );
 }

@@ -13,7 +13,7 @@ const CustomMap = dynamic(() => import("@/components/map/CustomMap"), {
 async function getLocations() {
   const res = await fetch("http://localhost:3000/api/locations");
   if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    return null;
   }
   return res.json();
 }
@@ -41,7 +41,6 @@ export default async function Page() {
       </div>
       <div className="max-w-screen-2xl 2xl:mx-auto flex flex-col items-start py-8 px-4 md:px-8 lg:px-12">
         {locations &&
-          //@ts-ignore
           locations.map((location: any) => (
             <Link
               href={"/locations/" + location._id}

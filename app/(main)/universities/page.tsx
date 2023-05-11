@@ -8,7 +8,7 @@ export const metadata = {
 async function getUniversities() {
   const res = await fetch("http://localhost:3000/api/universities");
   if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    return null;
   }
   return res.json();
 }
@@ -35,7 +35,6 @@ export default async function Page() {
         <UniversityCardsList universities={universities} /> */}
         <div className="flex flex-col items-center px-4">
           {universities &&
-            //@ts-ignore
             universities.map((university: any, index: number) => {
               return (
                 <Link

@@ -1,6 +1,5 @@
 import SearchInput from "@/components/SearchInput";
 import TopUniversities from "@/components/TopUniversities";
-import { NextPage } from "next";
 
 export default async function Page() {
   return (

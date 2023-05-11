@@ -9,7 +9,6 @@ interface DormDetailsProps {
 }
 
 export default function DormDetails({ dorm, means }: DormDetailsProps) {
-  console.log(dorm);
   return (
     <>
       <div className="bg-background">

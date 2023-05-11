@@ -10,8 +10,6 @@ export async function POST(request: Request) {
 
   const body = await request.json();
 
-  console.log(body);
-
   if (!emailRegEx.test(body.email)) {
     return NextResponse.json(
       { error: "Adresă de e-mail invalidă" },

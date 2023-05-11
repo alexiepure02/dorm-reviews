@@ -24,8 +24,6 @@ export async function POST(request: Request) {
     );
   }
 
-  console.log(body);
-
   const newLocation = new Location({
     name: body.name,
     description: body.description,
