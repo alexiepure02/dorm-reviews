@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import useSWR from "swr";
 import AddReviewButton from "./AddReviewButton";
+import { checkEnvironment } from "@/common/utils/checkEnvironment";
 
 interface ReviewsSection {
   dorm: any;
@@ -23,7 +24,7 @@ export default function ReviewsSection({ dorm }: ReviewsSection) {
   const { data: session } = useSession();
 
   const { data, error, isLoading } = useSWR<any>(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/reviews?dorm=${dorm}&page=${page}&limit=${limit}&orderBy=${orderBy}&order=${order}`,
+    `${checkEnvironment()}/api/reviews?dorm=${dorm}&page=${page}&limit=${limit}&orderBy=${orderBy}&order=${order}`,
     fetcher
   );
 

@@ -1,9 +1,10 @@
 import { UNIVERSITY_CARD_TYPE_ENUM } from "@/common/Constants";
 import UniversityCard from "./UniversityCard";
+import { checkEnvironment } from "@/common/utils/checkEnvironment";
 
 async function getTopUniversities(limit: number) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/universities/top?limit=${limit}`
+    `${checkEnvironment()}/api/universities/top?limit=${limit}`
   );
   if (!res.ok) {
     return null;

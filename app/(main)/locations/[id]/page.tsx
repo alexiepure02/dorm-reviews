@@ -1,5 +1,4 @@
-import { UNIVERSITY_CARD_TYPE_ENUM } from "@/common/Constants";
-import UniversityCard from "@/components/UniversityCard";
+import { checkEnvironment } from "@/common/utils/checkEnvironment";
 import UniversityCardsList from "@/components/UniversityCardsList";
 import { MdOutlineLocationCity } from "react-icons/md";
 
@@ -9,7 +8,7 @@ export async function generateMetadata({ params, searchParams }) {
 }
 
 async function getLocationById(id: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/locations/${id}`);
+  const res = await fetch(`${checkEnvironment()}/api/locations/${id}`);
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
@@ -18,7 +17,7 @@ async function getLocationById(id: string) {
 
 async function getUniversitiesByLocation(location: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/universities?location=${location}`
+    `${checkEnvironment()}/api/universities?location=${location}`
   );
   if (!res.ok) {
     throw new Error("Failed to fetch data");

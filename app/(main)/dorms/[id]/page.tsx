@@ -1,3 +1,4 @@
+import { checkEnvironment } from "@/common/utils/checkEnvironment";
 import DormDetails from "./DormDetails";
 import ReviewsSection from "./ReviewsSection";
 
@@ -7,7 +8,7 @@ export async function generateMetadata({ params, searchParams }) {
 }
 
 async function getDormById(id: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dorms/${id}`);
+  const res = await fetch(`${checkEnvironment()}/api/dorms/${id}`);
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }

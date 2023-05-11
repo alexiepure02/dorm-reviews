@@ -7,6 +7,7 @@ import { sendEmail } from "@/common/utils/email/sendEmail";
 import Token from "@/common/models/Token";
 import { emailRegEx } from "@/common/Constants";
 import { NextResponse } from "next/server";
+import { checkEnvironment } from "@/common/utils/checkEnvironment";
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -45,7 +46,7 @@ export async function POST(request: Request) {
     createdAt: Date.now(),
   }).save();
 
-  const link = `${process.env.NEXT_PUBLIC_API_URL}/password-reset?token=${resetToken}&id=${user._id}`;
+  const link = `${checkEnvironment()}/password-reset?token=${resetToken}&id=${user._id}`;
   await sendEmail(
     user.email,
     "Resetare Parolă",

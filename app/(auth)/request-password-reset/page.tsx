@@ -8,6 +8,7 @@ import Button from "@/components/Button";
 import { BiMailSend } from "react-icons/bi";
 import { AiOutlineUser } from "react-icons/ai";
 import { useState } from "react";
+import { checkEnvironment } from "@/common/utils/checkEnvironment";
 
 export default function RequestPasswordReset() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function RequestPasswordReset() {
   const onSubmit: SubmitHandler<FieldValues> = async (values: {
     email: string;
   }) => {
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/request-password-reset`, {
+    await fetch(`${checkEnvironment()}/api/auth/request-password-reset`, {
       method: "POST",
       body: JSON.stringify(values.email),
     })
