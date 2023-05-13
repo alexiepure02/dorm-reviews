@@ -1,3 +1,4 @@
+import Link from "next/link";
 import "../globals.css";
 
 export default function AuthLayout({
@@ -14,9 +15,14 @@ export default function AuthLayout({
         />
         <div className="flex h-full items-center justify-between">
           <div className=" flex text-background w-full max-w-[860px] justify-end">
-            <div className="flex flex-col grow gap-10 max-w-2xl">
-              <h1 className="text-8xl font-bold">Căminul Tău</h1>
-              <p className=" text-lg max-w-xl ">
+            <div className="flex flex-col items-start grow gap-10 max-w-2xl">
+              <Link
+                href="/"
+                className="text-8xl font-bold px-4 py-2 hover:bg-white hover:bg-opacity-25 hover:rounded-xl"
+              >
+                Căminul Tău
+              </Link>
+              <p className=" text-lg max-w-xl px-4">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
                 text ever since the 1500s, when an unknown printer took a galley

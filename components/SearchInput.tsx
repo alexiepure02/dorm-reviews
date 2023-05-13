@@ -1,7 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useRef, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { MdClear } from "react-icons/md";
 import Turnstone from "turnstone";
@@ -17,7 +17,7 @@ const styles = {
   clearButton:
     "absolute inset-y-0 right-0 w-8 inline-flex items-center justify-center text-gray-3 hover:text-gray-1",
   listbox:
-    "w-full bg-white border border-primary-100 sm:rounded text-left mt-2 p-2 drop-shadow-xl",
+    "w-full bg-white border border-primary-100 sm:rounded text-left mt-2 p-2 drop-shadow-xl z-[999]",
   groupHeading:
     "cursor-default mt-2 mb-0.5 px-1.5 uppercase text-sm text-primary-100 text-bold",
   item: "cursor-pointer p-1.5 text-lg overflow-ellipsis overflow-hidden",
@@ -88,13 +88,24 @@ const listbox = [
 
 const Clear = () => <MdClear type="clear" className="w-6 h-6" />;
 
-export default () => {
+interface SearchInputProps {
+  header?: boolean;
+}
+
+export default ({ header = false }: SearchInputProps) => {
   const [hasFocus, setHasFocus] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
-  const containerStyles = hasFocus
-    ? "text-gray-3 relative w-full lg:w-8/12 xl:6/12 bg-transparent overflow-visible"
-    : "text-gray-3 relative w-full lg:w-8/12 xl:6/12";
+  const turnstoneRef = useRef();
+
+  const containerStyles = `text-gray-3 relative w-full ${
+    header
+      ? ""
+      : hasFocus
+      ? "lg:w-8/12 xl:6/12 bg-transparent overflow-visible"
+      : "lg:w-8/12 xl:6/12"
+  }`;
 
   const iconDisplayStyle = hasFocus
     ? "inline-flex text-gray-3"
@@ -103,17 +114,29 @@ export default () => {
   const onBlur = () => setHasFocus(false);
   const onFocus = () => setHasFocus(true);
 
-  const onSelect = (selectedItem: any) =>
-    selectedItem && router.push(selectedItem.type + "/" + selectedItem._id);
+  const handleClear = () => {
+    //@ts-ignore
+    turnstoneRef.current?.clear();
+  };
 
+  const onSelect = (selectedItem: any) => {
+    if (selectedItem) {
+      if (pathname === "/" + selectedItem.type + "/" + selectedItem._id) {
+        setTimeout(() => handleClear(), 250);
+      } else {
+        router.push(selectedItem.type + "/" + selectedItem._id);
+      }
+    }
+  };
   return (
     <div className={containerStyles}>
       <span
-        className={`absolute w-10 h-12 inset-y-0 left-0 items-center justify-center z-10 inline-flex ${iconDisplayStyle}`}
+        className={`absolute w-10 h-12 inset-y-0 left-0 items-center justify-center z-20 inline-flex ${iconDisplayStyle}`}
       >
         <BiSearchAlt className="w-6 h-6" />
       </span>
       <Turnstone
+        ref={turnstoneRef}
         autoFocus={true}
         cancelButton={false}
         clearButton={true}
@@ -126,7 +149,7 @@ export default () => {
         noItemsMessage="Niciun rezultat găsit."
         onBlur={onBlur}
         onFocus={onFocus}
-        placeholder="Caută un cămin"
+        placeholder={header ? "" : "Caută un cămin"}
         styles={styles}
         Clear={Clear}
         onSelect={onSelect}

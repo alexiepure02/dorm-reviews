@@ -19,7 +19,7 @@ interface CustomMapProps {
 
 export default ({ locations }: CustomMapProps) => {
   return (
-    <div className="h-[374px] md:h-[561px] w-[1000px]">
+    <div className="h-[374px] md:h-[561px] w-[1000px] z-10">
       <MapContainer
         center={COORDINATES_ROMANIA_CENTER}
         zoom={6}

@@ -3,10 +3,11 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BiBuildings, BiMapAlt, BiPencil, BiUser } from "react-icons/bi";
+import { BiBuildings, BiMapAlt, BiPencil, BiUserCircle } from "react-icons/bi";
 
 import Button from "./Button";
 import Sidebar from "./Sidebar";
+import SearchInput from "./SearchInput";
 
 export default () => {
   const { data: session } = useSession();
@@ -18,24 +19,20 @@ export default () => {
       <header className="sticky top-0 bg-white flex justify-between px-8 py-3 m-0 z-50 rounded-b-xl shadow-md">
         <Link href="/" className="flex gap-4 items-center cursor-pointer">
           <img src="/logo.svg" className="w-14 h-16" />
-          <h1 className="hidden md:block font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-linear-1 to-linear-2">
+          <h1 className="hidden sm:block font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-linear-1 to-linear-2">
             Căminul Tău
           </h1>
         </Link>
-        <div className="hidden md:flex gap-8 items-center">
-          <Link
-            href="/my-reviews"
-            className={`flex gap-2 font-semibold text-gray-3 hover:text-primary-100 ${
-              pathname === "/my-reviews" && "text-primary-100"
-            }`}
-          >
-            <BiPencil
-              className={`w-6 h-6 ${
-                pathname === "/my-reviews" && "text-primary-100"
-              }`}
-            />
-            Recenziile mele
-          </Link>
+        <div
+          className={`hidden ${
+            pathname !== "/" ? "xl:flex" : "lg:flex"
+          } gap-8 items-center`}
+        >
+          {pathname !== "/" && (
+            <div>
+              <SearchInput header />
+            </div>
+          )}
           <Link
             href="/locations"
             className={`flex gap-2 font-semibold text-gray-3 hover:text-primary-100 ${
@@ -63,23 +60,44 @@ export default () => {
             Universități
           </Link>
 
+          <Link
+            href="/my-reviews"
+            className={`flex gap-2 font-semibold text-gray-3 hover:text-primary-100 ${
+              pathname === "/my-reviews" && "text-primary-100"
+            }`}
+          >
+            <BiPencil
+              className={`w-6 h-6 ${
+                pathname === "/my-reviews" && "text-primary-100"
+              }`}
+            />
+            Recenziile mele
+          </Link>
+
           {session !== null ? (
             session !== undefined ? (
               <Link
                 href="/account"
-                className={`flex gap-2 font-semibold text-gray-3 hover:text-primary-100 ${
+                className={`flex items-center gap-2 font-semibold text-gray-3 hover:text-primary-100 ${
                   pathname === "/account" && "text-primary-100"
                 }`}
               >
-                <BiUser
+                <BiUserCircle
                   className={`w-6 h-6 ${
                     pathname === "/account" && "text-primary-100"
                   }`}
                 />
-                {session.user?.name}
+                Contul meu
               </Link>
             ) : (
-              <BiUser className="w-6 h-6 text-gray-3" />
+              <div className="flex items-center gap-2 font-semibold text-gray-3 hover:text-primary-100">
+                <BiUserCircle
+                  className={`w-6 h-6 ${
+                    pathname === "/account" && "text-primary-100"
+                  }`}
+                />
+                Contul meu
+              </div>
             )
           ) : (
             <Button className="px-10">

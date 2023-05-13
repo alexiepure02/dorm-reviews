@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { slide as Menu } from "react-burger-menu"; // could also use slide or bubble
-import { BiBuildings, BiMapAlt, BiPencil, BiUser } from "react-icons/bi";
+import { BiBuildings, BiMapAlt, BiPencil, BiUserCircle } from "react-icons/bi";
 import Button from "./Button";
 
 var styles = {
@@ -65,31 +65,34 @@ export default () => {
   const pathname = usePathname();
 
   return (
-    <div className="md:hidden">
+    <div className={`${pathname !== "/" ? "xl:hidden" : "lg:hidden"}`}>
       <Menu styles={styles} right>
-        <Link href={"/reviews?user=" + session?.user?.name}>
-          <BiPencil className="w-6 h-6 text-gray-3" />
-          Recenzii
-        </Link>
-        <Link href={"/locations"}>
+        <Link href="/locations">
           <BiMapAlt className="w-6 h-6 text-gray-3" />
           Hartă
         </Link>
-        <Link href={"/universities"}>
+
+        <Link href="/universities">
           <BiBuildings className="w-6 h-6 text-gray-3" />
           Universități
         </Link>
 
-        {/* {session ? (
-          <Link href={"/account"}>
-            <BiUser className="w-6 h-6 text-gray-3" />
-            {session.user?.name}
+        <Link href="/my-reviews">
+          <BiPencil className="w-6 h-6 text-gray-3" />
+          Recenziile mele
+        </Link>
+
+        {session ? (
+          <Link href={"/account"} className="flex items-center">
+            <BiUserCircle className="w-6 h-6 text-gray-3" />
+            Contul meu
+            {/* {session.user?.name} */}
           </Link>
-        ) : ( */}
-        <Button className="w-[200px] mt-6">
-          <Link href={"/login"}>Autentificare</Link>
-        </Button>
-        {/* )} */}
+        ) : (
+          <Button className="px-10 mt-6">
+            <Link href={"/login"}>Autentificare</Link>
+          </Button>
+        )}
       </Menu>
     </div>
   );
