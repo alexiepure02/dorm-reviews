@@ -10,6 +10,10 @@ import { BiLockOpen, BiUserPin } from "react-icons/bi";
 import { AiOutlineUser } from "react-icons/ai";
 import { useState } from "react";
 
+export const metadata = {
+  title: "Autentificare - Căminul Tău",
+};
+
 export default function Login() {
   const router = useRouter();
   const [error, setError] = useState("");
