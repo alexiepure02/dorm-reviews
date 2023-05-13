@@ -150,7 +150,7 @@ export default ({ header = false, autoFocus = false }: SearchInputProps) => {
         noItemsMessage="Niciun rezultat găsit."
         onBlur={onBlur}
         onFocus={onFocus}
-        placeholder={header ? "" : "Caută un cămin"}
+        placeholder={header ? "Caută..." : "Caută un cămin"}
         styles={styles}
         Clear={Clear}
         onSelect={onSelect}
