@@ -19,7 +19,7 @@ export default async function Page() {
             <p className="max-w-2xl">
               Some catchy phrase or like a slogan or something..
             </p>
-            <SearchInput />
+            <SearchInput autoFocus />
           </div>
         </div>
         <div className="flex flex-col gap-2 py-4">

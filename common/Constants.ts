@@ -2,6 +2,8 @@ export const MIN_CHARS_USERNAME = 3;
 export const MAX_CHARS_USERNAME = 32;
 export const MIN_CHARS_PASSWORD = 6;
 
+export const MIN_CHARS_COMMENT = 100;
+
 // practical implementation of RFC 2822
 export const emailRegEx =
   /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;

@@ -30,6 +30,7 @@ export default ({
             <MenuIcon className="w-6 h-6" />
             <h1 className="text-2xl">{menuName}</h1>
           </div>
+          <p className="text-gray-2">{helperText}</p>
           <CustomRatingInteractive
             rating={rating}
             variant={2}
@@ -38,10 +39,9 @@ export default ({
         </div>
         <h1 className="text-2xl">{dormName}</h1>
       </div>
-      <p className="text-gray-2">{helperText}</p>
       <textarea
         className="w-full h-64 resize-none p-4"
-        placeholder="Lasă-ți aici amintirile.."
+        placeholder="Lasă-ți aici amintirile (opțional)"
         value={comment}
         onChange={(e) => handleComment(e.target.value)}
       />

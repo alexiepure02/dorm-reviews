@@ -3,7 +3,11 @@ import User from "@/common/models/User";
 import Dorm from "@/common/models/Dorm";
 import Review from "@/common/models/Review";
 import { NextResponse } from "next/server";
-import { ORDER_BY_ENUM, ORDER_ENUM } from "@/common/Constants";
+import {
+  MIN_CHARS_COMMENT,
+  ORDER_BY_ENUM,
+  ORDER_ENUM,
+} from "@/common/Constants";
 
 export async function GET(request: Request) {
   await dbConnect();
@@ -121,6 +125,52 @@ export async function POST(request: Request, { params }) {
       },
       { status: 400 }
     );
+
+  if (body.comment.length <= MIN_CHARS_COMMENT) {
+    return NextResponse.json(
+      {
+        error:
+          "Comentariul are mai puțin de " + MIN_CHARS_COMMENT + " de caractere",
+      },
+      { status: 400 }
+    );
+  }
+
+  if (body.roomRating === 0) {
+    return NextResponse.json(
+      {
+        error: "Nu ai selectat un rating pentru cameră",
+      },
+      { status: 400 }
+    );
+  }
+
+  if (body.bathRating === 0) {
+    return NextResponse.json(
+      {
+        error: "Nu ai selectat un rating pentru baie",
+      },
+      { status: 400 }
+    );
+  }
+
+  if (body.kitchenRating === 0) {
+    return NextResponse.json(
+      {
+        error: "Nu ai selectat un rating pentru bucătărie",
+      },
+      { status: 400 }
+    );
+  }
+
+  if (body.locationRating === 0) {
+    return NextResponse.json(
+      {
+        error: "Nu ai selectat un rating pentru locație",
+      },
+      { status: 400 }
+    );
+  }
 
   const overallRating =
     (body.roomRating +

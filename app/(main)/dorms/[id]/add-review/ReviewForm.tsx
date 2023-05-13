@@ -25,25 +25,35 @@ export default ({ dorm }: ReviewFormProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
+  const [error, setError] = useState(
+    // ""
+    "Comentariul are mai puțin de 100 de caractere"
+  );
+
   const [currentMenu, setCurrentMenu] = useState(0);
-  const [roomRating, setRoomRating] = useState(4);
+  const [roomRating, setRoomRating] = useState(0);
   const [roomComment, setRoomComment] = useState(
-    "Camera a fost extraordinara. Mi-a placut foarte mult. Sper ca la anul sa pot sta tot aici."
+    ""
+    // "Camera a fost extraordinara. Mi-a placut foarte mult. Sper ca la anul sa pot sta tot aici."
   );
-  const [bathRating, setBathRating] = useState(2);
+  const [bathRating, setBathRating] = useState(0);
   const [bathComment, setBathComment] = useState(
-    "Nu mi-a placut foarte mult baia. A fost destul de murdara si nu era deloc apa calda. Doamna de servici ar trebui sa faca o treaba mai buna."
+    ""
+    // "Nu mi-a placut foarte mult baia. A fost destul de murdara si nu era deloc apa calda. Doamna de servici ar trebui sa faca o treaba mai buna."
   );
-  const [kitchenRating, setKitchenRating] = useState(5);
+  const [kitchenRating, setKitchenRating] = useState(0);
   const [kitchenComment, setKitchenComment] = useState(
-    "Bucataria a fost de vis. Aveai tot ce iti trebuia, de la farfurii, la tacamuri, la pahare, la tigai si oale."
+    ""
+    // "Bucataria a fost de vis. Aveai tot ce iti trebuia, de la farfurii, la tacamuri, la pahare, la tigai si oale."
   );
-  const [locationRating, setLocationRating] = useState(4);
+  const [locationRating, setLocationRating] = useState(0);
   const [locationComment, setLocationComment] = useState(
-    "Locatia a fost ok. Caminul este situat departe de universitate dar exista o sala la nici 2 minute distanta."
+    ""
+    // "Locatia a fost ok. Caminul este situat departe de universitate dar exista o sala la nici 2 minute distanta."
   );
   const [comment, setComment] = useState(
-    "Nu stiu ce sa scriu aici. Per total, mi-a placut caminul si camera in care am fost cazat. Colegii de camera si de camin au fost foarte prietenosi, iar administratorul e un om foarte chill. Mi-am facut amintiri de neuitat in acest camin."
+    ""
+    // "Nu stiu ce sa scriu aici. Per total, mi-a placut caminul si camera in care am fost cazat. Colegii de camera si de camin au fost foarte prietenosi, iar administratorul e un om foarte chill. Mi-am facut amintiri de neuitat in acest camin."
   );
 
   const overallRating =
@@ -97,34 +107,39 @@ export default ({ dorm }: ReviewFormProps) => {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // console.log("comment: ", comment);
     // console.log("room: ", roomRating, roomComment);
     // console.log("bath: ", bathRating, bathComment);
     // console.log("kitchen: ", kitchenRating, kitchenComment);
     // console.log("location: ", locationRating, locationComment);
-    // console.log("comment: ", comment);
 
     // console.log(session?.user?.name);
 
-    // await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/reviews`, {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     username: session?.user?.name,
-    //     dorm: dorm.name,
-    //     roomRating: roomRating,
-    //     roomComment: roomComment,
-    //     bathRating: bathRating,
-    //     bathComment: bathComment,
-    //     kitchenRating: kitchenRating,
-    //     kitchenComment: kitchenComment,
-    //     locationRating: locationRating,
-    //     locationComment: locationComment,
-    //     overallRating: overallRating,
-    //     comment: comment,
-    //   }),
-    // }).then(async (res) => console.log(await res.json()));
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/reviews`, {
+      method: "POST",
+      body: JSON.stringify({
+        username: session?.user?.name,
+        dorm: dorm.name,
+        roomRating: roomRating,
+        roomComment: roomComment,
+        bathRating: bathRating,
+        bathComment: bathComment,
+        kitchenRating: kitchenRating,
+        kitchenComment: kitchenComment,
+        locationRating: locationRating,
+        locationComment: locationComment,
+        overallRating: overallRating,
+        comment: comment,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setError(data.error);
 
-    // redirect only if request completed succesfully
-    if (true) router.push(pathname + "/succesful");
+        if (!data.error) {
+          router.push(pathname + "/succesful");
+        }
+      });
   };
 
   return (
@@ -156,10 +171,15 @@ export default ({ dorm }: ReviewFormProps) => {
           showThumbs={false}
           dynamicHeight={true}
         >
+          <CommentMenu
+            dormName={dorm.name}
+            comment={comment}
+            handleComment={handleComment}
+          />
           <ReviewMenu
             menuName="Cameră"
             MenuIcon={MdBed}
-            helperText="Cât de comod era patul? Ai avut încălzire? Ai avut destul loc de depozitare? Ai fost bogătan cu frigider?"
+            helperText="Cât de comod e patul? Ai încălzire? Ai destul loc de depozitare? Ești bogătan cu frigider în cameră?"
             dormName={dorm.name}
             rating={roomRating}
             comment={roomComment}
@@ -169,7 +189,7 @@ export default ({ dorm }: ReviewFormProps) => {
           <ReviewMenu
             menuName="Baie"
             MenuIcon={MdOutlineBathtub}
-            helperText="helper text bath"
+            helperText="Baie pe hol la comun sau privată proprie? S-a inventat apa caldă la duș? E destul de curat?"
             dormName={dorm.name}
             rating={bathRating}
             comment={bathComment}
@@ -179,7 +199,7 @@ export default ({ dorm }: ReviewFormProps) => {
           <ReviewMenu
             menuName="Bucătărie"
             MenuIcon={MdKitchen}
-            helperText="helper text kitchen"
+            helperText="Furculițe? cuțite? oale? tigăi? Aragaz? Cuptor? sau doar îți comanzi mancarea de la McDonald's."
             dormName={dorm.name}
             rating={kitchenRating}
             comment={kitchenComment}
@@ -189,17 +209,12 @@ export default ({ dorm }: ReviewFormProps) => {
           <ReviewMenu
             menuName="Locație"
             MenuIcon={MdOutlineLocationOn}
-            helperText="helper text location"
+            helperText="Ești aproape de universitate? Sunt magazine, cafenele, restaurante, săli de sport în apropiere?"
             dormName={dorm.name}
             rating={locationRating}
             comment={locationComment}
             handleRating={handleLocationRating}
             handleComment={handleLocationComment}
-          />
-          <CommentMenu
-            dormName={dorm.name}
-            comment={comment}
-            handleComment={handleComment}
           />
           <SubmitMenu
             dormName={dorm.name}
@@ -216,9 +231,12 @@ export default ({ dorm }: ReviewFormProps) => {
           />
         </CustomCarousel>
         {currentMenu === 5 && (
-          <Button type="submit" className="px-8 self-center">
-            Adaugă recenzie
-          </Button>
+          <>
+            <h1 className="self-center text-red-500">{error}</h1>
+            <Button type="submit" className="px-8 self-center">
+              Adaugă recenzie
+            </Button>
+          </>
         )}
       </form>
     </div>

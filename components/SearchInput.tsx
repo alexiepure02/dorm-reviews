@@ -90,9 +90,10 @@ const Clear = () => <MdClear type="clear" className="w-6 h-6" />;
 
 interface SearchInputProps {
   header?: boolean;
+  autoFocus?: boolean;
 }
 
-export default ({ header = false }: SearchInputProps) => {
+export default ({ header = false, autoFocus = false }: SearchInputProps) => {
   const [hasFocus, setHasFocus] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -137,7 +138,7 @@ export default ({ header = false }: SearchInputProps) => {
       </span>
       <Turnstone
         ref={turnstoneRef}
-        autoFocus={true}
+        autoFocus={autoFocus}
         cancelButton={false}
         clearButton={true}
         debounceWait={150}

@@ -12,7 +12,7 @@ export default async function Page({ params }) {
   const { dorm } = await getDormById(params.id);
 
   return (
-    <div className="md:flex md:justify-center md:py-20 mx-3">
+    <div className="md:flex md:justify-center py-6 md:py-20 mx-3">
       <ReviewForm dorm={dorm} />
     </div>
   );
