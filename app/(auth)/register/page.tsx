@@ -1,20 +1,24 @@
 "use client";
 
 import Link from "next/link";
-// import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi";
 import { useState } from "react";
-// import { useFormik } from 'formik';
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { BiLock, BiLockOpen, BiMailSend, BiUserPin } from "react-icons/bi";
 import FormInput from "@/components/FormInput";
 import { AiOutlineUser } from "react-icons/ai";
 import Button from "@/components/Button";
+import { useRouter } from "next/navigation";
+import {
+  MAX_CHARS_USERNAME,
+  MIN_CHARS_PASSWORD,
+  MIN_CHARS_USERNAME,
+} from "@/common/Constants";
 
 export default function Register() {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
-
-  // react-hook-form
+  const router = useRouter();
+  
   const {
     register,
     handleSubmit,
@@ -37,7 +41,13 @@ export default function Register() {
       .then((data) => {
         setError(data.error);
         setSuccess(data.msg);
-        if (data.msg) reset();
+
+        if (data.msg) {
+          reset();
+          setTimeout(() => {
+            router.push("/login");
+          }, 5000);
+        }
       });
   };
 
@@ -56,15 +66,23 @@ export default function Register() {
         className="self-center w-40 h-40"
         style={{ fill: "url(#orange-gradient)" }}
       />
-      <p className="self-center bg-green-500 bg-opacity-50 px-2 ">{success}</p>
-
+      <p className="self-center bg-green-500 bg-opacity-50 px-2">{success}</p>
+      {success !== undefined && success.length !== 0 && (
+        <p className="self-center text-gray-2 text-center px-2">
+          În 5 secunde vei fi redirecționat la pagina de autentificare.
+        </p>
+      )}
       <FormInput
         id="username"
         type="text"
         placeholder="Nume de utilizator"
         register={register}
         Icon={AiOutlineUser}
-        rules={{ required: true, minLength: 5, maxLength: 32 }}
+        rules={{
+          required: true,
+          minLength: MIN_CHARS_USERNAME,
+          maxLength: MAX_CHARS_USERNAME,
+        }}
       />
 
       <FormInput
@@ -82,7 +100,7 @@ export default function Register() {
         placeholder="Parolă"
         register={register}
         Icon={BiLockOpen}
-        rules={{ required: true, minLength: 8, maxLength: 32 }}
+        rules={{ required: true, minLength: MIN_CHARS_PASSWORD }}
       />
 
       <FormInput
@@ -91,7 +109,7 @@ export default function Register() {
         placeholder="Confirmă parola"
         register={register}
         Icon={BiLock}
-        rules={{ required: true, minLength: 8, maxLength: 32 }}
+        rules={{ required: true, minLength: MIN_CHARS_PASSWORD }}
       />
       <p className="self-center text-red-500 text-center">{error}</p>
       <Button type="submit">Creează cont</Button>

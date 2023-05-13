@@ -49,7 +49,7 @@ export async function POST(request: Request) {
 
   if (!usernameRegEx.test(body.username)) {
     return NextResponse.json(
-      { error: "Nume de utilizator invalid" },
+      { error: "Nume de utilizator fără _ sau ." },
       {
         status: 400,
       }
