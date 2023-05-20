@@ -16,6 +16,12 @@ export const usernameRegEx =
 export const passwordRegEx =
   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
 
+export const enum EMAIL_TYPE_ENUM {
+  accountCreated = "accountCreated",
+  requestResetPassword = "requestResetPassword",
+  resetPassword = "resetPassword",
+}
+
 export const enum UNIVERSITY_CARD_TYPE_ENUM {
   vertical = "vertical",
   horizontal = "horizontal",
@@ -33,4 +39,9 @@ export const enum ORDER_BY_ENUM {
 export const enum ORDER_ENUM {
   asc = "asc",
   desc = "desc",
+}
+
+export const enum Role {
+  user = "user",
+  admin = "admin",
 }

@@ -64,3 +64,20 @@ export async function GET(request: Request, { params }) {
     { status: 404 }
   );
 }
+
+export async function DELETE(request: Request, { params }) {
+  await dbConnect();
+
+  const { id } = params;
+
+  const dorm = await Dorm.findByIdAndDelete(id);
+
+  if (dorm) {
+    return NextResponse.json(dorm);
+  }
+
+  return NextResponse.json(
+    { error: `No dorm found with the id '${id}'` },
+    { status: 404 }
+  );
+}

@@ -18,7 +18,7 @@ export default function Register() {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-  
+
   const {
     register,
     handleSubmit,

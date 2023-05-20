@@ -78,6 +78,8 @@ export async function POST(request: Request) {
 
   const body = await request.json();
 
+  console.log(body);
+
   if (await Dorm.findOne({ name: body.name })) {
     return NextResponse.json(
       { error: `Dorm with the name '${body.name}' already exists` },
@@ -85,20 +87,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const foundLocation = await Location.findOne({ name: body.location });
-
-  if (!foundLocation) {
-    return NextResponse.json(
-      {
-        error: `Unable to create dorm: Location with the id '${body.location}' not found`,
-      },
-      { status: 400 }
-    );
-  }
-
-  const foundUniversity = await University.findOne({
-    name: body.university,
-  });
+  const foundUniversity = await University.findById(body.university);
 
   if (!foundUniversity) {
     return NextResponse.json(
@@ -111,9 +100,10 @@ export async function POST(request: Request) {
 
   const newDorm = new Dorm({
     name: body.name,
-    university: foundUniversity.id,
-    location: foundLocation.id,
     address: body.address,
+    position: body.position,
+    university: foundUniversity.id,
+    location: foundUniversity.location.name,
   });
 
   return newDorm
@@ -127,4 +117,40 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     });
+}
+
+export async function PUT(request: Request) {
+  await dbConnect();
+
+  const body = await request.json();
+
+  const initialDorm = await Dorm.findById(body._id);
+
+  if (initialDorm.name !== body.name) {
+    const dorm = await Dorm.findOne({
+      name: body.name,
+    });
+
+    if (dorm) {
+      return NextResponse.json(
+        { error: "Nume deja folosit" },
+        {
+          status: 400,
+        }
+      );
+    }
+  }
+
+  if (!(await University.findById(body.university))) {
+    return NextResponse.json(
+      { error: "Universitatea nu există" },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const updatedDorm = await Dorm.findByIdAndUpdate(body._id, body);
+
+  return NextResponse.json(updatedDorm);
 }

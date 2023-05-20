@@ -18,3 +18,20 @@ export async function GET(request: Request, { params }) {
     { status: 404 }
   );
 }
+
+export async function DELETE(request: Request, { params }) {
+  await dbConnect();
+
+  const { id } = params;
+
+  const location = await Location.findByIdAndDelete(id);
+
+  if (location) {
+    return NextResponse.json(location);
+  }
+
+  return NextResponse.json(
+    { error: `No location found with the id '${id}'` },
+    { status: 404 }
+  );
+}

@@ -18,3 +18,20 @@ export async function GET(request: Request, { params }) {
     { status: 404 }
   );
 }
+
+export async function DELETE(request: Request, { params }) {
+  await dbConnect();
+
+  const { id } = params;
+
+  const university = await University.findByIdAndDelete(id);
+
+  if (university) {
+    return NextResponse.json(university);
+  }
+
+  return NextResponse.json(
+    { error: `No university found with the id '${id}'` },
+    { status: 404 }
+  );
+}

@@ -2,7 +2,12 @@ import dbConnect from "@/lib/dbConnect";
 import User from "@/common/models/User";
 import bcrypt from "bcrypt";
 import { sendEmail } from "@/common/utils/email/sendEmail";
-import { emailRegEx, passwordRegEx, usernameRegEx } from "@/common/Constants";
+import {
+  EMAIL_TYPE_ENUM,
+  emailRegEx,
+  passwordRegEx,
+  usernameRegEx,
+} from "@/common/Constants";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -89,18 +94,19 @@ export async function POST(request: Request) {
     username: body.username,
     password: hashedPassword,
     image: "",
+    role: "user",
   });
 
   return newUser
     .save()
     .then(() => {
       sendEmail(
+        EMAIL_TYPE_ENUM.accountCreated,
         newUser.email,
         "Cont creat cu succes",
         {
           name: newUser.username,
-        },
-        "../../../../../common/utils/email/template/accountCreated.handlebars"
+        }
       );
 
       return NextResponse.json({ msg: "Contul tău a fost creat cu succes" });

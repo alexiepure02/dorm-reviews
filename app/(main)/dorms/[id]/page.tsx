@@ -1,5 +1,5 @@
+import ReviewsSection from "@/components/ReviewsSection";
 import DormDetails from "./DormDetails";
-import ReviewsSection from "./ReviewsSection";
 
 export async function generateMetadata({ params, searchParams }) {
   const dorm = await getDormById(params.id);

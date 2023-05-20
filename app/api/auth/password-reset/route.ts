@@ -4,12 +4,15 @@ import User from "@/common/models/User";
 import bcrypt from "bcrypt";
 import { sendEmail } from "@/common/utils/email/sendEmail";
 import Token from "@/common/models/Token";
-import { passwordRegEx } from "@/common/Constants";
+import { EMAIL_TYPE_ENUM, passwordRegEx } from "@/common/Constants";
 import { NextResponse } from "next/server";
+import { type } from "os";
 
 export async function POST(request: Request) {
   await dbConnect();
   const body = await request.json();
+
+  console.log(body);
 
   let passwordResetToken = await Token.findOne({ userId: body.userId });
 
@@ -66,12 +69,12 @@ export async function POST(request: Request) {
   const user = await User.findById({ _id: body.userId });
 
   sendEmail(
+    EMAIL_TYPE_ENUM.resetPassword,
     user.email,
     "Parolă resetată cu success",
     {
       name: user.username,
-    },
-    "../../../../../common/utils/email/template/resetPassword.handlebars"
+    }
   );
   await passwordResetToken.deleteOne({ userId: body.userId });
 

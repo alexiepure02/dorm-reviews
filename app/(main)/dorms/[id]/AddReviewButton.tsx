@@ -1,20 +1,15 @@
 "use client";
 
 import Button from "@/components/Button";
-import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default () => {
-  const router = useRouter();
   const pathname = usePathname();
 
-  const handleAddReviewClick = () => router.push(pathname + "/add-review");
-
   return (
-    <Button
-      className="px-8 text-lg font-semibold"
-      onClick={handleAddReviewClick}
-    >
-      Adaugă o Recenzie
+    <Button className="px-8 text-lg font-semibold">
+      <Link href={pathname + "/add-review"}>Adaugă o Recenzie</Link>
     </Button>
   );
 };

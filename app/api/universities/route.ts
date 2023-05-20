@@ -72,3 +72,39 @@ export async function POST(request: Request) {
       );
     });
 }
+
+export async function PUT(request: Request) {
+  await dbConnect();
+
+  const body = await request.json();
+
+  const initialUniversity = await University.findById(body._id);
+
+  if (initialUniversity.name !== body.name) {
+    const university = await University.findOne({
+      name: body.name,
+    });
+
+    if (university) {
+      return NextResponse.json(
+        { error: "Nume deja folosit" },
+        {
+          status: 400,
+        }
+      );
+    }
+  }
+
+  if (!(await Location.findById(body.location))) {
+    return NextResponse.json(
+      { error: "Locația nu există" },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const updatedUniversity = await University.findByIdAndUpdate(body._id, body);
+
+  return NextResponse.json(updatedUniversity);
+}

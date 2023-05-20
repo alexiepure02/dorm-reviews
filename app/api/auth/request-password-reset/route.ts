@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import { randomBytes } from "crypto";
 import { sendEmail } from "@/common/utils/email/sendEmail";
 import Token from "@/common/models/Token";
-import { emailRegEx } from "@/common/Constants";
+import { EMAIL_TYPE_ENUM, emailRegEx } from "@/common/Constants";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -47,10 +47,10 @@ export async function POST(request: Request) {
 
   const link = `${process.env.NEXT_PUBLIC_API_URL}/password-reset?token=${resetToken}&id=${user._id}`;
   await sendEmail(
+    EMAIL_TYPE_ENUM.requestResetPassword,
     user.email,
     "Resetare Parolă",
-    { name: user.username, link: link },
-    "../../../../../common/utils/email/template/requestResetPassword.handlebars"
+    { name: user.username, link: link }
   );
 
   return NextResponse.json({ msg: "Mail sent succesfully" });

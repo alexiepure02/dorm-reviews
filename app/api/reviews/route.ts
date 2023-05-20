@@ -136,7 +136,7 @@ export async function POST(request: Request, { params }) {
     );
   }
 
-  if (body.roomRating === 0) {
+  if (body.roomRating < 1 || body.roomRating > 5) {
     return NextResponse.json(
       {
         error: "Nu ai selectat un rating pentru cameră",
@@ -145,7 +145,7 @@ export async function POST(request: Request, { params }) {
     );
   }
 
-  if (body.bathRating === 0) {
+  if (body.bathRating < 1 || body.bathRating > 5) {
     return NextResponse.json(
       {
         error: "Nu ai selectat un rating pentru baie",
@@ -154,7 +154,7 @@ export async function POST(request: Request, { params }) {
     );
   }
 
-  if (body.kitchenRating === 0) {
+  if (body.kitchenRating < 1 || body.kitchenRating > 5) {
     return NextResponse.json(
       {
         error: "Nu ai selectat un rating pentru bucătărie",
@@ -163,7 +163,7 @@ export async function POST(request: Request, { params }) {
     );
   }
 
-  if (body.locationRating === 0) {
+  if (body.locationRating < 1 || body.locationRating > 5) {
     return NextResponse.json(
       {
         error: "Nu ai selectat un rating pentru locație",

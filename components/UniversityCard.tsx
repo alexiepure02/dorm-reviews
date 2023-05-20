@@ -1,8 +1,6 @@
-"use client";
-
-import { useRouter } from "next/navigation";
 import { BiMapPin } from "react-icons/bi";
 import { UNIVERSITY_CARD_TYPE_ENUM } from "../common/Constants";
+import Link from "next/link";
 
 interface UniversityCardProps {
   type?: UNIVERSITY_CARD_TYPE_ENUM;
@@ -27,17 +25,14 @@ export default ({ type, university }: UniversityCardProps) => {
 
     university.description = "";
   }
-  const router = useRouter();
-
-  const goToUniversity = () => router.push("universities/" + university._id);
 
   return (
-    <div
+    <Link
+      href={"universities/" + university._id}
       className={
         "flex shadow-lg rounded-2xl gap-2 cursor-pointer transition duration-500 hover:bg-hover hover:-translate-y-2 " +
         typeClassName
       }
-      onClick={goToUniversity}
     >
       <img src="/university.jpg" alt="University" className={imageClassName} />
       <div className="flex flex-col p-6 gap-1">
@@ -50,6 +45,6 @@ export default ({ type, university }: UniversityCardProps) => {
         </div>
         <p>{university.description}</p>
       </div>
-    </div>
+    </Link>
   );
 };

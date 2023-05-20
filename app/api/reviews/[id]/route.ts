@@ -20,3 +20,20 @@ export async function GET(request: Request, { params }) {
     { status: 404 }
   );
 }
+
+export async function DELETE(request: Request, { params }) {
+  await dbConnect();
+
+  const { id } = params;
+
+  const review = await Review.findByIdAndDelete(id);
+
+  if (review) {
+    return NextResponse.json(review);
+  }
+
+  return NextResponse.json(
+    { error: `No review found with the id '${id}'` },
+    { status: 404 }
+  );
+}

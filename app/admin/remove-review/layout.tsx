@@ -1,8 +1,8 @@
 export const metadata = {
-  title: "Cont - Căminul Tău",
+  title: "Șterge Recenzie - Căminul Tău",
 };
 
-export default function PasswordResetLayout({
+export default function RemoveReviewsLayout({
   children,
 }: {
   children: React.ReactNode;

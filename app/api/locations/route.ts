@@ -42,3 +42,30 @@ export async function POST(request: Request) {
       );
     });
 }
+
+export async function PUT(request: Request) {
+  await dbConnect();
+
+  const body = await request.json();
+
+  const initialLocation = await Location.findById(body._id);
+
+  if (initialLocation.name !== body.name) {
+    const location = await Location.findOne({
+      name: body.name,
+    });
+
+    if (location) {
+      return NextResponse.json(
+        { error: "Nume deja folosit" },
+        {
+          status: 400,
+        }
+      );
+    }
+  }
+
+  const updatedLocation = await Location.findByIdAndUpdate(body._id, body);
+
+  return NextResponse.json(updatedLocation);
+}

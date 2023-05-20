@@ -26,6 +26,15 @@ export default function Login() {
     password: string;
     cpassword: string;
   }) => {
+    console.log(
+      JSON.stringify({
+        token: token,
+        userId: id,
+        password: values.password,
+        cpassword: values.cpassword,
+      })
+    );
+
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/password-reset`, {
       method: "POST",
       body: JSON.stringify({

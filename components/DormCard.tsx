@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AiFillStar } from "react-icons/ai";
 
@@ -10,12 +11,10 @@ interface DormCardProps {
 export default ({ dorm }: DormCardProps) => {
   const router = useRouter();
 
-  const goToDorm = () => router.push("dorms/" + dorm.dorm._id);
-
   return (
-    <div
+    <Link
+      href={"dorms/" + dorm.dorm._id}
       className="flex shadow-lg rounded-2xl gap-2 cursor-pointer transition duration-500 hover:bg-hover hover:-translate-y-2 max-w-[342px] flex-col"
-      onClick={goToDorm}
     >
       <img src="/dorm.jpg" alt="dorm" className="rounded-t-2xl" />
       <div className="flex p-6 justify-between">
@@ -43,6 +42,6 @@ export default ({ dorm }: DormCardProps) => {
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

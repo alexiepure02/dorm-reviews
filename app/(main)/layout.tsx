@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import "../globals.css";
-import SessionProvider from "./SessionProvider";
+import SessionProvider from "@/contexts/SessionProvider";
 
 export const metadata = {
   title: "Acasă - Căminul Tău",

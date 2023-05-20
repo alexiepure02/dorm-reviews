@@ -26,8 +26,8 @@ export default ({ dorm }: ReviewFormProps) => {
   const pathname = usePathname();
 
   const [error, setError] = useState(
-    // ""
-    "Comentariul are mai puțin de 100 de caractere"
+    ""
+    // "Comentariul are mai puțin de 100 de caractere"
   );
 
   const [currentMenu, setCurrentMenu] = useState(0);

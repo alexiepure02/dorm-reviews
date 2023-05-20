@@ -65,28 +65,34 @@ const handler = NextAuth({
   adapter: MongoDBAdapter(clientPromise),
   callbacks: {
     session: async ({ session, token }) => {
+      // console.log("session: ", token.sub, " - user: ", session?.user);
       if (token.sub && session?.user) {
+        // console.log(token.sub, session?.user);
         session.user.id = token.sub;
+        session.user.role = token.role;
       }
       return session;
     },
     async jwt({ token, account, user }) {
+      // console.log("jwt: ", user);
+      // console.log("token: ", token);
       if (user && account) {
         token.accessToken = account.access_token;
-        // console.log("username exists on user: ", user.username);
         //@ts-ignore
         token.name = user.username;
+        //@ts-ignore
+        token.role = user.role;
       }
       return token;
     },
   },
   session: {
     strategy: "jwt",
-    maxAge: 3 * 60 * 60, // 3 hours
+    maxAge: 48 * 60 * 60, // 48 hrs
   },
   jwt: {
     secret: process.env.NEXTAUTH_JWT_SECRET,
-    maxAge: 3 * 60 * 60,
+    maxAge: 48 * 60 * 60,
   },
   secret: process.env.NEXTAUTH_SECRET,
 });
