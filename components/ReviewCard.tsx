@@ -1,6 +1,6 @@
 import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 import CustomRating from "./CustomRating";
-import RemoveReviewButton from "./RemoveReviewButton";
+import OptionsButton from "./OptionsButton";
 
 interface ReviewCardProps {
   review: any;
@@ -18,7 +18,7 @@ export default ({
 
   return (
     <div className="relative flex flex-col shadow-lg rounded-2xl px-4 sm:px-9 py-6 gap-4">
-      <div className="flex">
+      <div className="flex justify-between">
         <div className="flex gap-4">
           <img
             src="/avatar.svg"
@@ -35,38 +35,21 @@ export default ({
             <CustomRating rating={review.overallRating} decimals={1} />
           </div>
         </div>
-        <div
-          className="self-start p-2 ml-auto rounded-full transition duration-200 hover:bg-hover cursor-pointer"
-          onClick={handleExpandClick}
-        >
-          {expandedId === review._id ? (
-            <BiUpArrow className="w-5 h-5" />
-          ) : (
-            <BiDownArrow className="w-5 h-5" />
-          )}
+        <div className="flex items-start">
+          <div
+            className="p-2 rounded-full transition duration-200 hover:bg-hover cursor-pointer"
+            onClick={handleExpandClick}
+          >
+            {expandedId === review._id ? (
+              <BiUpArrow className="w-5 h-5" />
+            ) : (
+              <BiDownArrow className="w-5 h-5" />
+            )}
+          </div>
+          <OptionsButton reviewId={review._id} userId={review.user._id} />
         </div>
       </div>
       {review.comment}
-      {/* <div className="flex gap-4">
-        <img
-          src="/dorm.jpg"
-          alt="Dorm"
-          className="align-middle w-14 h-14 cursor-pointer"
-          onClick={() => console.log("open dorm pic.")}
-        />
-        <img
-          src="/dorm.jpg"
-          alt="Dorm"
-          className="align-middle w-14 h-14 cursor-pointer"
-          onClick={() => console.log("open dorm pic.")}
-        />
-        <img
-          src="/dorm.jpg"
-          alt="Dorm"
-          className="align-middle w-14 h-14 cursor-pointer"
-          onClick={() => console.log("open dorm pic.")}
-        />
-      </div> */}
       <div
         className={` overflow-hidden transition-[max-height] duration-300 ${
           expandedId === review._id ? " max-h-full" : "max-h-0"
@@ -97,7 +80,6 @@ export default ({
           <p>{review.locationComment}</p>
         </div>
       </div>
-      <RemoveReviewButton userId={review.user._id} reviewId={review._id} />
     </div>
   );
 };

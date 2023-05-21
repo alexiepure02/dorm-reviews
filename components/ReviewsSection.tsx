@@ -79,6 +79,8 @@ export default function ReviewsSection({
             <h1 className="text-4xl font-medium">Recenziile mele</h1>
           )}
           <SortSelect
+            orderBy={orderBy}
+            order={order}
             handleOrderBy={handleOrderBy}
             handleOrder={handleOrder}
             handlePage={handlePage}

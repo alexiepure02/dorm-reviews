@@ -3,7 +3,9 @@ import DormDetails from "./DormDetails";
 
 export async function generateMetadata({ params, searchParams }) {
   const dorm = await getDormById(params.id);
-  return { title: dorm.dorm.name + " - Căminul Tău" };
+  return dorm
+    ? { title: dorm.dorm.name + " - Căminul Tău" }
+    : { title: "Cămin - Căminul Tău" };
 }
 
 async function getDormById(id: string) {
