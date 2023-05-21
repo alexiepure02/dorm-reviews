@@ -199,7 +199,7 @@ export default ({ dorm }: ReviewFormProps) => {
           <ReviewMenu
             menuName="Bucătărie"
             MenuIcon={MdKitchen}
-            helperText="Furculițe? cuțite? oale? tigăi? Aragaz? Cuptor? sau doar îți comanzi mancarea de la McDonald's."
+            helperText="Furculițe? Cuțite? Oale? Tigăi? Aragaz? Cuptor? Sau doar îți comanzi mâncarea de la McDonald's."
             dormName={dorm.name}
             rating={kitchenRating}
             comment={kitchenComment}

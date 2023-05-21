@@ -3,7 +3,8 @@ import UniversityCard from "./UniversityCard";
 
 async function getTopUniversities(limit: number) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/universities/top?limit=${limit}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/universities/top?limit=${limit}`,
+    { cache: "no-store" }
   );
   if (!res.ok) {
     return null;
