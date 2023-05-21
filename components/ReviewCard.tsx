@@ -1,5 +1,6 @@
 import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 import CustomRating from "./CustomRating";
+import RemoveReviewButton from "./RemoveReviewButton";
 
 interface ReviewCardProps {
   review: any;
@@ -16,7 +17,7 @@ export default ({
   const handleExpandClick = () => handleExpand(review._id);
 
   return (
-    <div className="flex flex-col shadow-lg rounded-2xl px-4 sm:px-9 py-6 gap-4">
+    <div className="relative flex flex-col shadow-lg rounded-2xl px-4 sm:px-9 py-6 gap-4">
       <div className="flex">
         <div className="flex gap-4">
           <img
@@ -96,6 +97,7 @@ export default ({
           <p>{review.locationComment}</p>
         </div>
       </div>
+      <RemoveReviewButton userId={review.user._id} reviewId={review._id} />
     </div>
   );
 };

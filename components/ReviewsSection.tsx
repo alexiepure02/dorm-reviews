@@ -21,7 +21,7 @@ interface ReviewsSectionProps {
 
 export default function ReviewsSection({
   admin = false,
-  revalidate,
+  revalidate = false,
   showAddReviewButton = true,
   dorm,
   checkedReviewIds,
@@ -42,7 +42,9 @@ export default function ReviewsSection({
   if (dorm) {
     url = `${process.env.NEXT_PUBLIC_API_URL}/api/reviews?dorm=${dorm}&page=${page}&limit=${limit}&orderBy=${orderBy}&order=${order}`;
   } else {
-    url = `${process.env.NEXT_PUBLIC_API_URL}/api/reviews?user=${user}&page=${page}&limit=${limit}&orderBy=${orderBy}&order=${order}`;
+    if (user) {
+      url = `${process.env.NEXT_PUBLIC_API_URL}/api/reviews?user=${user}&page=${page}&limit=${limit}&orderBy=${orderBy}&order=${order}`;
+    }
   }
 
   const { data, error, isLoading } = useSWR<any>(url, fetcher);
@@ -55,8 +57,9 @@ export default function ReviewsSection({
     setPageCount(data.countReviews);
 
   useEffect(() => {
-    console.log("revalidate", url);
-    mutate(url);
+    if (revalidate) {
+      mutate(url);
+    }
   }, [revalidate]);
 
   const handlePage = (page: number) => setPage(page);
