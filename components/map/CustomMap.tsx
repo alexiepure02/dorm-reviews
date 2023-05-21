@@ -25,7 +25,7 @@ export default ({ locations }: CustomMapProps) => {
         zoom={6}
         // scrollWheelZoom={false}
         // dragging={false}
-        // zoomControl={false}
+        zoomControl={false}
         style={{
           minHeight: "100%",
           height: "100%",

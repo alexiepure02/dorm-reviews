@@ -17,6 +17,7 @@
     "bcrypt": "^5.1.0",
     "dayjs": "^1.11.7",
     "handlebars": "^4.7.7",
+    "lodash": "^4.17.21",
     "mongodb": "^4.16.0",
     "mongoose": "^6.11.1",
     "next": "^13.4.1",

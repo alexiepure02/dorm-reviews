@@ -39,9 +39,9 @@ export default async function Page({ params }) {
           <MdOutlineLocationCity className="w-9 h-9" />
           <h1 className=" text-4xl font-medium">{location.name}</h1>
         </div>
-        <p className=" max-w-lg">{location.description}</p>
+        <p className=" max-w-xl">{location.description}</p>
       </div>
-      <div className="max-w-screen-2xl 2xl:mx-auto flex justify-center 2xl:justify-start p-4 pb-6">
+      <div className="max-w-screen-2xl 2xl:mx-auto flex justify-center 2xl:justify-start pt-4">
         <h1 className="text-4xl font-medium">Universități</h1>
       </div>
       <UniversityCardsList universities={universities} />

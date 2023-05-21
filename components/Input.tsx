@@ -8,6 +8,8 @@ interface InputProps {
   type: string;
   placeholder: string;
   rules?: object;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default ({
@@ -17,6 +19,7 @@ export default ({
   id,
   type,
   placeholder,
+  onChange,
 }: InputProps) => {
   return (
     <div className={"relative " + classNameDiv}>
@@ -29,6 +32,7 @@ export default ({
         id={id}
         type={type}
         placeholder={placeholder}
+        onChange={onChange}
       />
     </div>
   );
