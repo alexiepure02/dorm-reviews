@@ -1,7 +1,7 @@
 "use client";
 
 import { Role } from "@/common/Constants";
-import fetcher, { isLatitude, isLongitude } from "@/common/utils/functions";
+import fetcher from "@/common/utils/functions";
 import Button from "@/components/Button";
 import FormInput from "@/components/FormInput";
 import { useEffect, useState } from "react";

@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import Location from "@/common/models/Location";
 import { NextResponse } from "next/server";
+import { includeDiacritics } from "@/common/utils/functions";
 
 export async function GET(request: Request) {
   await dbConnect();
@@ -12,8 +13,10 @@ export async function GET(request: Request) {
   const limitParam: number | null = limit !== null ? +limit : null;
 
   if (query && limitParam) {
+    const diacriticsQuery = includeDiacritics(query);
+
     const locations = await Location.find({
-      name: { $regex: query, $options: "i" },
+      name: { $regex: diacriticsQuery, $options: "i" },
     })
       .limit(limitParam)
       .select("name");

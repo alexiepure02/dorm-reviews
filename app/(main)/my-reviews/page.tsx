@@ -1,7 +1,5 @@
-import Input from "@/components/Input";
 import ReviewsSection from "@/components/ReviewsSection";
 import SearchInput from "@/components/SearchInput";
-import { BiSearchAlt } from "react-icons/bi";
 
 export const metadata = {
   title: "Recenziile mele - Căminul Tău",
@@ -17,13 +15,6 @@ export default function Page() {
             Împărtășește-ți povestea și ajută pe cineva să-și aleagă viitorul
             loc unde să locuiască în timpul studiilor
           </p>
-          {/* <Input
-          Icon={BiSearchAlt}
-          id="search"
-          type="text"
-          placeholder="Caută un cămin"
-          classNameDiv="w-full max-w-3xl"
-        /> */}
           <SearchInput />
         </div>
       </div>

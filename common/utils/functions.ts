@@ -13,3 +13,11 @@ export function isLatitude(lat: number) {
 export function isLongitude(lng: number) {
   return isFinite(lng) && Math.abs(lng) <= 180;
 }
+
+export function includeDiacritics(query: string) {
+  return query
+    .replaceAll("s", "[sș]")
+    .replaceAll("t", "[tț]")
+    .replaceAll("a", "[aăâ]")
+    .replaceAll("i", "[iî]");
+}

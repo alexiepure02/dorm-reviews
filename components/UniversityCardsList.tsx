@@ -5,6 +5,7 @@ import UniversityCard from "./UniversityCard";
 import Input from "./Input";
 import { BiSearchAlt } from "react-icons/bi";
 import { debounce } from "lodash";
+import { includeDiacritics } from "@/common/utils/functions";
 
 interface UniversityCardsListProps {
   universities: any;
@@ -21,7 +22,8 @@ export default ({ universities }: UniversityCardsListProps) => {
   );
 
   const filteredUniversities = universities.filter((university: any) => {
-    const regex = new RegExp(searchValue, "i");
+    const diacriticsQuery = includeDiacritics(searchValue);
+    const regex = new RegExp(diacriticsQuery, "i");
     return (
       !searchValue ||
       regex.test(university.name) ||
