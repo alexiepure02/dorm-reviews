@@ -1,5 +1,5 @@
 import User from "@/common/models/User";
-import { includeDiacritics } from "@/common/utils/functions";
+import { reformatQuery } from "@/common/utils/functions";
 import dbConnect from "@/lib/dbConnect";
 import { NextResponse } from "next/server";
 
@@ -13,10 +13,10 @@ export async function GET(request: Request) {
   const limitParam: number | null = limit !== null ? +limit : null;
 
   if (query && limitParam) {
-    const diacriticsQuery = includeDiacritics(query);
+    const formattedQuery = reformatQuery(query);
 
     const users = await User.find({
-      username: { $regex: diacriticsQuery, $options: "i" },
+      username: { $regex: formattedQuery, $options: "i" },
     })
       .limit(limitParam)
       .select("username");

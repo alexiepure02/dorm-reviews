@@ -1,13 +1,14 @@
 "use client";
 
-import { Role } from "@/common/Constants";
-import fetcher, { isLatitude, isLongitude } from "@/common/utils/functions";
+import fetcher from "@/common/utils/functions";
 import Button from "@/components/Button";
 import FormInput from "@/components/FormInput";
 import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useSWR, { mutate } from "swr";
 import SelectLocation from "./SelectLocation";
+import ImageInput from "@/components/ImageInput";
+import ImagesGrid from "@/components/ImagesGrid";
 
 interface UniversityFormProps {
   universityId: any;
@@ -19,6 +20,8 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
   const [showWarning, setShowWarning] = useState(false);
   const [newUniversity, setNewUniversity] = useState<any>();
   const [newLocationId, setNewLocationId] = useState("");
+  const [newImage, setNewImage] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -42,6 +45,15 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
     setNewUniversity(university);
   }, [university]);
 
+  const {
+    data: imageUrls,
+    error: errImageUrls,
+    isLoading: isLoadingImageUrls,
+  } = useSWR<any>(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/image/${universityId}`,
+    fetcher
+  );
+
   const onFirstSubmit: SubmitHandler<FieldValues> = async (values: {
     name: string;
     description: string;
@@ -58,13 +70,10 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
       location: newLocationId || initialUniversity.location._id,
     };
 
-    console.log(inputUniversity.location);
-    console.log(reformatedInitialUniversity.location);
-    console.log(newLocationId);
-
     if (
       JSON.stringify(inputUniversity) !==
-      JSON.stringify(reformatedInitialUniversity)
+        JSON.stringify(reformatedInitialUniversity) ||
+      newImage
     ) {
       setNewUniversity(inputUniversity);
       toggleOnWarning();
@@ -77,29 +86,98 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
   };
 
   const onSecondSubmit = async () => {
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/universities`, {
-      method: "PUT",
-      body: JSON.stringify(newUniversity),
-    }).then(async (res) => {
+    setLoading(true);
+
+    const reformatedInitialUniversity = {
+      ...initialUniversity,
+      location: initialUniversity.location._id,
+    };
+
+    if (
+      JSON.stringify(newUniversity) !==
+      JSON.stringify(reformatedInitialUniversity)
+    ) {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/universities`, {
+        method: "PUT",
+        body: JSON.stringify(newUniversity),
+      }).then(async (res) => {
+        if (res.ok) {
+          setSuccess("Universitate actualizată cu succes");
+          setError("");
+        } else {
+          const response = await res.json();
+          setSuccess("");
+          setError(response.error);
+        }
+      });
+    }
+
+    if (newImage) {
+      const formData = new FormData();
+
+      formData.append("name", initialUniversity._id);
+      formData.append("file", newImage);
+
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/image`, {
+        method: "POST",
+        body: formData,
+      }).then(async (res) => {
+        if (res.ok) {
+          setSuccess("Universitate actualizată cu succes");
+          setError("");
+        } else {
+          const response = await res.json();
+          setSuccess("");
+          setError(response.error);
+          return;
+        }
+      });
+      setNewImage(null);
+    }
+
+    mutate(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/universities/${universityId}`
+    );
+    mutate(`${process.env.NEXT_PUBLIC_API_URL}/api/image/${universityId}`);
+
+    toggleOffWarning();
+  };
+
+  const toggleOnWarning = () => setShowWarning(true);
+  const toggleOffWarning = () => {
+    setLoading(false);
+    setShowWarning(false);
+  };
+
+  const selectLocation = (locationId: string) => setNewLocationId(locationId);
+
+  const handleNewImage = (image: File | null) => {
+    setNewImage(image);
+  };
+
+  const handleError = (error: string) => {
+    setError(error);
+  };
+
+  const removeExistingImage = async (imageIndex: string) => {
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/image/${universityId}/${imageIndex}`,
+      {
+        method: "DELETE",
+      }
+    ).then(async (res) => {
       if (res.ok) {
-        setSuccess("Universitate actualizată cu succes");
+        setSuccess("Imagine ștearsă cu succes");
         setError("");
       } else {
         const response = await res.json();
         setSuccess("");
-        setError(response.error);
+        setError("Eroare la ștergerea imaginilor: " + response.message);
       }
     });
-    toggleOffWarning();
-    mutate(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/universities/${universityId}`
-    );
+
+    mutate(`${process.env.NEXT_PUBLIC_API_URL}/api/image/${universityId}`);
   };
-
-  const toggleOnWarning = () => setShowWarning(true);
-  const toggleOffWarning = () => setShowWarning(false);
-
-  const selectLocation = (locationId: string) => setNewLocationId(locationId);
 
   return (
     newUniversity &&
@@ -129,6 +207,23 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
           />
           <h1>Locație (actual: {initialUniversity.location.name})</h1>
           <SelectLocation selectLocation={selectLocation} />
+
+          <h1>Imagini actuale:</h1>
+          {imageUrls && imageUrls.length !== 0 && (
+            <ImagesGrid
+              removable
+              removeImage={removeExistingImage}
+              images={imageUrls}
+            />
+          )}
+
+          <h1>Adaugă o imagine: (landscape)</h1>
+          <ImageInput
+            newImage={newImage}
+            handleNewImage={handleNewImage}
+            handleError={handleError}
+          />
+
           {success && <h1 className="text-green-500">{success}</h1>}
           {error && <h1 className="text-red-500">{error}</h1>}
           <Button className="px-4" type="submit">
@@ -161,16 +256,28 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
                 {initialUniversity.location._id + " -> " + newLocationId}
               </h1>
             )}
+            {newImage && (
+              <>
+                <h1>Ai adăugat o imagine nouă:</h1>
+                <div className="grid grid-cols-2 gap-2">
+                  <img src={URL.createObjectURL(newImage)} className="w-64" />
+                </div>
+              </>
+            )}
           </div>
         </div>
-        <div className="flex gap-4">
-          <Button className="px-4" onClick={toggleOffWarning}>
-            Nu, mergi înapoi
-          </Button>
-          <Button className="px-4" onClick={onSecondSubmit}>
-            Da, actualizează
-          </Button>
-        </div>
+        {!loading ? (
+          <div className="flex gap-4">
+            <Button className="px-4" onClick={toggleOffWarning}>
+              Nu, mergi înapoi
+            </Button>
+            <Button className="px-4" onClick={onSecondSubmit}>
+              Da, actualizează
+            </Button>
+          </div>
+        ) : (
+          <h1>Așteaptă...</h1>
+        )}
       </>
     ))
   );

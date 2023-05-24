@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import University from "@/common/models/University";
 import { NextResponse } from "next/server";
-import { includeDiacritics } from "@/common/utils/functions";
+import { reformatQuery } from "@/common/utils/functions";
 
 export async function GET(request: Request) {
   await dbConnect();
@@ -13,10 +13,10 @@ export async function GET(request: Request) {
   const limitParam: number | null = limit !== null ? +limit : null;
 
   if (query && limitParam) {
-    const diacriticsQuery = includeDiacritics(query);
+    const formattedQuery = reformatQuery(query);
 
     const universities = await University.find({
-      name: { $regex: diacriticsQuery, $options: "i" },
+      name: { $regex: formattedQuery, $options: "i" },
     })
       .limit(limitParam)
       .select("name location")

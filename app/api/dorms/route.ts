@@ -78,8 +78,6 @@ export async function POST(request: Request) {
 
   const body = await request.json();
 
-  console.log(body);
-
   if (await Dorm.findOne({ name: body.name })) {
     return NextResponse.json(
       { error: `Dorm with the name '${body.name}' already exists` },

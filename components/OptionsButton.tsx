@@ -32,7 +32,6 @@ export default function OptionsButton({
   const handleCloseModal = () => setShowModal(false);
 
   useOutsideClick(dropdownRef, () => {
-    console.log("close list");
     handleCloseDropdown();
   });
   useOutsideClick(modalRef, () => {
@@ -66,10 +65,7 @@ export default function OptionsButton({
         <ul className="z-2 absolute mt-2 w-48 right-0 rounded bg-white ring-1 ring-gray-1 shadow-md">
           <li
             className="cursor-pointer select-none p-2 hover:bg-hover"
-            onClick={() => {
-              console.log("open modal");
-              handleOpenModal();
-            }}
+            onClick={handleOpenModal}
           >
             Șterge recenzia
           </li>

@@ -12,8 +12,6 @@ export async function POST(request: Request) {
   await dbConnect();
   const body = await request.json();
 
-  console.log(body);
-
   let passwordResetToken = await Token.findOne({ userId: body.userId });
 
   if (!passwordResetToken) {

@@ -36,8 +36,6 @@ export default function LocationForm({ locationId }: LocationFormProps) {
 
   const initialLocation = location;
 
-  console.log(location);
-
   useEffect(() => {
     setNewLocation(location);
   }, [location]);
@@ -55,9 +53,6 @@ export default function LocationForm({ locationId }: LocationFormProps) {
         description: values.description,
         position: [+values.lat, +values.long],
       };
-
-      console.log(JSON.stringify(inputLocation));
-      console.log(JSON.stringify(initialLocation));
 
       if (
         isLatitude(+values.lat) &&

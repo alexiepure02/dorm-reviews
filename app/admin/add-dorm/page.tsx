@@ -3,14 +3,17 @@
 import { isLatitude, isLongitude } from "@/common/utils/functions";
 import Button from "@/components/Button";
 import FormInput from "@/components/FormInput";
+import ImageInput from "@/components/ImageInput";
 import SearchInput from "@/components/SearchInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 
 export default function AddDormPage() {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [universityId, setUniversityId] = useState("");
+  const [newImage, setNewImage] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -22,6 +25,14 @@ export default function AddDormPage() {
 
   const handleUniversityId = (id: string) => setUniversityId(id);
 
+  const handleNewImage = (image: File | null) => {
+    setNewImage(image);
+  };
+
+  const handleError = (error: string) => {
+    setError(error);
+  };
+
   const onSubmit: SubmitHandler<FieldValues> = async (values: {
     name: string;
     address: string;
@@ -29,6 +40,8 @@ export default function AddDormPage() {
     long: string;
   }) => {
     if (isLatitude(+values.lat) && isLongitude(+values.long) && universityId) {
+      setLoading(true);
+
       await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dorms`, {
         method: "POST",
         body: JSON.stringify({
@@ -39,18 +52,38 @@ export default function AddDormPage() {
         }),
       }).then(async (res) => {
         if (res.status === 201) {
-          setSuccess("Universitate adăugată cu succes");
+          const response = await res.json();
+
+          if (newImage) {
+            const formData = new FormData();
+
+            formData.append("name", response._id);
+            formData.append("file", newImage);
+
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/image`, {
+              method: "POST",
+              body: formData,
+            });
+            setNewImage(null);
+          }
+
+          setSuccess("Cămin adăugat cu succes");
           setError("");
           reset();
           setUniversityId("");
         } else {
-          setError("Eroare la adăugarea universității");
+          setError("Eroare la adăugarea căminului");
         }
       });
     } else {
+      setSuccess("");
       setError("Datele introduse sunt invalide");
     }
   };
+
+  useEffect(() => {
+    if (loading) setLoading(false);
+  }, [success, error, universityId]);
 
   return (
     <form
@@ -91,7 +124,7 @@ export default function AddDormPage() {
         <FormInput
           id="long"
           type="text"
-          placeholder="Latitudine"
+          placeholder="Longitudine"
           register={register}
           rules={{
             required: true,
@@ -105,11 +138,23 @@ export default function AddDormPage() {
         showDorms={false}
         setSelectedItem={handleUniversityId}
       />
+
+      <h1>Adaugă o imagine: (landscape)</h1>
+      <ImageInput
+        newImage={newImage}
+        handleNewImage={handleNewImage}
+        handleError={handleError}
+      />
+
       {success && <h1 className="text-green-500">{success}</h1>}
       {error && <h1 className="text-red-500">{error}</h1>}
-      <Button className="mt-2 px-6" type="submit">
-        Adaugă
-      </Button>
+      {!loading ? (
+        <Button className="mt-2 px-6" type="submit">
+          Adaugă
+        </Button>
+      ) : (
+        <h1>Așteaptă...</h1>
+      )}
     </form>
   );
 }
