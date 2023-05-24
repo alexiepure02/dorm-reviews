@@ -1,12 +1,5 @@
 import { S3 } from "aws-sdk";
-import { IncomingForm } from "formidable";
 import { NextResponse } from "next/server";
-
-export const config = {
-  api: {
-    bodyParser: false, // Disable Next.js default body parser
-  },
-};
 
 const s3 = new S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,

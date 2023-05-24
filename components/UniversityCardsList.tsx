@@ -1,36 +1,48 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UniversityCard from "./UniversityCard";
 import Input from "./Input";
 import { BiSearchAlt } from "react-icons/bi";
 import { debounce } from "lodash";
-import { includeDiacritics } from "@/common/utils/functions";
+import { reformatQuery } from "@/common/utils/functions";
 
 interface UniversityCardsListProps {
   universities: any;
 }
 
 export default ({ universities }: UniversityCardsListProps) => {
-  const [searchValue, setSearchValue] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = debounce(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchValue(event.target.value);
+      const input = event.target.value;
+      const formattedQuery = reformatQuery(input);
+
+      if (formattedQuery !== searchQuery) setSearchQuery(formattedQuery);
     },
-    500
+    600
   );
 
   const filteredUniversities = universities.filter((university: any) => {
-    const diacriticsQuery = includeDiacritics(searchValue);
-    const regex = new RegExp(diacriticsQuery, "i");
+    const regex = new RegExp(searchQuery, "i");
     return (
-      !searchValue ||
+      !searchQuery ||
       regex.test(university.name) ||
       regex.test(university.location.name)
     );
   });
-  console.log(filteredUniversities);
+
+  useEffect(() => {
+    // if (loading) setTimeout(() =>
+    setLoading(false);
+    // , 200);
+  }, [loading]);
+
+  useEffect(() => {
+    setLoading(true);
+  }, [searchQuery]);
 
   return (
     <div className="flex flex-col items-center py-4">
@@ -40,17 +52,20 @@ export default ({ universities }: UniversityCardsListProps) => {
           id="search-value"
           type="text"
           placeholder="Caută o universitate"
-          value={searchValue}
           onChange={handleSearch}
         />
       </div>
       {universities.length !== 0 ? (
         filteredUniversities.length !== 0 ? (
-          <div className="max-w-screen-2xl 2xl:mx-auto flex flex-col items-center 2xl:grid 2xl:grid-cols-2 gap-8 p-4">
-            {filteredUniversities.map((university: any, index: number) => (
-              <UniversityCard key={index} university={university} />
-            ))}
-          </div>
+          !loading ? (
+            <div className="max-w-screen-2xl 2xl:mx-auto flex flex-col items-center 2xl:grid 2xl:grid-cols-2 gap-8 p-4">
+              {filteredUniversities.map((university: any, index: number) => (
+                <UniversityCard key={index} university={university} />
+              ))}
+            </div>
+          ) : (
+            <h1>Loading..</h1>
+          )
         ) : (
           <h1>Ne pare rău, nu am avem universitatea pe care o cauți.</h1>
         )
