@@ -25,9 +25,13 @@ export async function GET(request: Request) {
 
     universities = await University.find({
       location: searchedLocation.id,
-    }).populate("location", "name -_id");
+    }).populate({ path: "location", model: Location, select: "name -_id" });
   } else {
-    universities = await University.find().populate("location", "name -_id");
+    universities = await University.find().populate({
+      path: "location",
+      model: Location,
+      select: "name -_id",
+    });
   }
 
   return NextResponse.json(universities);

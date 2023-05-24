@@ -11,7 +11,7 @@ export async function GET(request: Request, { params }) {
 
   const universities = await University.find()
     .limit(limit)
-    .populate("location", "name -_id");
+    .populate({ path: "location", model: Location, select: "name -_id" });
 
   return NextResponse.json(universities);
 }

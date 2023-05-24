@@ -11,8 +11,8 @@ export async function GET(request: Request, { params }) {
   const { id } = params;
 
   const dorm = await Dorm.findById(id)
-    .populate("location")
-    .populate("university");
+    .populate({ path: "location", model: Location })
+    .populate({ path: "university", model: University });
 
   if (dorm) {
     const ratings = await Review.find(

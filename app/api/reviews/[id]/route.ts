@@ -10,8 +10,8 @@ export async function GET(request: Request, { params }) {
   const { id } = params;
 
   const review = await Review.findById(id)
-    .populate("user", "-password")
-    .populate("dorm");
+    .populate({ path: "user", model: User, select: "-password" })
+    .populate({ path: "dorm", model: Dorm });
 
   if (review) {
     return NextResponse.json(review);

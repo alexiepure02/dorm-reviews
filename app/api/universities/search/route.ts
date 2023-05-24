@@ -21,7 +21,7 @@ export async function GET(request: Request) {
     })
       .limit(limitParam)
       .select("name location")
-      .populate("location", "name");
+      .populate({ path: "location", model: Location, select: "name" });
 
     return NextResponse.json(universities);
   }

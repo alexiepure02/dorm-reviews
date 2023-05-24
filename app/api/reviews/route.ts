@@ -89,8 +89,8 @@ export async function GET(request: Request) {
   sortCriteria[orderBy] = order;
 
   reviews = await Review.find(searchCriteria)
-    .populate("user", "-password")
-    .populate("dorm", "name")
+    .populate({ path: "user", model: User, select: "-password" })
+    .populate({ path: "dorm", model: Dorm, select: "name" })
     .limit(limit)
     .skip(page * limit)
     .sort(sortCriteria);

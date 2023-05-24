@@ -8,7 +8,10 @@ export async function GET(request: Request, { params }) {
 
   const { id } = params;
 
-  const university = await University.findById(id).populate("location");
+  const university = await University.findById(id).populate({
+    path: "location",
+    model: Location,
+  });
 
   if (university) {
     return NextResponse.json(university);
