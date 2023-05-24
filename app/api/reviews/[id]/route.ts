@@ -1,5 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import Review from "@/common/models/Review";
+import User from "@/common/models/User";
+import Dorm from "@/common/models/Dorm";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request, { params }) {

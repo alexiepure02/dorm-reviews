@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import Dorm from "@/common/models/Dorm";
+import University from "@/common/models/University";
 import { NextResponse } from "next/server";
 import { reformatQuery } from "@/common/utils/functions";
 

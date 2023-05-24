@@ -1,4 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
+import Location from "@/common/models/Location";
+import University from "@/common/models/University";
 import Dorm from "@/common/models/Dorm";
 import Review from "@/common/models/Review";
 import { NextResponse } from "next/server";
