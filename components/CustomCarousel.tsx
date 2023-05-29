@@ -2,7 +2,7 @@
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
-import { PropsWithChildren, ReactChild, ReactElement, ReactNode } from "react";
+import { ReactChild, ReactElement, ReactNode } from "react";
 
 interface CustomCarouselProps {
   selectedItem?: number;
@@ -13,6 +13,7 @@ interface CustomCarouselProps {
   showArrows?: boolean;
   showThumbs?: boolean;
   dynamicHeight?: boolean;
+  onClickItem?: (index: number) => void;
   children: any; // won't work for ReactNode, and asks for ReactChild[] which is deprecated
 }
 
@@ -35,8 +36,27 @@ export default function CustomCarousel({
   showArrows = true,
   showThumbs = true,
   dynamicHeight = false,
+  onClickItem,
   children,
 }: CustomCarouselProps) {
+  const renderItem = (
+    item: any,
+    options?:
+      | {
+          isSelected: boolean;
+          isPrevious: boolean;
+        }
+      | undefined
+  ) => {
+    return onClickItem ? (
+      <div onClick={() => onClickItem(item?.key)} className="cursor-pointer">
+        {item}
+      </div>
+    ) : (
+      item
+    );
+  };
+
   return (
     <Carousel
       // centerMode
@@ -48,9 +68,10 @@ export default function CustomCarousel({
       showIndicators={showIndicators}
       showArrows={showArrows}
       showThumbs={showThumbs}
-      renderThumbs={customRenderThumbs}
+      renderThumbs={onClickItem && customRenderThumbs}
       showStatus={false}
       dynamicHeight={dynamicHeight}
+      renderItem={renderItem}
     >
       {children}
     </Carousel>

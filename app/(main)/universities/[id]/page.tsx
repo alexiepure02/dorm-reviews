@@ -1,5 +1,5 @@
-import CustomCarousel from "@/components/CustomCarousel";
 import DormCardsList from "@/components/DormCardsList";
+import ImagesCarousel from "@/components/ImagesCarousel";
 import { BiMapPin } from "react-icons/bi";
 import { FaUniversity } from "react-icons/fa";
 
@@ -62,15 +62,7 @@ export default async function Page({ params }) {
             <p className="xl:max-w-lg">{university.description}</p>
           </div>
           <div className="max-w-4xl xl:w-[55%]">
-            <CustomCarousel>
-              {images.map((image: string, index: number) => (
-                <img
-                  src={image}
-                  alt={"University " + index}
-                  className="object-cover max-h-[400px]"
-                />
-              ))}
-            </CustomCarousel>
+            <ImagesCarousel images={images} />
           </div>
         </div>
       </div>

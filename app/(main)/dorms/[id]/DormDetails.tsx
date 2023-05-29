@@ -1,5 +1,5 @@
-import CustomCarousel from "@/components/CustomCarousel";
 import DormMeans from "@/components/DormMeans";
+import ImagesCarousel from "@/components/ImagesCarousel";
 import { BiMapPin } from "react-icons/bi";
 import { MdOutlineBed } from "react-icons/md";
 
@@ -32,15 +32,7 @@ export default function DormDetails({ dorm, means, images }: DormDetailsProps) {
               <DormMeans means={means} />
             </div>
             <div className="max-w-4xl w-full lg:w-[55%]">
-              <CustomCarousel>
-                {images.map((image: string, index: number) => (
-                  <img
-                    src={image}
-                    alt={"Dorm " + index}
-                    className="object-cover h-[400px]"
-                  />
-                ))}
-              </CustomCarousel>
+              <ImagesCarousel images={images} />
             </div>
           </div>
         </div>
