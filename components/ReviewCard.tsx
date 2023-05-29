@@ -1,6 +1,8 @@
 import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 import CustomRating from "./CustomRating";
 import OptionsButton from "./OptionsButton";
+import Avatar from "/public/avatar.svg";
+import Image from "next/image";
 
 interface ReviewCardProps {
   review: any;
@@ -20,8 +22,8 @@ export default ({
     <div className="relative flex flex-col shadow-lg rounded-2xl px-4 sm:px-9 py-6 gap-4">
       <div className="flex justify-between">
         <div className="flex gap-4">
-          <img
-            src="/avatar.svg"
+          <Image
+            src={Avatar}
             alt="Avatar"
             className="align-middle w-14 h-14 rounded-full"
           />

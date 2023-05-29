@@ -19,12 +19,24 @@ async function getDormById(id: string) {
   return res.json();
 }
 
+async function getDormImages(name: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/image/${name}`,
+    { cache: "no-store" }
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
+
 export default async function Page({ params }) {
   const { dorm, means } = await getDormById(params.id);
+  const images = await getDormImages(params.id);
 
   return (
     <>
-      <DormDetails dorm={dorm} means={means} />
+      <DormDetails dorm={dorm} means={means} images={images} />
       <ReviewsSection dorm={dorm.name} />
     </>
   );

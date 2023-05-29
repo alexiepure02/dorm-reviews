@@ -35,9 +35,7 @@ export default ({ universities }: UniversityCardsListProps) => {
   });
 
   useEffect(() => {
-    // if (loading) setTimeout(() =>
-    setLoading(false);
-    // , 200);
+    if (loading) setLoading(false);
   }, [loading]);
 
   useEffect(() => {

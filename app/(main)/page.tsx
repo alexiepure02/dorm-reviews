@@ -1,11 +1,14 @@
 import SearchInput from "@/components/SearchInput";
 import TopUniversities from "@/components/TopUniversities";
+import HomeBackground from "/public/home-bg.png";
+import Image from "next/image";
 
 export default async function Page() {
   return (
     <>
-      <img
-        src="home-bg.png"
+      <Image
+        src={HomeBackground}
+        alt="Home Background"
         className="absolute w-full h-screen object-cover -z-50 -top-0.5"
       />
       <div className=" max-w-screen-2xl 2xl:mx-auto h-full px-9">

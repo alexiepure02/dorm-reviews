@@ -30,9 +30,21 @@ async function getDormsByUniversity(university: string) {
   return res.json();
 }
 
+async function getUniversityImages(name: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/image/${name}`,
+    { cache: "no-store" }
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
+
 export default async function Page({ params }) {
   const university = await getUniversityById(params.id);
   const dorms = await getDormsByUniversity(university.name);
+  const images = await getUniversityImages(university._id);
 
   return (
     <>
@@ -51,9 +63,13 @@ export default async function Page({ params }) {
           </div>
           <div className="max-w-4xl xl:w-[55%]">
             <CustomCarousel>
-              <img src="/university2.jpg" />
-              <img src="/university2.jpg" />
-              <img src="/university2.jpg" />
+              {images.map((image: string, index: number) => (
+                <img
+                  src={image}
+                  alt={"University " + index}
+                  className="object-cover max-h-[400px]"
+                />
+              ))}
             </CustomCarousel>
           </div>
         </div>

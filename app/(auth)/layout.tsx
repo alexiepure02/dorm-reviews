@@ -1,5 +1,7 @@
 import Link from "next/link";
 import "../globals.css";
+import authBackground from "/public/auth-bg.png";
+import Image from "next/image";
 
 export default function AuthLayout({
   children,
@@ -9,9 +11,10 @@ export default function AuthLayout({
   return (
     <html lang="en">
       <body className="w-screen h-screen bg-background">
-        <img
-          src="auth-bg.png"
+        <Image
+          src={authBackground}
           className="fixed min-w-screen min-h-screen -z-50"
+          alt="Auth Background"
         />
         <div className="flex h-full items-center justify-between">
           <div className=" flex text-background w-full max-w-[860px] justify-end">

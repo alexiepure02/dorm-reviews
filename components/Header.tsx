@@ -8,6 +8,8 @@ import { BiBuildings, BiMapAlt, BiPencil, BiUserCircle } from "react-icons/bi";
 import Button from "./Button";
 import Sidebar from "./Sidebar";
 import SearchInput from "./SearchInput";
+import Logo from "/public/logo.svg";
+import Image from "next/image";
 
 export default () => {
   const { data: session } = useSession();
@@ -18,7 +20,7 @@ export default () => {
       <Sidebar />
       <header className="sticky top-0 bg-white flex justify-between px-8 py-3 m-0 z-50 rounded-b-xl shadow-md">
         <Link href="/" className="flex gap-4 items-center cursor-pointer">
-          <img src="/logo.svg" className="w-14 h-16" />
+          <Image src={Logo} alt="Logo" className="w-14 h-16" />
           <h1 className="hidden sm:block font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-linear-1 to-linear-2">
             Căminul Tău
           </h1>

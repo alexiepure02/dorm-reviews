@@ -6,9 +6,10 @@ import { MdOutlineBed } from "react-icons/md";
 interface DormDetailsProps {
   dorm: any;
   means: any;
+  images: string[];
 }
 
-export default function DormDetails({ dorm, means }: DormDetailsProps) {
+export default function DormDetails({ dorm, means, images }: DormDetailsProps) {
   return (
     <>
       <div className="bg-background">
@@ -32,9 +33,13 @@ export default function DormDetails({ dorm, means }: DormDetailsProps) {
             </div>
             <div className="max-w-4xl w-full lg:w-[55%]">
               <CustomCarousel>
-                <img src="/dorm.jpg" />
-                <img src="/dorm.jpg" />
-                <img src="/dorm.jpg" />
+                {images.map((image: string, index: number) => (
+                  <img
+                    src={image}
+                    alt={"Dorm " + index}
+                    className="object-cover h-[400px]"
+                  />
+                ))}
               </CustomCarousel>
             </div>
           </div>

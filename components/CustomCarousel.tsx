@@ -16,6 +16,16 @@ interface CustomCarouselProps {
   children: any; // won't work for ReactNode, and asks for ReactChild[] which is deprecated
 }
 
+const customRenderThumbs = (children: any[]): ReactChild[] =>
+  children.map((item: any, index: number) => (
+    <img
+      key={index}
+      alt={"Thumb " + index}
+      src={item.props.src}
+      className=" object-cover max-h-12"
+    />
+  ));
+
 export default function CustomCarousel({
   selectedItem,
   onChange,
@@ -38,6 +48,7 @@ export default function CustomCarousel({
       showIndicators={showIndicators}
       showArrows={showArrows}
       showThumbs={showThumbs}
+      renderThumbs={customRenderThumbs}
       showStatus={false}
       dynamicHeight={dynamicHeight}
     >

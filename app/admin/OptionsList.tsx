@@ -22,6 +22,7 @@ export default function OptionsList() {
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/add-location" && "bg-primary-800"
           }`}
+          prefetch={false}
         >
           Adaugă locație
         </Link>
@@ -30,6 +31,7 @@ export default function OptionsList() {
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/update-location" && "bg-primary-800"
           }`}
+          prefetch={false}
         >
           Actualizează locație
         </Link>
@@ -38,6 +40,7 @@ export default function OptionsList() {
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/remove-location" && "bg-primary-800"
           }`}
+          prefetch={false}
         >
           Șterge locație
         </Link>
@@ -46,6 +49,7 @@ export default function OptionsList() {
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/add-university" && "bg-primary-800"
           }`}
+          prefetch={false}
         >
           Adaugă universitate
         </Link>
@@ -54,6 +58,7 @@ export default function OptionsList() {
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/update-university" && "bg-primary-800"
           }`}
+          prefetch={false}
         >
           Actualizează universitate
         </Link>
@@ -62,6 +67,7 @@ export default function OptionsList() {
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/remove-university" && "bg-primary-800"
           }`}
+          prefetch={false}
         >
           Șterge universitate
         </Link>
@@ -70,6 +76,7 @@ export default function OptionsList() {
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/add-dorm" && "bg-primary-800"
           }`}
+          prefetch={false}
         >
           Adaugă cămin
         </Link>
@@ -78,6 +85,7 @@ export default function OptionsList() {
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/update-dorm" && "bg-primary-800"
           }`}
+          prefetch={false}
         >
           Actualizează cămin
         </Link>
@@ -86,6 +94,7 @@ export default function OptionsList() {
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/remove-dorm" && "bg-primary-800"
           }`}
+          prefetch={false}
         >
           Șterge cămin
         </Link>
@@ -94,6 +103,7 @@ export default function OptionsList() {
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/remove-review" && "bg-primary-800"
           }`}
+          prefetch={false}
         >
           Șterge recenzie
         </Link>
@@ -102,6 +112,7 @@ export default function OptionsList() {
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/users" && "bg-primary-800"
           }`}
+          prefetch={false}
         >
           Utilizatori
         </Link>
