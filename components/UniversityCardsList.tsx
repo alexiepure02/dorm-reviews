@@ -27,10 +27,12 @@ export default ({ universities }: UniversityCardsListProps) => {
 
   const filteredUniversities = universities.filter((university: any) => {
     const regex = new RegExp(searchQuery, "i");
+
     return (
       !searchQuery ||
       regex.test(university.name) ||
-      regex.test(university.location.name)
+      regex.test(university.location.name) ||
+      regex.test(university.acronym)
     );
   });
 

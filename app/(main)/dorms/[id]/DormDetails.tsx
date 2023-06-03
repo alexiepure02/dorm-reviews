@@ -1,5 +1,6 @@
 import DormMeans from "@/components/DormMeans";
 import ImagesCarousel from "@/components/ImagesCarousel";
+import Link from "next/link";
 import { BiMapPin } from "react-icons/bi";
 import { MdOutlineBed } from "react-icons/md";
 
@@ -21,12 +22,23 @@ export default function DormDetails({ dorm, means, images }: DormDetailsProps) {
                 <h1 className="text-4xl font-medium">{dorm.name}</h1>
               </div>
               <div>
-                <h1 className="text-xl">{dorm.university.name}</h1>
-                <div className="flex items-center gap-2">
-                  <BiMapPin />
-                  <p className=" max-w-lg">
-                    {dorm.address}, {dorm.location?.name}
-                  </p>
+                <Link
+                  href={"/universities/" + dorm.university._id}
+                  className="text-xl hover:underline"
+                >
+                  {dorm.university.name}
+                </Link>
+                <div className="flex gap-1">
+                  <div className="flex items-center gap-2">
+                    <BiMapPin />
+                    <p className=" max-w-lg">{dorm.address},</p>
+                  </div>
+                  <Link
+                    href={"/locations/" + dorm.location._id}
+                    className="hover:underline"
+                  >
+                    {dorm.location?.name}
+                  </Link>
                 </div>
               </div>
               <DormMeans means={means} />

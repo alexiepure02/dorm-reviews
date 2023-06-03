@@ -17,10 +17,15 @@ export async function GET(request: Request) {
     const formattedQuery = reformatQuery(query);
 
     const universities = await University.find({
-      name: { $regex: formattedQuery, $options: "i" },
+      $or: [
+        {
+          name: { $regex: formattedQuery, $options: "i" },
+        },
+        { acronym: { $regex: formattedQuery, $options: "i" } },
+      ],
     })
       .limit(limitParam)
-      .select("name location")
+      .select("name acronym location")
       .populate({ path: "location", model: Location, select: "name" });
 
     return NextResponse.json(universities);

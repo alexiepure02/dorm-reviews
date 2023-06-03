@@ -1,5 +1,6 @@
 import DormCardsList from "@/components/DormCardsList";
 import ImagesCarousel from "@/components/ImagesCarousel";
+import Link from "next/link";
 import { BiMapPin } from "react-icons/bi";
 import { FaUniversity } from "react-icons/fa";
 
@@ -53,11 +54,18 @@ export default async function Page({ params }) {
           <div className="flex flex-col gap-6 pb-4 xl:pb-0">
             <div className="flex gap-4">
               <FaUniversity className="w-9 h-9" />
-              <h1 className="text-4xl font-medium">{university.name}</h1>
+              <h1 className="text-4xl font-medium">
+                {university.name + " (" + university.acronym + ")"}
+              </h1>
             </div>
             <div className="flex items-center gap-2">
               <BiMapPin />
-              <h1 className="text-xl">{university.location.name}</h1>
+              <Link
+                href={"/locations/" + university.location._id}
+                className="text-xl hover:underline"
+              >
+                {university.location.name}
+              </Link>
             </div>
             <p className="xl:max-w-lg">{university.description}</p>
           </div>

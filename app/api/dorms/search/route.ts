@@ -21,7 +21,11 @@ export async function GET(request: Request) {
     })
       .limit(limitParam)
       .select("name university")
-      .populate({ path: "university", model: University, select: "name" });
+      .populate({
+        path: "university",
+        model: University,
+        select: "name acronym",
+      });
 
     return NextResponse.json(dorms);
   }

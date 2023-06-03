@@ -53,7 +53,7 @@ export default ({
         }`}
       >
         <h1 className="text-2xl sm:text-3xl font-semibold text-secondary-green">
-          {university.name}
+          {university.name + " (" + university.acronym + ")"}
         </h1>
         <div className="flex items-center gap-2 text-gray-3">
           <BiMapPin className="w-6 h-6" />

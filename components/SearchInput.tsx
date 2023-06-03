@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { MdClear } from "react-icons/md";
 import Turnstone from "turnstone";
@@ -59,7 +59,7 @@ const LISTBOX = [
       const array = await response.json();
       return array.map((item: any) => ({
         ...item,
-        name: item.name + ", " + item.location.name,
+        name: item.name + " (" + item.acronym + ")",
         type: "universities",
       }));
     },
@@ -77,7 +77,7 @@ const LISTBOX = [
       const array = await response.json();
       return array.map((item: any) => ({
         ...item,
-        name: item.name + ", " + item.university.name,
+        name: item.name + " (" + item.university.acronym + ")",
         type: "dorms",
       }));
     },

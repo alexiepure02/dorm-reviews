@@ -56,6 +56,7 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
 
   const onFirstSubmit: SubmitHandler<FieldValues> = async (values: {
     name: string;
+    acronym: string;
     description: string;
   }) => {
     const reformatedInitialUniversity = {
@@ -66,6 +67,7 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
     const inputUniversity = {
       ...university,
       name: values.name,
+      acronym: values.acronym,
       description: values.description,
       location: newLocationId || initialUniversity.location._id,
     };
@@ -198,6 +200,19 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
               required: true,
             }}
           />
+
+          <h1>Acronim (actual: {initialUniversity.acronym})</h1>
+          <FormInput
+            id="acronym"
+            type="text"
+            placeholder={"Acronim"}
+            defaultValue={newUniversity.acronym}
+            register={register}
+            rules={{
+              required: true,
+            }}
+          />
+
           <h1>Descriere (actual: {initialUniversity.description})</h1>
           <textarea
             className=" min-w-full h-64 resize-none p-4 rounded-md border-2 border-primary-800 focus:border-primary-100 placeholder-gray-1 outline-none"
@@ -205,6 +220,7 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
             defaultValue={newUniversity.description}
             {...register("description", { required: true })}
           />
+
           <h1>Locație (actual: {initialUniversity.location.name})</h1>
           <SelectLocation selectLocation={selectLocation} />
 
@@ -242,6 +258,14 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
                 Nume: {initialUniversity.name + " -> " + newUniversity.name}
               </h1>
             )}
+
+            {initialUniversity.acronym !== newUniversity.acronym && (
+              <h1>
+                Acronim:{" "}
+                {initialUniversity.acronym + " -> " + newUniversity.acronym}
+              </h1>
+            )}
+
             {initialUniversity.description !== newUniversity.description && (
               <h1>
                 Descriere:{" "}
@@ -250,12 +274,14 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
                   newUniversity.description}
               </h1>
             )}
+
             {initialUniversity.location._id !== newUniversity.location && (
               <h1>
                 Locație:{" "}
                 {initialUniversity.location._id + " -> " + newLocationId}
               </h1>
             )}
+
             {newImage && (
               <>
                 <h1>Ai adăugat o imagine nouă:</h1>

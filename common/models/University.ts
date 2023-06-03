@@ -12,6 +12,10 @@ const universitySchema = new Schema(
       type: String,
       required: true,
     },
+    acronym: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

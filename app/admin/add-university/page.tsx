@@ -34,6 +34,7 @@ export default function AddUniversityPage() {
 
   const onSubmit: SubmitHandler<FieldValues> = async (values: {
     name: string;
+    acronym: string;
     description: string;
   }) => {
     if (locationId) {
@@ -43,6 +44,7 @@ export default function AddUniversityPage() {
         method: "POST",
         body: JSON.stringify({
           name: values.name,
+          acronym: values.acronym,
           description: values.description,
           location: locationId,
         }),
@@ -96,12 +98,25 @@ export default function AddUniversityPage() {
           required: true,
         }}
       />
+
+      <h1>Acronim</h1>
+      <FormInput
+        id="acronym"
+        type="text"
+        placeholder="UVT"
+        register={register}
+        rules={{
+          required: true,
+        }}
+      />
+
       <h1>Descriere universitate</h1>
       <textarea
         className=" min-w-full h-64 resize-none p-4 rounded-md border-2 border-primary-800 focus:border-primary-100 outline-none"
         placeholder="Universitatea de Vest din Timișoara (abreviată UVT) este principala instituție de învățământ superior și centru de cercetare din vestul României..."
         {...register("description", { required: true })}
       />
+
       <h1>Locație</h1>
       <SearchInput
         placeholder="Timișoara"

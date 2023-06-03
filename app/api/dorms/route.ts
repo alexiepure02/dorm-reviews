@@ -85,7 +85,10 @@ export async function POST(request: Request) {
     );
   }
 
-  const foundUniversity = await University.findById(body.university);
+  const foundUniversity = await University.findById(body.university).populate({
+    path: "location",
+    model: Location,
+  });
 
   if (!foundUniversity) {
     return NextResponse.json(
@@ -101,7 +104,7 @@ export async function POST(request: Request) {
     address: body.address,
     position: body.position,
     university: foundUniversity.id,
-    location: foundUniversity.location.name,
+    location: foundUniversity.location._id,
   });
 
   return newDorm

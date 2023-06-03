@@ -50,6 +50,14 @@ export async function POST(request: Request) {
       { status: 400 }
     );
 
+  if (await University.findOne({ acronym: body.acronym }))
+    return NextResponse.json(
+      {
+        error: `University with the acronym '${body.acronym}' already exists`,
+      },
+      { status: 400 }
+    );
+
   if (!(await Location.findById(body.location)))
     return NextResponse.json(
       {
@@ -60,6 +68,7 @@ export async function POST(request: Request) {
 
   const newUniversity = new University({
     name: body.name,
+    acronym: body.acronym,
     location: body.location,
     description: body.description,
   });
@@ -85,13 +94,26 @@ export async function PUT(request: Request) {
   const initialUniversity = await University.findById(body._id);
 
   if (initialUniversity.name !== body.name) {
-    const university = await University.findOne({
-      name: body.name,
-    });
-
-    if (university) {
+    if (
+      await University.findOne({
+        name: body.name,
+      })
+    ) {
       return NextResponse.json(
         { error: "Nume deja folosit" },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    if (
+      await University.findOne({
+        acronym: body.acronym,
+      })
+    ) {
+      return NextResponse.json(
+        { error: "Acronim deja folosit" },
         {
           status: 400,
         }
