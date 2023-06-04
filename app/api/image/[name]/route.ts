@@ -63,26 +63,48 @@ export async function GET(request: Request, { params }) {
 export async function DELETE(request: Request, { params }) {
   const { name } = params;
 
+  const { searchParams } = new URL(request.url);
+  const indexesParam: string = searchParams.get("indexes") || "";
+
   try {
     const listObjectsParams = {
       Bucket: "caminul-tau-bucket",
       Prefix: name,
     };
 
-    const listedObjects = await s3.listObjectsV2(listObjectsParams).promise();
+    if (indexesParam) {
+      const indexes: string[] = indexesParam.split(",");
 
-    if (listedObjects.Contents && listedObjects.Contents.length > 0) {
       const deleteObjectsParams = {
         Bucket: "caminul-tau-bucket",
         Delete: {
-          Objects: listedObjects.Contents.map((obj) => ({ Key: obj.Key! })),
+          Objects: indexes.map((index: string) => ({
+            Key: `${name}-${index}`,
+          })),
         },
       };
 
       await s3.deleteObjects(deleteObjectsParams).promise();
+      
       return NextResponse.json(
-        `Images with the prefix ${name} succesfully deleted`
+        `Images with the prefix ${name} and indexes ${indexes} succesfully deleted`
       );
+    } else {
+      const listedObjects = await s3.listObjectsV2(listObjectsParams).promise();
+
+      if (listedObjects.Contents && listedObjects.Contents.length > 0) {
+        const deleteObjectsParams = {
+          Bucket: "caminul-tau-bucket",
+          Delete: {
+            Objects: listedObjects.Contents.map((obj) => ({ Key: obj.Key! })),
+          },
+        };
+
+        await s3.deleteObjects(deleteObjectsParams).promise();
+        return NextResponse.json(
+          `Images with the prefix ${name} succesfully deleted`
+        );
+      }
     }
   } catch (error) {
     return NextResponse.json(

@@ -1,3 +1,4 @@
+import Review from "@/common/models/Review";
 import { S3 } from "aws-sdk";
 import { NextResponse } from "next/server";
 
@@ -17,6 +18,18 @@ export async function DELETE(request: Request, { params }) {
     };
 
     await s3.deleteObject(params).promise();
+
+    const review = await Review.findOne({ imageIndexes: index });
+
+    if (review) {
+      const newIndexes = review.imageIndexes.filter(
+        (imageIndex: string) => imageIndex !== index
+      );
+
+      await Review.findByIdAndUpdate(review._id, {
+        imageIndexes: newIndexes,
+      });
+    }
 
     return NextResponse.json({ message: "Image deleted succesfully" });
   } catch (error) {
