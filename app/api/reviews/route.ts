@@ -193,6 +193,7 @@ export async function POST(request: Request, { params }) {
     locationComment: body.locationComment || null,
     overallRating: overallRating,
     comment: body.comment,
+    imageIndexes: body.imageIndexes,
   });
 
   return newReview

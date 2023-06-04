@@ -12,7 +12,7 @@ const locationSchema = new Schema(
       required: true,
     },
     position: {
-      type: [],
+      type: [Number],
       required: true,
     },
   },

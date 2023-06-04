@@ -7,6 +7,7 @@ import ReviewMenu from "./ReviewMenu";
 import Button from "@/components/Button";
 import SubmitMenu from "./SubmitMenu";
 import {
+  MdAddAPhoto,
   MdBed,
   MdKitchen,
   MdOutlineBathtub,
@@ -15,6 +16,7 @@ import {
 import CommentMenu from "./CommentMenu";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
+import ImagesInput from "@/components/ImageInput";
 
 interface ReviewFormProps {
   dorm: any;
@@ -55,6 +57,8 @@ export default ({ dorm }: ReviewFormProps) => {
     ""
     // "Nu stiu ce sa scriu aici. Per total, mi-a placut caminul si camera in care am fost cazat. Colegii de camera si de camin au fost foarte prietenosi, iar administratorul e un om foarte chill. Mi-am facut amintiri de neuitat in acest camin."
   );
+  const [images, setImages] = useState<File[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const overallRating =
     (roomRating + bathRating + kitchenRating + locationRating) / 4;
@@ -104,42 +108,74 @@ export default ({ dorm }: ReviewFormProps) => {
     setComment(comment);
   };
 
+  const handleImages = (images: File[]) => {
+    setImages(images);
+  };
+
+  const handleError = (error: string) => {
+    setError(error);
+  };
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // console.log("comment: ", comment);
-    // console.log("room: ", roomRating, roomComment);
-    // console.log("bath: ", bathRating, bathComment);
-    // console.log("kitchen: ", kitchenRating, kitchenComment);
-    // console.log("location: ", locationRating, locationComment);
+    setLoading(true);
 
-    // console.log(session?.user?.name);
+    let imageError: boolean = false;
+    let imageIndexes: number[] = [];
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/reviews`, {
-      method: "POST",
-      body: JSON.stringify({
-        username: session?.user?.name,
-        dorm: dorm.name,
-        roomRating: roomRating,
-        roomComment: roomComment,
-        bathRating: bathRating,
-        bathComment: bathComment,
-        kitchenRating: kitchenRating,
-        kitchenComment: kitchenComment,
-        locationRating: locationRating,
-        locationComment: locationComment,
-        overallRating: overallRating,
-        comment: comment,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setError(data.error);
+    if (images.length !== 0) {
+      const formData = new FormData();
 
-        if (!data.error) {
-          router.push(pathname + "/succesful");
+      formData.append("name", dorm._id);
+
+      images.forEach((image) => {
+        formData.append("images", image);
+      });
+
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/image`, {
+        method: "POST",
+        body: formData,
+      }).then(async (res) => {
+        if (res.ok) {
+          const response = await res.json();
+          imageIndexes = response.indexes;
+        } else {
+          imageError = true;
+          setError("Eroare la adăugarea imaginilor");
+          return;
         }
       });
+    }
+    if (!imageError) {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/reviews`, {
+        method: "POST",
+        body: JSON.stringify({
+          username: session?.user?.name,
+          dorm: dorm.name,
+          roomRating: roomRating,
+          roomComment: roomComment,
+          bathRating: bathRating,
+          bathComment: bathComment,
+          kitchenRating: kitchenRating,
+          kitchenComment: kitchenComment,
+          locationRating: locationRating,
+          locationComment: locationComment,
+          overallRating: overallRating,
+          comment: comment,
+          imageIndexes: imageIndexes,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setError(data.error);
+
+          if (!data.error) {
+            router.push(pathname + "/succesful");
+          }
+        });
+    }
+    setLoading(false);
   };
 
   return (
@@ -232,9 +268,23 @@ export default ({ dorm }: ReviewFormProps) => {
         </CustomCarousel>
         {currentMenu === 5 && (
           <>
+            <div className="self-center w-full md:max-w-lg rounded-lg flex flex-col items-center bg-background p-4 sm:p-10 gap-4">
+              <div className="flex items-center justify-center gap-2">
+                <MdAddAPhoto className="text-gray-3 w-12 h-12 self-center" />
+                <h1>Lasă câteva imagini împreună cu recenzia (opțional)</h1>
+              </div>
+              <ImagesInput
+                newImages={images}
+                handleNewImages={handleImages}
+              />
+            </div>
             <h1 className="self-center text-red-500">{error}</h1>
-            <Button type="submit" className="px-8 self-center">
-              Adaugă recenzie
+            <Button
+              type="submit"
+              disabled={loading}
+              className="px-8 self-center"
+            >
+              {!loading ? "Adaugă recenzie" : "Se adaugă..."}
             </Button>
           </>
         )}

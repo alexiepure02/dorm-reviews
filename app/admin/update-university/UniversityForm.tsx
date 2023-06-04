@@ -20,7 +20,7 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
   const [showWarning, setShowWarning] = useState(false);
   const [newUniversity, setNewUniversity] = useState<any>();
   const [newLocationId, setNewLocationId] = useState("");
-  const [newImage, setNewImage] = useState<File | null>(null);
+  const [newImages, setNewImages] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
 
   const {
@@ -75,7 +75,7 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
     if (
       JSON.stringify(inputUniversity) !==
         JSON.stringify(reformatedInitialUniversity) ||
-      newImage
+      newImages.length !== 0
     ) {
       setNewUniversity(inputUniversity);
       toggleOnWarning();
@@ -114,11 +114,14 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
       });
     }
 
-    if (newImage) {
+    if (newImages.length !== 0) {
       const formData = new FormData();
 
       formData.append("name", initialUniversity._id);
-      formData.append("file", newImage);
+
+      newImages.forEach((image) => {
+        formData.append("images", image);
+      });
 
       await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/image`, {
         method: "POST",
@@ -134,7 +137,7 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
           return;
         }
       });
-      setNewImage(null);
+      setNewImages([]);
     }
 
     mutate(
@@ -153,8 +156,8 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
 
   const selectLocation = (locationId: string) => setNewLocationId(locationId);
 
-  const handleNewImage = (image: File | null) => {
-    setNewImage(image);
+  const handleNewImages = (images: File[]) => {
+    setNewImages(images);
   };
 
   const handleError = (error: string) => {
@@ -233,12 +236,8 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
             />
           )}
 
-          <h1>Adaugă o imagine: (landscape)</h1>
-          <ImageInput
-            newImage={newImage}
-            handleNewImage={handleNewImage}
-            handleError={handleError}
-          />
+          <h1>Adaugă imagini noi: (landscape)</h1>
+          <ImageInput newImages={newImages} handleNewImages={handleNewImages} />
 
           {success && <h1 className="text-green-500">{success}</h1>}
           {error && <h1 className="text-red-500">{error}</h1>}
@@ -282,11 +281,18 @@ export default function UniversityForm({ universityId }: UniversityFormProps) {
               </h1>
             )}
 
-            {newImage && (
+            {newImages.length !== 0 && (
               <>
-                <h1>Ai adăugat o imagine nouă:</h1>
+                <h1>Ai adăugat imagini noi:</h1>
+
                 <div className="grid grid-cols-2 gap-2">
-                  <img src={URL.createObjectURL(newImage)} className="w-64" />
+                  {newImages.map((image: File, index: number) => (
+                    <img
+                      key={index}
+                      src={URL.createObjectURL(image)}
+                      className="w-64"
+                    />
+                  ))}
                 </div>
               </>
             )}

@@ -20,7 +20,7 @@ export default function DormForm({ dormId }: DormFormProps) {
   const [showWarning, setShowWarning] = useState(false);
   const [newDorm, setNewDorm] = useState<any>();
   const [newUniversityId, setNewUniversityId] = useState("");
-  const [newImage, setNewImage] = useState<File | null>(null);
+  const [newImages, setNewImages] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
 
   const {
@@ -79,7 +79,7 @@ export default function DormForm({ dormId }: DormFormProps) {
       (isLatitude(+values.lat) &&
         isLongitude(+values.long) &&
         JSON.stringify(inputDorm) !== JSON.stringify(reformatedInitialDorm)) ||
-      newImage
+      newImages.length !== 0
     ) {
       setNewDorm(inputDorm);
       toggleOnWarning();
@@ -115,12 +115,14 @@ export default function DormForm({ dormId }: DormFormProps) {
       });
     }
 
-    if (newImage) {
+    if (newImages.length !== 0) {
       const formData = new FormData();
 
       formData.append("name", initialDorm._id);
-      formData.append("file", newImage);
 
+      newImages.forEach((image) => {
+        formData.append("images", image);
+      });
       await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/image`, {
         method: "POST",
         body: formData,
@@ -135,7 +137,7 @@ export default function DormForm({ dormId }: DormFormProps) {
           return;
         }
       });
-      setNewImage(null);
+      setNewImages([]);
     }
 
     mutate(`${process.env.NEXT_PUBLIC_API_URL}/api/dorms/${dormId}`);
@@ -153,8 +155,8 @@ export default function DormForm({ dormId }: DormFormProps) {
   const selectUniversity = (universityId: string) =>
     setNewUniversityId(universityId);
 
-  const handleNewImage = (image: File | null) => {
-    setNewImage(image);
+  const handleNewImages = (images: File[]) => {
+    setNewImages(images);
   };
 
   const handleError = (error: string) => {
@@ -252,12 +254,8 @@ export default function DormForm({ dormId }: DormFormProps) {
             />
           )}
 
-          <h1>Adaugă o imagine: (landscape)</h1>
-          <ImageInput
-            newImage={newImage}
-            handleNewImage={handleNewImage}
-            handleError={handleError}
-          />
+          <h1>Adaugă imagini noi: (landscape)</h1>
+          <ImageInput newImages={newImages} handleNewImages={handleNewImages} />
 
           {success && <h1 className="text-green-500">{success}</h1>}
           {error && <h1 className="text-red-500">{error}</h1>}
@@ -275,12 +273,14 @@ export default function DormForm({ dormId }: DormFormProps) {
             {initialDorm.name !== newDorm.name && (
               <h1>Nume: {initialDorm.name + " -> " + newDorm.name}</h1>
             )}
+
             {initialDorm.university._id !== newDorm.university && (
               <h1>
                 Universitate:{" "}
                 {initialDorm.university._id + " -> " + newUniversityId}
               </h1>
             )}
+
             {(initialDorm.position[0] !== newDorm.position[0] ||
               initialDorm.position[1] !== newDorm.position[1]) && (
               <>
@@ -294,11 +294,19 @@ export default function DormForm({ dormId }: DormFormProps) {
                 </h1>
               </>
             )}
-            {newImage && (
+
+            {newImages.length !== 0 && (
               <>
-                <h1>Ai adăugat o imagine nouă:</h1>
+                <h1>Ai adăugat imagini noi:</h1>
+
                 <div className="grid grid-cols-2 gap-2">
-                  <img src={URL.createObjectURL(newImage)} className="w-64" />
+                  {newImages.map((image: File, index: number) => (
+                    <img
+                      key={index}
+                      src={URL.createObjectURL(image)}
+                      className="w-64"
+                    />
+                  ))}
                 </div>
               </>
             )}

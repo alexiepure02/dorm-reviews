@@ -1,15 +1,15 @@
 "use client";
 
-import useOutsideClick from "@/common/utils/hooks";
 import { useRef, useState } from "react";
 import CustomCarousel from "./CustomCarousel";
+import useOutsideClick from "@/common/utils/hooks";
 
-interface ImagesCarouselProps {
+interface ReviewImagesProps {
   images: string[];
 }
 
-export default function ImagesCarousel({ images }: ImagesCarouselProps) {
-  const [showModal, setShowModal] = useState(false);
+export default function ReviewImages({ images }: ReviewImagesProps) {
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
 
   const modalRef = useRef<any>();
@@ -26,16 +26,18 @@ export default function ImagesCarousel({ images }: ImagesCarouselProps) {
 
   return (
     <>
-      <CustomCarousel onClickItem={handleOpenModal}>
-        {images.map((image: string, index: number) => (
-          <img
-            key={index}
-            src={image}
-            alt={"Image " + index}
-            className="object-cover h-[400px]"
-          />
-        ))}
-      </CustomCarousel>
+      <div className="flex gap-2">
+        {images.length !== 0 &&
+          images.map((image: string, index: number) => (
+            <div
+              key={index}
+              className="cursor-pointer"
+              onClick={() => handleOpenModal(index)}
+            >
+              <img src={image} className="object-cover max-h-20" />
+            </div>
+          ))}
+      </div>
       {showModal && (
         <>
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">

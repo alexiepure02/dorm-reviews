@@ -10,26 +10,48 @@ const s3 = new S3({
 export async function GET(request: Request, { params }) {
   const { name } = params;
 
+  const { searchParams } = new URL(request.url);
+  const indexesParam: string = searchParams.get("indexes") || "";
+
   try {
     const params = {
       Bucket: "caminul-tau-bucket",
       Prefix: name,
     };
 
-    const response = await s3.listObjectsV2(params).promise();
+    if (indexesParam) {
+      const indexes: string[] = indexesParam.split(",");
 
-    const filePromises =
-      response.Contents?.map(async (object) => {
-        const fileParams = {
-          Bucket: "caminul-tau-bucket",
-          Key: object.Key || "",
-        };
-        const url = await s3.getSignedUrlPromise("getObject", fileParams);
-        return url;
-      }) || [];
+      const filePromises =
+        indexes.map(async (index: string) => {
+          const fileParams = {
+            Bucket: "caminul-tau-bucket",
+            Key: `${name}-${index}`,
+          };
+          const url = await s3.getSignedUrlPromise("getObject", fileParams);
+          return url;
+        }) || [];
 
-    const files = await Promise.all(filePromises);
-    return NextResponse.json(files);
+      const files = await Promise.all(filePromises);
+
+      return NextResponse.json(files);
+    } else {
+      const response = await s3.listObjectsV2(params).promise();
+
+      const filePromises =
+        response.Contents?.map(async (object) => {
+          const fileParams = {
+            Bucket: "caminul-tau-bucket",
+            Key: object.Key || "",
+          };
+          const url = await s3.getSignedUrlPromise("getObject", fileParams);
+          return url;
+        }) || [];
+
+      const files = await Promise.all(filePromises);
+
+      return NextResponse.json(files);
+    }
   } catch (error) {
     return NextResponse.json(
       { message: "Server error", error },

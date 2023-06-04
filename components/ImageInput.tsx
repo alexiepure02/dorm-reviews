@@ -1,18 +1,16 @@
 "use client";
 
 import { ChangeEvent, useRef } from "react";
-import ImageAdminFile from "./ImageAdminFile";
+import { AiFillDelete } from "react-icons/ai";
 
 interface ImagesInputProps {
-  newImage: File | null;
-  handleNewImage: (images: File | null) => void;
-  handleError: (error: string) => void;
+  newImages: File[];
+  handleNewImages: (images: File[]) => void;
 }
 
 export default function ImagesInput({
-  newImage,
-  handleNewImage,
-  handleError,
+  newImages,
+  handleNewImages,
 }: ImagesInputProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -25,23 +23,19 @@ export default function ImagesInput({
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
     if (!e.target.files || e.target.files[0] === undefined) return;
 
-    const file = e.target.files[0];
+    const files: File[] = [];
 
-    if (
-      !(
-        file.type === "image/png" ||
-        file.type === "image/jpg" ||
-        file.type === "image/jpeg"
-      )
-    ) {
-      handleError("Fișierul trebuie să aibă extensia png, jpg sau jpeg");
+    for (let index = 0; index < e.target.files.length; index++) {
+      files.push(e.target.files[index]);
     }
 
-    handleNewImage(file);
+    handleNewImages(files);
   };
 
-  const removeImage = () => {
-    handleNewImage(null);
+  const removeImage = (imageIndex: number) => {
+    handleNewImages(
+      newImages.filter((image: File, index: number) => index !== imageIndex)
+    );
   };
 
   return (
@@ -57,13 +51,27 @@ export default function ImagesInput({
         <input
           ref={fileInputRef}
           type="file"
+          multiple
           className="hidden"
+          accept="image/png, image/jpeg, image/jpg"
           onChange={handleFileChange}
         />
       </div>
-      {newImage && (
-        <ImageAdminFile image={newImage} removeImage={removeImage} removable />
-      )}
+
+      <div className="grid grid-cols-2 gap-2">
+        {newImages.length !== 0 &&
+          newImages.map((image: File, index: number) => (
+            <div key={index} className="relative">
+              <AiFillDelete
+                className="absolute w-8 h-8 top-1 right-1 p-2 text-gray-3 bg-gray-1 bg-opacity-60 hover:bg-hover hover:bg-opacity-80 rounded-full cursor-pointer"
+                onClick={() => {
+                  removeImage(index);
+                }}
+              />
+              <img src={URL.createObjectURL(image)} className="w-32" />
+            </div>
+          ))}
+      </div>
     </div>
   );
 }

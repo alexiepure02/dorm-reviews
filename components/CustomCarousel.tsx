@@ -2,7 +2,7 @@
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
-import { ReactChild, ReactElement, ReactNode } from "react";
+import { ReactChild } from "react";
 
 interface CustomCarouselProps {
   selectedItem?: number;
@@ -23,12 +23,12 @@ const customRenderThumbs = (children: any[]): ReactChild[] =>
       key={index}
       alt={"Thumb " + index}
       src={item.props.src}
-      className=" object-cover max-h-12"
+      className="object-cover max-h-12"
     />
   ));
 
 export default function CustomCarousel({
-  selectedItem,
+  selectedItem = 0,
   onChange,
   emulateTouch = true,
   infiniteLoop = true,
@@ -49,7 +49,7 @@ export default function CustomCarousel({
       | undefined
   ) => {
     return onClickItem ? (
-      <div onClick={() => onClickItem(item?.key)} className="cursor-pointer">
+      <div onClick={() => onClickItem(+item?.key)} className="cursor-pointer">
         {item}
       </div>
     ) : (
@@ -68,7 +68,7 @@ export default function CustomCarousel({
       showIndicators={showIndicators}
       showArrows={showArrows}
       showThumbs={showThumbs}
-      renderThumbs={onClickItem && customRenderThumbs}
+      renderThumbs={customRenderThumbs}
       showStatus={false}
       dynamicHeight={dynamicHeight}
       renderItem={renderItem}

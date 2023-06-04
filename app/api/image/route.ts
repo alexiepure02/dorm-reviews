@@ -11,9 +11,11 @@ const s3 = new S3({
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
-    const body = Object.fromEntries(formData) as { name: string; file: File };
 
-    if (!(body.file && body.name))
+    const name = formData.get("name") as string;
+    const images = formData.getAll("images") as File[];
+
+    if (!images || !name)
       return NextResponse.json(
         { message: "No file or name passed" },
         { status: 400 }
@@ -21,10 +23,11 @@ export async function POST(request: Request) {
 
     const findParams = {
       Bucket: "caminul-tau-bucket",
-      Prefix: body.name,
+      Prefix: name,
     };
 
     let lastImageIndex: number;
+    let indexes: string[] = [];
 
     try {
       const response = await s3.listObjectsV2(findParams).promise();
@@ -34,22 +37,28 @@ export async function POST(request: Request) {
       lastImageIndex = 0;
     }
 
-    const paddedIndex = lastImageIndex.toString().padStart(3, "0");
+    images.forEach(async (image: File, index: number) => {
+      const fileIndex = lastImageIndex + index;
+      const paddedIndex = fileIndex.toString().padStart(3, "0");
 
-    const arrayBuffer = await body.file.arrayBuffer();
-    const fileBuffer = Buffer.from(arrayBuffer);
+      indexes.push(paddedIndex);
 
-    const uploadParams = {
-      Bucket: "caminul-tau-bucket",
-      Key: `${body.name}-${paddedIndex}`,
-      Body: fileBuffer,
-      ContentType: "image/png",
-    };
+      const arrayBuffer = await image.arrayBuffer();
+      const fileBuffer = Buffer.from(arrayBuffer);
 
-    await s3.upload(uploadParams).promise();
+      const uploadParams = {
+        Bucket: "caminul-tau-bucket",
+        Key: `${name}-${paddedIndex}`,
+        Body: fileBuffer,
+        ContentType: "image/png",
+      };
+
+      await s3.upload(uploadParams).promise();
+    });
 
     return NextResponse.json({
-      message: `File uploaded successfully: ${body.name}-${paddedIndex}`,
+      message: `Files uploaded successfully: ${name}`,
+      indexes: indexes,
     });
   } catch (error) {
     return NextResponse.json(

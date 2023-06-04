@@ -44,6 +44,10 @@ const reviewSchema = new Schema(
       type: String,
       required: true,
     },
+    imageIndexes: {
+      type: [String],
+      default: [],
+    },
   },
   { timestamps: true }
 );

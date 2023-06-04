@@ -11,7 +11,7 @@ export default function AddUniversityPage() {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [locationId, setLocationId] = useState("");
-  const [newImage, setNewImage] = useState<File | null>(null);
+  const [newImages, setNewImages] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
 
   const {
@@ -24,8 +24,8 @@ export default function AddUniversityPage() {
 
   const handleLocationId = (id: string) => setLocationId(id);
 
-  const handleNewImage = (image: File | null) => {
-    setNewImage(image);
+  const handleNewImages = (images: File[]) => {
+    setNewImages(images);
   };
 
   const handleError = (error: string) => {
@@ -52,17 +52,20 @@ export default function AddUniversityPage() {
         if (res.status === 201) {
           const response = await res.json();
 
-          if (newImage) {
+          if (newImages.length !== 0) {
             const formData = new FormData();
 
             formData.append("name", response._id);
-            formData.append("file", newImage);
+
+            newImages.forEach((image) => {
+              formData.append("images", image);
+            });
 
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/image`, {
               method: "POST",
               body: formData,
             });
-            setNewImage(null);
+            setNewImages([]);
           }
 
           setSuccess("Universitate adăugată cu succes");
@@ -125,12 +128,8 @@ export default function AddUniversityPage() {
         setSelectedItem={handleLocationId}
       />
 
-      <h1>Adaugă o imagine: (landscape)</h1>
-      <ImageInput
-        newImage={newImage}
-        handleNewImage={handleNewImage}
-        handleError={handleError}
-      />
+      <h1>Adaugă imagini noi: (landscape)</h1>
+      <ImageInput newImages={newImages} handleNewImages={handleNewImages} />
 
       {success && <h1 className="text-green-500">{success}</h1>}
       {error && <h1 className="text-red-500">{error}</h1>}

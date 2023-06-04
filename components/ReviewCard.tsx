@@ -3,6 +3,9 @@ import CustomRating from "./CustomRating";
 import OptionsButton from "./OptionsButton";
 import Avatar from "/public/avatar.svg";
 import Image from "next/image";
+import useSWR from "swr";
+import fetcher from "@/common/utils/functions";
+import ReviewImages from "./ReviewImages";
 
 interface ReviewCardProps {
   review: any;
@@ -10,12 +13,28 @@ interface ReviewCardProps {
   handleExpand: (id: number) => void;
   showDormName: boolean;
 }
+
 export default ({
   review,
   expandedId,
   handleExpand,
   showDormName,
 }: ReviewCardProps) => {
+  let imageUrls: string[] = [];
+
+  if (review.imageIndexes.length !== 0) {
+    const { data: images } = useSWR<any>(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/image/${
+        review.dorm._id
+      }?${new URLSearchParams({ indexes: review.imageIndexes })}`,
+      fetcher
+    );
+
+    if (images !== undefined) {
+      imageUrls = images;
+    }
+  }
+
   const handleExpandClick = () => handleExpand(review._id);
 
   return (
@@ -52,6 +71,7 @@ export default ({
         </div>
       </div>
       {review.comment}
+      {imageUrls.length !== 0 && <ReviewImages images={imageUrls} />}
       <div
         className={` overflow-hidden transition-[max-height] duration-300 ${
           expandedId === review._id ? " max-h-full" : "max-h-0"
