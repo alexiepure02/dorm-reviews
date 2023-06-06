@@ -32,7 +32,7 @@ export default async function Page() {
         </div>
         <p className=" max-w-lg">
           Aici aveți o hartă interactivă a marilor orașe din România. Fiecare
-          oraș are un marcaj distinctiv Selectează un marcaj pentru a vedea
+          oraș are un marcaj distinctiv. Selectează un marcaj pentru a vedea
           universitățile din acea locație.
         </p>
       </div>

@@ -16,13 +16,11 @@ export default ({
   children,
 }: ButtonProps) => (
   <button
-    className={
+    className={`${className} rounded-full h-[44px] text-background bg-gradient-to-r shadow hover:shadow-lg ${
       disabled
-        ? "bg-gradient-to-r from-linear-1-pale to-linear-2-pale rounded-full h-[44px] text-background " +
-          className
-        : "bg-gradient-to-r from-linear-1 to-linear-2 rounded-full h-[44px] text-background " +
-          className
-    }
+        ? "from-linear-1-pale to-linear-2-pale"
+        : "from-linear-1 to-linear-2"
+    }`}
     type={type}
     onClick={onClick}
     disabled={disabled}

@@ -1,7 +1,7 @@
 "use client";
 
 import AddReviewButton from "@/app/(main)/dorms/[id]/AddReviewButton";
-import { ORDER_BY_ENUM, ORDER_ENUM } from "@/common/Constants";
+import { ORDER_BY_ENUM, ORDER_ENUM, REVIEW_PER_PAGE } from "@/common/Constants";
 import fetcher from "@/common/utils/functions";
 import ReviewCardsList from "@/components/ReviewCardsList";
 import SortSelect from "@/components/SortSelect";
@@ -32,7 +32,7 @@ export default function ReviewsSection({
   const [pageCount, setPageCount] = useState(0);
   const [orderBy, setOrderBy] = useState(ORDER_BY_ENUM.createdAt);
   const [order, setOrder] = useState(ORDER_ENUM.desc);
-  const limit = 3;
+  const limit = REVIEW_PER_PAGE;
 
   const { data: session } = useSession();
   const user = session?.user?.name;

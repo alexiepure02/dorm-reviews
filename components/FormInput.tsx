@@ -34,7 +34,7 @@ export default ({
         <Icon className="absolute top-1/2 translate-y-[-50%] left-4 text-primary-100" />
       )}
       <input
-        className={`w-full h-[54px] px-4 rounded-md border-2 border-primary-800 focus:border-primary-100 placeholder-gray-1 outline-none ${
+        className={`w-full h-[54px] px-4 rounded-md border-2 border-primary-800 focus:border-primary-100 placeholder-gray-1 outline-none shadow ${
           Icon && "pl-10"
         }`}
         id={id}
@@ -48,12 +48,12 @@ export default ({
       {type === "password" &&
         (show ? (
           <BiHide
-            className="w-5 h-5 absolute top-1/2 translate-y-[-50%] right-4 text-primary-100"
+            className="w-5 h-5 absolute top-1/2 translate-y-[-50%] right-4 text-primary-100 cursor-pointer"
             onClick={handleShowPassword}
           />
         ) : (
           <BiShow
-            className="w-5 h-5 absolute top-1/2 translate-y-[-50%] right-4 text-primary-100"
+            className="w-5 h-5 absolute top-1/2 translate-y-[-50%] right-4 text-primary-100 cursor-pointer"
             onClick={handleShowPassword}
           />
         ))}

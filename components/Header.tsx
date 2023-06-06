@@ -30,7 +30,7 @@ export default () => {
             pathname !== "/" ? "xl:flex" : "lg:flex"
           } gap-8 items-center`}
         >
-          {pathname !== "/" && (
+          {pathname !== "/" && pathname !== "/my-reviews" && (
             <div>
               <SearchInput header />
             </div>

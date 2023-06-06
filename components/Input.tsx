@@ -25,7 +25,7 @@ export default ({
       <Icon className="absolute top-1/2 translate-y-[-50%] left-4 text-primary-100" />
       <input
         className={
-          "w-full h-[54px] pl-10 px-4 rounded-md border-2 border-primary-800 focus:border-primary-100 outline-none " +
+          "w-full h-[54px] pl-10 px-4 rounded-md border-2 border-primary-800 focus:border-primary-100 outline-none shadow" +
           classNameInput
         }
         id={id}
