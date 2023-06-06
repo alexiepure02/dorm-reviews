@@ -1,5 +1,7 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Review from "@/common/models/Review";
 import { S3 } from "aws-sdk";
+import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
 
 const s3 = new S3({
@@ -9,6 +11,15 @@ const s3 = new S3({
 });
 
 export async function DELETE(request: Request, { params }) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json(
+      { error: "Authentication required" },
+      { status: 401 }
+    );
+  }
+
   const { name, index } = params;
 
   try {

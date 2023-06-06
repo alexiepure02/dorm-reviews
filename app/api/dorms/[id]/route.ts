@@ -4,6 +4,9 @@ import University from "@/common/models/University";
 import Dorm from "@/common/models/Dorm";
 import Review from "@/common/models/Review";
 import { NextResponse } from "next/server";
+import { Role } from "@/common/Constants";
+import { authOptions } from "../../auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
 
 export async function GET(request: Request, { params }) {
   await dbConnect();
@@ -68,6 +71,15 @@ export async function GET(request: Request, { params }) {
 }
 
 export async function DELETE(request: Request, { params }) {
+  const session = await getServerSession(authOptions);
+
+  if (session !== undefined && session?.user?.role !== Role.admin) {
+    return NextResponse.json(
+      { error: "Authentication and admin role required" },
+      { status: 401 }
+    );
+  }
+
   await dbConnect();
 
   const { id } = params;

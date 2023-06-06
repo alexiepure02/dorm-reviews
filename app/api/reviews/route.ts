@@ -8,6 +8,8 @@ import {
   ORDER_BY_ENUM,
   ORDER_ENUM,
 } from "@/common/Constants";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function GET(request: Request) {
   await dbConnect();
@@ -101,6 +103,15 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request, { params }) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json(
+      { error: "Authentication required" },
+      { status: 401 }
+    );
+  }
+
   await dbConnect();
 
   const body = await request.json();

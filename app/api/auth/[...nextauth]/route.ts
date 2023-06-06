@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "@/lib/mongodb";
@@ -6,7 +6,7 @@ import dbConnect from "@/lib/dbConnect";
 import { compare } from "bcrypt";
 import User from "@/common/models/User";
 
-const handler = NextAuth({
+export const authOptions: AuthOptions = {
   // Configure one or more authentication providers
   providers: [
     // Email & Password
@@ -95,6 +95,8 @@ const handler = NextAuth({
     maxAge: 48 * 60 * 60,
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

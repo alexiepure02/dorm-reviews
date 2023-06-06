@@ -1,6 +1,9 @@
 import { getNextImageIndex } from "@/common/utils/functions";
 import { S3 } from "aws-sdk";
+import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
+import { authOptions } from "../auth/[...nextauth]/route";
+import { Role } from "@/common/Constants";
 
 const s3 = new S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -9,6 +12,15 @@ const s3 = new S3({
 });
 
 export async function POST(request: Request) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json(
+      { error: "Authentication required" },
+      { status: 401 }
+    );
+  }
+
   try {
     const formData = await request.formData();
 

@@ -1,6 +1,9 @@
 import dbConnect from "@/lib/dbConnect";
 import Location from "@/common/models/Location";
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]/route";
+import { Role } from "@/common/Constants";
 
 export async function GET() {
   await dbConnect();
@@ -11,6 +14,15 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const session = await getServerSession(authOptions);
+
+  if (session !== undefined && session?.user?.role !== Role.admin) {
+    return NextResponse.json(
+      { error: "Authentication and admin role required" },
+      { status: 401 }
+    );
+  }
+
   await dbConnect();
 
   const body = await request.json();
@@ -44,6 +56,15 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
+  const session = await getServerSession(authOptions);
+
+  if (session !== undefined && session?.user?.role !== Role.admin) {
+    return NextResponse.json(
+      { error: "Authentication and admin role required" },
+      { status: 401 }
+    );
+  }
+
   await dbConnect();
 
   const body = await request.json();

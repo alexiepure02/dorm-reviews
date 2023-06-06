@@ -1,5 +1,7 @@
 import { S3 } from "aws-sdk";
+import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 const s3 = new S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -61,6 +63,15 @@ export async function GET(request: Request, { params }) {
 }
 
 export async function DELETE(request: Request, { params }) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json(
+      { error: "Authentication required" },
+      { status: 401 }
+    );
+  }
+
   const { name } = params;
 
   const { searchParams } = new URL(request.url);
@@ -85,7 +96,7 @@ export async function DELETE(request: Request, { params }) {
       };
 
       await s3.deleteObjects(deleteObjectsParams).promise();
-      
+
       return NextResponse.json(
         `Images with the prefix ${name} and indexes ${indexes} succesfully deleted`
       );

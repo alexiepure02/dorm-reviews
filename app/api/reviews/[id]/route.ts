@@ -4,6 +4,8 @@ import User from "@/common/models/User";
 import Dorm from "@/common/models/Dorm";
 import { NextResponse } from "next/server";
 import { S3 } from "aws-sdk";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 export async function GET(request: Request, { params }) {
   await dbConnect();
@@ -25,6 +27,15 @@ export async function GET(request: Request, { params }) {
 }
 
 export async function DELETE(request: Request, { params }) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json(
+      { error: "Authentication required" },
+      { status: 401 }
+    );
+  }
+
   await dbConnect();
 
   const { id } = params;
