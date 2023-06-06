@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import FormInput from "@/components/FormInput";
@@ -14,13 +14,15 @@ export default function Login() {
   const router = useRouter();
   const [error, setError] = useState("");
 
-  // react-hook-form
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<FieldValues>();
+
+  const { data: session } = useSession();
+  if (session) router.push("/");
 
   const onSubmit: SubmitHandler<FieldValues> = async (values: {
     email: string;
@@ -39,7 +41,7 @@ export default function Login() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col grow max-w-[360px] gap-4"
+      className="flex flex-col grow gap-4"
     >
       <svg width="0" height="0">
         <linearGradient id="orange-gradient">
@@ -48,7 +50,7 @@ export default function Login() {
         </linearGradient>
       </svg>
       <BiUserPin
-        className="self-center w-40 h-40"
+        className="self-center w-20 h-20 2xl:w-40 2xl:h-40"
         style={{ fill: "url(#orange-gradient)" }}
       />
       <FormInput

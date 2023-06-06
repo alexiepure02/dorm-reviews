@@ -13,7 +13,6 @@ export default function RequestPasswordReset() {
   const router = useRouter();
   const [error, setError] = useState("");
 
-  // react-hook-form
   const {
     register,
     handleSubmit,
@@ -24,10 +23,13 @@ export default function RequestPasswordReset() {
   const onSubmit: SubmitHandler<FieldValues> = async (values: {
     email: string;
   }) => {
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/request-password-reset`, {
-      method: "POST",
-      body: JSON.stringify(values.email),
-    })
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/auth/request-password-reset`,
+      {
+        method: "POST",
+        body: JSON.stringify(values.email),
+      }
+    )
       .then((res) => {
         if (res.status === 200)
           router.push("/request-password-reset/succesful");
@@ -41,7 +43,7 @@ export default function RequestPasswordReset() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col grow max-w-[360px] gap-4"
+      className="flex flex-col grow gap-4"
     >
       <svg width="0" height="0">
         <linearGradient id="orange-gradient">
@@ -50,7 +52,7 @@ export default function RequestPasswordReset() {
         </linearGradient>
       </svg>
       <BiMailSend
-        className="self-center w-40 h-40"
+        className="self-center w-20 h-20 2xl:w-40 2xl:h-40"
         style={{ fill: "url(#orange-gradient)" }}
       />
       <p className="text-gray-2 text-center">

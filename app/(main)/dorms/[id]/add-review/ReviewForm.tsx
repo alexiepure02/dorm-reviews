@@ -27,6 +27,8 @@ export default ({ dorm }: ReviewFormProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
+  if (!session) router.push("/");
+
   const [error, setError] = useState(
     ""
     // "Comentariul are mai puțin de 100 de caractere"
@@ -273,10 +275,7 @@ export default ({ dorm }: ReviewFormProps) => {
                 <MdAddAPhoto className="text-gray-3 w-12 h-12 self-center" />
                 <h1>Lasă câteva imagini împreună cu recenzia (opțional)</h1>
               </div>
-              <ImagesInput
-                newImages={images}
-                handleNewImages={handleImages}
-              />
+              <ImagesInput newImages={images} handleNewImages={handleImages} />
             </div>
             <h1 className="self-center text-red-500">{error}</h1>
             <Button

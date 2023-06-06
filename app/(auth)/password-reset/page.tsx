@@ -14,7 +14,6 @@ export default function Login() {
   const token = useSearchParams()?.get("token");
   const id = useSearchParams()?.get("id");
 
-  // react-hook-form
   const {
     register,
     handleSubmit,
@@ -47,7 +46,7 @@ export default function Login() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col grow max-w-[360px] gap-4"
+      className="flex flex-col grow gap-4"
     >
       <svg width="0" height="0">
         <linearGradient id="orange-gradient">
@@ -56,7 +55,7 @@ export default function Login() {
         </linearGradient>
       </svg>
       <BiLockOpen
-        className="self-center w-40 h-40"
+        className="self-center w-20 h-20 2xl:w-40 2xl:h-40"
         style={{ fill: "url(#orange-gradient)" }}
       />
       <p className="text-gray-2 text-center">

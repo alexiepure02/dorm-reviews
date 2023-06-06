@@ -13,6 +13,7 @@ import {
   MIN_CHARS_PASSWORD,
   MIN_CHARS_USERNAME,
 } from "@/common/Constants";
+import { useSession } from "next-auth/react";
 
 export default function Register() {
   const [success, setSuccess] = useState("");
@@ -26,6 +27,9 @@ export default function Register() {
     formState: { errors },
     reset,
   } = useForm<FieldValues>();
+
+  const { data: session } = useSession();
+  if (session) router.push("/");
 
   const onSubmit: SubmitHandler<FieldValues> = async (values: {
     username: string;
@@ -54,16 +58,16 @@ export default function Register() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col grow max-w-[360px] gap-4"
+      className="flex flex-col grow gap-4"
     >
-      <svg width="0" height="0">
+      <svg className="hidden 2xl:block" width="0" height="0">
         <linearGradient id="orange-gradient">
           <stop stopColor="#F64C18" offset="0%" />
           <stop stopColor="#EF9045" offset="100%" />
         </linearGradient>
       </svg>
       <BiUserPin
-        className="self-center w-40 h-40"
+        className="hidden 2xl:block self-center w-40 h-40"
         style={{ fill: "url(#orange-gradient)" }}
       />
       <p className="self-center bg-green-500 bg-opacity-50 px-2">{success}</p>
