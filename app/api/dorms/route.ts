@@ -90,13 +90,6 @@ export async function POST(request: Request) {
 
   const body = await request.json();
 
-  if (await Dorm.findOne({ name: body.name })) {
-    return NextResponse.json(
-      { error: `Dorm with the name '${body.name}' already exists` },
-      { status: 400 }
-    );
-  }
-
   const foundUniversity = await University.findById(body.university).populate({
     path: "location",
     model: Location,
