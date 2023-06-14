@@ -28,7 +28,7 @@ export default async function Page() {
         <div className="flex flex-col gap-2 py-4">
           <h1 className="text-5xl">Universități</h1>
           <p className="max-w-screen-md">
-            Cele mai populare universități din țară..
+            Cele mai populare universități din țară...
           </p>
           {/* @ts-expect-error Server Component */}
           <TopUniversities />

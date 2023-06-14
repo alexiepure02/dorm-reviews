@@ -13,26 +13,60 @@ export default function AccountSection() {
   };
 
   return (
-    <div className="flex flex-col gap-6 items-center justify-center h-52">
-      {session !== null ? (
-        session !== undefined ? (
-          <>
-            <h1>You're logged in as: {session.user?.name}</h1>
-            {session.user?.role === Role.admin && (
-              <Button className="w-52">
-                <Link href={"/admin"}>Panou administrator</Link>
+    <div className="flex justify-center p-6 md:p-10 lg:p-14">
+      <div className="flex flex-col gap-6 items-center lg:items-start justify-center bg-background px-8 py-6 rounded-lg">
+        <h1 className="text-3xl font-bold">Contul Tău</h1>
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start justify-center">
+          {session !== null ? (
+            session !== undefined ? (
+              <>
+                <div className="flex flex-col gap-1">
+                  <h1>Nume de utilizator:</h1>
+                  <h1 className="text-xl font-bold">{session.user?.name}</h1>
+                  <h1>Adresa de email:</h1>
+                  <h1 className="text-xl font-bold">{session.user?.email}</h1>
+                  {session.user?.role === Role.admin && (
+                    <>
+                      <h1>Rol:</h1>
+                      <h1 className="text-xl font-bold">
+                        {session.user?.role}
+                      </h1>
+                    </>
+                  )}
+                </div>
+                <div className="flex flex-col self-center gap-4">
+                  {session.user?.role === Role.admin && (
+                    <Button className="px-4">
+                      <Link href={"/admin"}>
+                        Panou administrator
+                      </Link>
+                    </Button>
+                  )}
+                  <Button className="px-4">
+                    <Link href={"/request-password-reset"}>
+                      Resetare parolă
+                    </Link>
+                  </Button>
+                  <Button className="px-4" onClick={handleSignOut}>
+                    Deconectare
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <h1>Se încarcă...</h1>
+            )
+          ) : (
+            <div className="flex flex-col gap-6">
+              <h1>Nu ești autentificat.</h1>
+              <Button className="px-10">
+                <Link href="/login">
+                  Autentificare
+                </Link>
               </Button>
-            )}
-            <Button className="w-52" onClick={handleSignOut}>
-              Sign out
-            </Button>
-          </>
-        ) : (
-          <h1>Loading...</h1>
-        )
-      ) : (
-        <h1>You're not logged in.</h1>
-      )}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

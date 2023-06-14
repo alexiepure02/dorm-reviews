@@ -9,7 +9,7 @@ export default () => {
 
   return (
     <Button className="px-8 text-lg font-semibold">
-      <Link href={pathname + "/add-review"}>Adaugă o Recenzie</Link>
+      <Link href={pathname + "/add-review"}>Adaugă Recenzie</Link>
     </Button>
   );
 };

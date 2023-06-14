@@ -71,7 +71,7 @@ export default function ReviewsSection({
       <div className="w-full max-w-screen-2xl 2xl:mx-auto p-4">
         <div className="flex w-full justify-between gap-2">
           {dorm ? (
-            <div className="flex items-center gap-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
               <h1 className="text-4xl font-medium">Recenzii</h1>
               {showAddReviewButton && session && <AddReviewButton />}
             </div>

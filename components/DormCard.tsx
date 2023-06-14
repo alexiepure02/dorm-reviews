@@ -14,7 +14,7 @@ export default ({ dorm }: DormCardProps) => {
 
   return (
     <Link
-      href={"dorms/" + dorm.dorm._id}
+      href={"/dorms/" + dorm.dorm._id}
       className="w-full flex shadow-lg rounded-2xl gap-2 cursor-pointer transition duration-500 hover:bg-hover hover:-translate-y-2 max-w-[342px] flex-col overflow-hidden"
     >
       <CardImage

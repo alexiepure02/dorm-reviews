@@ -64,7 +64,7 @@ export default ({ universities }: UniversityCardsListProps) => {
               ))}
             </div>
           ) : (
-            <h1>Loading..</h1>
+            <h1>Se încarcă...</h1>
           )
         ) : (
           <h1>Ne pare rău, nu am avem universitatea pe care o cauți.</h1>

@@ -24,7 +24,7 @@ export default ({ dorm }: SuccesfulPageProps) => {
       </div>
       <div className="flex flex-col items-center gap-4">
         <Button className="px-4">
-          <Link href={dormPathname}>Înapoi la cămin</Link>
+          <Link href={"/" + dormPathname}>Înapoi la cămin</Link>
         </Button>
       </div>
     </div>
