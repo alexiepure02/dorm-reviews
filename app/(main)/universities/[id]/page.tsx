@@ -11,8 +11,7 @@ export async function generateMetadata({ params, searchParams }) {
 
 async function getUniversityById(id: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/universities/${id}`,
-    { cache: "no-store" }
+    `${process.env.NEXT_PUBLIC_API_URL}/api/universities/${id}`
   );
   if (!res.ok) {
     throw new Error("Failed to fetch data");
@@ -22,8 +21,7 @@ async function getUniversityById(id: string) {
 
 async function getDormsByUniversity(university: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/dorms?university=${university}`,
-    { cache: "no-store" }
+    `${process.env.NEXT_PUBLIC_API_URL}/api/dorms?university=${university}`
   );
   if (!res.ok) {
     throw new Error("Failed to fetch data");
@@ -33,8 +31,7 @@ async function getDormsByUniversity(university: string) {
 
 async function getUniversityImages(name: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/image/${name}`,
-    { cache: "no-store" }
+    `${process.env.NEXT_PUBLIC_API_URL}/api/image/${name}`
   );
   if (!res.ok) {
     throw new Error("Failed to fetch data");

@@ -11,9 +11,7 @@ const CustomMap = dynamic(() => import("@/components/map/CustomMap"), {
 });
 
 async function getLocations() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/locations`, {
-    cache: "no-store",
-  });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/locations`);
   if (!res.ok) {
     return null;
   }

@@ -3,8 +3,7 @@ import UniversityCard from "./UniversityCard";
 
 async function getTopUniversities(limit: number) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/universities/top?limit=${limit}`,
-    { cache: "no-store" }
+    `${process.env.NEXT_PUBLIC_API_URL}/api/universities/top?limit=${limit}`
   );
   if (!res.ok) {
     return null;
@@ -13,9 +12,7 @@ async function getTopUniversities(limit: number) {
 }
 
 export default async function TopUniversities() {
-  const TOP_UNIVERSITIES_NUMBER = 4;
-
-  const universities = await getTopUniversities(TOP_UNIVERSITIES_NUMBER);
+  const universities = await getTopUniversities(4);
 
   return (
     <div className="grid py-8 gap-8 items-stretch justify-items-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
