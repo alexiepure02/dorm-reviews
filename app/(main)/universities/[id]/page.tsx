@@ -21,7 +21,8 @@ async function getUniversityById(id: string) {
 
 async function getDormsByUniversity(university: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/dorms?university=${university}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/dorms?university=${university}`,
+    { cache: "no-store" }
   );
   if (!res.ok) {
     throw new Error("Failed to fetch data");
@@ -31,7 +32,8 @@ async function getDormsByUniversity(university: string) {
 
 async function getUniversityImages(name: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/image/${name}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/image/${name}`,
+    { cache: "no-store" }
   );
   if (!res.ok) {
     throw new Error("Failed to fetch data");

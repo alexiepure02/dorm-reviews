@@ -29,7 +29,7 @@ export default ({
 
   return (
     <Link
-      href={"universities/" + university._id}
+      href={"/universities/" + university._id}
       className={
         "flex shadow-lg rounded-2xl gap-2 cursor-pointer transition duration-500 hover:bg-hover hover:-translate-y-2 overflow-hidden " +
         typeClassName

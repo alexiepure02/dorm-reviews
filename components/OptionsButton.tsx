@@ -17,6 +17,8 @@ export default function OptionsButton({
 }: OptionsButtonProps) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [hasBeenDeleted, setHasBeenDeleted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { data: session } = useSession();
 
@@ -40,17 +42,20 @@ export default function OptionsButton({
   });
 
   const removeReview = async () => {
-    handleCloseModal();
-    handleCloseDropdown();
+    setLoading(true);
 
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/reviews/${reviewId}`, {
       method: "DELETE",
     });
-
     mutate(`${process.env.NEXT_PUBLIC_API_URL}/api/reviews`);
+
+    setHasBeenDeleted(true);
+    setLoading(false);
+    handleCloseModal();
+    handleCloseDropdown();
   };
 
-  return session?.user?.id === userId ? (
+  return !hasBeenDeleted && session?.user?.id === userId ? (
     <div ref={dropdownRef} className="relative">
       <div
         className={`p-2 rounded-full hover:bg-hover cursor-pointer hover:text-gray-2 ${
@@ -88,25 +93,31 @@ export default function OptionsButton({
                 <h1 className="text-lg">
                   Ești sigur că vrei să ștergi această recenzie?
                 </h1>
-                <div className="flex items-center justify-between pt-4 rounded-b">
-                  <button
-                    className="text-white bg-primary-100 font-bold uppercase text-sm px-6 py-3 rounded outline-none shadow hover:shadow-lg focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => {
-                      handleCloseModal();
-                      handleCloseDropdown();
-                    }}
-                  >
-                    Nu, m-am răzgândit
-                  </button>
-                  <button
-                    className="text-red-500 bg-transparent font-bold uppercase text-sm px-6 py-3 rounded outline-none shadow hover:shadow-lg focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={removeReview}
-                  >
-                    Da, șterge
-                  </button>
-                </div>
+                {!loading ? (
+                  <div className="flex items-center justify-between pt-4 rounded-b">
+                    <button
+                      disabled={loading}
+                      className="text-white bg-primary-100 font-bold uppercase text-sm px-6 py-3 rounded outline-none shadow hover:shadow-lg focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => {
+                        handleCloseModal();
+                        handleCloseDropdown();
+                      }}
+                    >
+                      Nu, m-am răzgândit
+                    </button>
+                    <button
+                      disabled={loading}
+                      className="text-red-500 bg-transparent font-bold uppercase text-sm px-6 py-3 rounded outline-none shadow hover:shadow-lg focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={removeReview}
+                    >
+                      Da, șterge
+                    </button>
+                  </div>
+                ) : (
+                  <h1 className="text-xl text-red-700 pt-4">Se șterge...</h1>
+                )}
               </div>
             </div>
           </div>

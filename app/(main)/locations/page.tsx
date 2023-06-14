@@ -22,27 +22,23 @@ export default async function Page() {
   const locations = await getLocations();
 
   return (
-    <div className="flex flex-col xl:flex-row xl:items-start xl:justify-center bg-background gap-4 p-6 md:p-10 lg:p-14">
-      <div className="flex flex-col gap-6 pb-4 xl:pb-0">
+    <div className="flex flex-col 2xl:flex-row 2xl:items-start 2xl:justify-center bg-background gap-4 p-6 md:p-10 lg:p-14">
+      <div className="flex flex-col items-center 2xl:items-start gap-6 pb-4 xl:pb-0">
         <div className="flex items-end gap-4">
           <BiMapAlt className="w-9 h-9" />
           <h1 className=" text-4xl font-medium">Hartă</h1>
         </div>
-        <p className="text-lg max-w-lg">
+        <p className="text-lg max-w-2xl 2xl:max-w-lg text-center 2xl:text-start">
           Explorează harta interactivă a României și descoperă principalele
           orașe universitare ale țării. Fiecare oraș universitar este marcat pe
           hartă, oferindu-ți o imagine de ansamblu asupra locațiilor în care
-          poți găsi cămine studențești. Indiferent dacă ești interesat de un
+          poți găsi cămine studențești.
         </p>
-        <p className="text-lg max-w-lg">
+        <p className="hidden md:inline-block text-lg max-w-2xl 2xl:max-w-lg text-center 2xl:text-start">
           Indiferent dacă ești interesat de un anumit oraș sau vrei să explorezi
           opțiuni în diferite regiuni ale țării, harta noastră interactivă îți
           oferă o modalitate rapidă și intuitivă de a naviga prin diversele
           locații universitare.
-        </p>
-        <p className="text-lg max-w-lg">
-          Alege cu încredere orașul universitar care te atrage și descoperă
-          căminul perfect pentru experiența ta studențească!
         </p>
       </div>
       <div className="flex justify-center">

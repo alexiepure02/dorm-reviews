@@ -43,23 +43,25 @@ export async function DELETE(request: Request, { params }) {
   const review = await Review.findByIdAndDelete(id);
 
   if (review) {
-    const s3 = new S3({
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      region: process.env.AWS_REGION,
-    });
+    if (review.imageIndexes.length !== 0) {
+      console.log("delete images?");
+      const s3 = new S3({
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        region: process.env.AWS_REGION,
+      });
 
-    const deleteObjectsParams = {
-      Bucket: "caminul-tau-bucket",
-      Delete: {
-        Objects: review.imageIndexes.map((index: string) => ({
-          Key: `${review.dorm.toString()}-${index}`,
-        })),
-      },
-    };
+      const deleteObjectsParams = {
+        Bucket: "caminul-tau-bucket",
+        Delete: {
+          Objects: review.imageIndexes.map((index: string) => ({
+            Key: `${review.dorm.toString()}-${index}`,
+          })),
+        },
+      };
 
-    await s3.deleteObjects(deleteObjectsParams).promise();
-
+      await s3.deleteObjects(deleteObjectsParams).promise();
+    }
     return NextResponse.json(review);
   }
 
