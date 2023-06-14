@@ -37,7 +37,7 @@ export default ({
     >
       <CardImage
         name={university._id}
-        fallback="/university-not-found.png"
+        fallback="/not-found-university.png"
         alt="University"
         className={
           type === UNIVERSITY_CARD_TYPE_ENUM.vertical
@@ -55,7 +55,7 @@ export default ({
         <h1 className="text-2xl sm:text-3xl font-semibold text-secondary-green">
           {university.name + " (" + university.acronym + ")"}
         </h1>
-        <div className="flex items-center gap-2 text-gray-3">
+        <div className="flex items-center gap-2 text-gray-4">
           <BiMapPin className="w-6 h-6" />
           <p className="text-lg">{university.location.name}</p>
         </div>

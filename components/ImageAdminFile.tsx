@@ -25,7 +25,7 @@ export default function ImageAdminFile({
     !loading ? (
       <div className="relative">
         <AiFillDelete
-          className="absolute w-8 h-8 top-1 right-1 p-2 text-gray-3 bg-gray-1 bg-opacity-60 hover:bg-hover hover:bg-opacity-80 rounded-full"
+          className="absolute w-8 h-8 top-1 right-1 p-2 text-gray-4 bg-gray-1 bg-opacity-60 hover:bg-hover hover:bg-opacity-80 rounded-full"
           onClick={handleRemove}
         />
         <img src={URL.createObjectURL(image)} className="w-32" />

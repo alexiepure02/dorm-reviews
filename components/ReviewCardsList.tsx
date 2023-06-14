@@ -1,5 +1,6 @@
 "use client";
 
+import { REVIEW_PER_PAGE_LIMIT } from "@/common/Constants";
 import { useState } from "react";
 import Pagination from "./Pagination";
 import ReviewCard from "./ReviewCard";
@@ -9,8 +10,7 @@ interface ReviewCardProps {
   reviews: any;
   showDormNames?: boolean;
   page: number;
-  pageCount: number;
-  limit: number;
+  totalReviews: number;
   handlePage: (page: number) => void;
   checkedReviewIds?: string[];
   checkId?: (reviewId: string) => void;
@@ -22,8 +22,7 @@ export default ({
   reviews,
   showDormNames = false,
   page,
-  pageCount,
-  limit,
+  totalReviews,
   handlePage,
   checkedReviewIds,
   checkId,
@@ -74,16 +73,22 @@ export default ({
               />
             )
           )}
-          <Pagination
-            canPreviousPage={true}
-            canNextPage={true}
-            pageCount={Math.ceil(pageCount / limit)}
-            pageIndex={page}
-            gotoPage={handlePage}
-          />
+
+          {totalReviews > REVIEW_PER_PAGE_LIMIT && (
+            <Pagination
+              canPreviousPage={true}
+              canNextPage={true}
+              pageCount={Math.ceil(totalReviews / REVIEW_PER_PAGE_LIMIT)}
+              pageIndex={page}
+              gotoPage={handlePage}
+            />
+          )}
         </>
       ) : (
-        <h1>Nu sunt recenzii aici.</h1>
+        <h1>
+          Nu sunt recenzii aici.{" "}
+          {!showDormNames && "Fii primul care scrie o recenzie acestui cămin."}
+        </h1>
       )}
     </div>
   );

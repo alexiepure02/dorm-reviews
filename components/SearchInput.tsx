@@ -14,7 +14,7 @@ const styles = {
   typeahead: "text-gray-1",
   cancelButton: `absolute w-10 h-12 inset-y-0 left-0 items-center justify-center z-10 text-red-100 inline-flex sm:hidden`,
   clearButton:
-    "absolute inset-y-0 right-0 w-8 inline-flex items-center justify-center text-gray-3 hover:text-gray-1",
+    "absolute inset-y-0 right-0 w-8 inline-flex items-center justify-center text-gray-4 hover:text-gray-1",
   listbox:
     "w-full bg-white border border-primary-100 sm:rounded text-left mt-2 p-2 drop-shadow-xl z-[999]",
   groupHeading:
@@ -140,7 +140,7 @@ export default ({
     listbox = listbox.filter((source) => source.id !== "users");
   }
 
-  const containerStyles = `text-gray-3 relative w-full ${
+  const containerStyles = `text-gray-4 relative w-full ${
     header
       ? ""
       : hasFocus
@@ -149,7 +149,7 @@ export default ({
   }`;
 
   const iconDisplayStyle = hasFocus
-    ? "inline-flex text-gray-3"
+    ? "inline-flex text-gray-4"
     : "inline-flex text-gray-2";
 
   const onChange = (query: string) =>

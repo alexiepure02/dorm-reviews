@@ -18,107 +18,109 @@ export default function OptionsList() {
     <div className="min-w-max flex flex-col-reverse md:flex-col items-center gap-8">
       <div className="w-full flex flex-col divide-y-2 divide-primary-600 text-lg bg-background p-4 rounded-md">
         <Link
-          href={"admin/add-location"}
+          prefetch={false}
+          href={"/admin/add-location"}
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/add-location" && "bg-primary-800"
           }`}
-          prefetch={false}
         >
           Adaugă locație
         </Link>
         <Link
-          href={"admin/update-location"}
+          prefetch={false}
+          href={"/admin/update-location"}
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/update-location" && "bg-primary-800"
           }`}
-          prefetch={false}
         >
           Actualizează locație
         </Link>
         <Link
-          href={"admin/remove-location"}
+          prefetch={false}
+          href={"/admin/remove-location"}
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/remove-location" && "bg-primary-800"
           }`}
-          prefetch={false}
         >
           Șterge locație
         </Link>
         <Link
-          href={"admin/add-university"}
+          prefetch={false}
+          href={"/admin/add-university"}
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/add-university" && "bg-primary-800"
           }`}
-          prefetch={false}
         >
           Adaugă universitate
         </Link>
         <Link
-          href={"admin/update-university"}
+          prefetch={false}
+          href={"/admin/update-university"}
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/update-university" && "bg-primary-800"
           }`}
-          prefetch={false}
         >
           Actualizează universitate
         </Link>
         <Link
-          href={"admin/remove-university"}
+          prefetch={false}
+          href={"/admin/remove-university"}
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/remove-university" && "bg-primary-800"
           }`}
-          prefetch={false}
         >
           Șterge universitate
         </Link>
         <Link
-          href={"admin/add-dorm"}
+          prefetch={false}
+          href={"/admin/add-dorm"}
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/add-dorm" && "bg-primary-800"
           }`}
-          prefetch={false}
         >
           Adaugă cămin
         </Link>
         <Link
-          href={"admin/update-dorm"}
+          prefetch={false}
+          href={"/admin/update-dorm"}
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/update-dorm" && "bg-primary-800"
           }`}
-          prefetch={false}
         >
           Actualizează cămin
         </Link>
         <Link
-          href={"admin/remove-dorm"}
+          prefetch={false}
+          href={"/admin/remove-dorm"}
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/remove-dorm" && "bg-primary-800"
           }`}
-          prefetch={false}
         >
           Șterge cămin
         </Link>
         <Link
-          href={"admin/remove-review"}
+          prefetch={false}
+          href={"/admin/remove-review"}
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/remove-review" && "bg-primary-800"
           }`}
-          prefetch={false}
         >
           Șterge recenzie
         </Link>
         <Link
-          href={"admin/users"}
+          prefetch={false}
+          href={"/admin/users"}
           className={`p-2 hover:bg-primary-800 ${
             pathname === "/admin/users" && "bg-primary-800"
           }`}
-          prefetch={false}
         >
           Utilizatori
         </Link>
       </div>
       <Button className="px-6">
-        <Link href={"/"}>Înapoi Acasă</Link>
+        <Link prefetch={false} href={"/"}>
+          Înapoi Acasă
+        </Link>
       </Button>
     </div>
   );

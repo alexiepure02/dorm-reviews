@@ -19,7 +19,7 @@ export default ({ dorm }: DormCardProps) => {
     >
       <CardImage
         name={dorm.dorm._id}
-        fallback="/dorm-not-found.png"
+        fallback="/not-found-dorm.png"
         alt="Dorm"
         className="w-full h-[250px]"
       />

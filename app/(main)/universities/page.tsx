@@ -21,13 +21,19 @@ export default async function Page() {
 
   return (
     <div className="flex flex-col justify-center">
-      <div className="flex flex-col items-center bg-background gap-4 p-6 md:p-10 lg:p-14">
+      <div className="flex flex-col items-center gap-4 text-center bg-background p-6 md:p-10 lg:p-14">
         <div className="flex items-end gap-4">
           <BiBuildings className="w-9 h-9" />
           <h1 className=" text-4xl font-medium">Universități</h1>
         </div>
-        <p className=" max-w-lg">
-          Aici poți găsi o listă completă a tuturor universităților din România.
+        <p className="text-lg max-w-2xl">
+          Aici vei găsi o listă completă ce conține numele și locația fiecărei
+          universități din țară care oferă posibilități de acomodare
+          studenților.
+        </p>
+        <p className="text-lg max-w-2xl">
+          Caută universități în funcție de nume, acronim sau locație, pentru a
+          găsi rapid informațiile de care ai nevoie.
         </p>
       </div>
       <UniversityCardsList universities={universities} />

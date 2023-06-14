@@ -272,7 +272,7 @@ export default ({ dorm }: ReviewFormProps) => {
           <>
             <div className="self-center w-full md:max-w-lg rounded-lg flex flex-col items-center bg-background p-4 sm:p-10 gap-4">
               <div className="flex items-center justify-center gap-2">
-                <MdAddAPhoto className="text-gray-3 w-12 h-12 self-center" />
+                <MdAddAPhoto className="text-gray-4 w-12 h-12 self-center" />
                 <h1>Lasă câteva imagini împreună cu recenzia (opțional)</h1>
               </div>
               <ImagesInput newImages={images} handleNewImages={handleImages} />

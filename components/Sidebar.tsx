@@ -68,23 +68,23 @@ export default () => {
     <div className={`${pathname !== "/" ? "xl:hidden" : "lg:hidden"}`}>
       <Menu styles={styles} right>
         <Link href="/locations">
-          <BiMapAlt className="w-6 h-6 text-gray-3" />
+          <BiMapAlt className="w-6 h-6 text-gray-4" />
           Hartă
         </Link>
 
         <Link href="/universities">
-          <BiBuildings className="w-6 h-6 text-gray-3" />
+          <BiBuildings className="w-6 h-6 text-gray-4" />
           Universități
         </Link>
 
         <Link href="/my-reviews">
-          <BiPencil className="w-6 h-6 text-gray-3" />
+          <BiPencil className="w-6 h-6 text-gray-4" />
           Recenziile mele
         </Link>
 
         {session ? (
           <Link href={"/account"} className="flex items-center">
-            <BiUserCircle className="w-6 h-6 text-gray-3" />
+            <BiUserCircle className="w-6 h-6 text-gray-4" />
             Contul meu
             {/* {session.user?.name} */}
           </Link>

@@ -1,7 +1,11 @@
 "use client";
 
 import AddReviewButton from "@/app/(main)/dorms/[id]/AddReviewButton";
-import { ORDER_BY_ENUM, ORDER_ENUM, REVIEW_PER_PAGE } from "@/common/Constants";
+import {
+  ORDER_BY_ENUM,
+  ORDER_ENUM,
+  REVIEW_PER_PAGE_LIMIT,
+} from "@/common/Constants";
 import fetcher from "@/common/utils/functions";
 import ReviewCardsList from "@/components/ReviewCardsList";
 import SortSelect from "@/components/SortSelect";
@@ -29,10 +33,9 @@ export default function ReviewsSection({
   uncheckId,
 }: ReviewsSectionProps) {
   const [page, setPage] = useState(0);
-  const [pageCount, setPageCount] = useState(0);
+  const [totalReviews, setTotalReviews] = useState(0);
   const [orderBy, setOrderBy] = useState(ORDER_BY_ENUM.createdAt);
   const [order, setOrder] = useState(ORDER_ENUM.desc);
-  const limit = REVIEW_PER_PAGE;
 
   const { data: session } = useSession();
   const user = session?.user?.name;
@@ -40,10 +43,10 @@ export default function ReviewsSection({
   let url = "";
 
   if (dorm) {
-    url = `${process.env.NEXT_PUBLIC_API_URL}/api/reviews?dorm=${dorm}&page=${page}&limit=${limit}&orderBy=${orderBy}&order=${order}`;
+    url = `${process.env.NEXT_PUBLIC_API_URL}/api/reviews?dorm=${dorm}&page=${page}&limit=${REVIEW_PER_PAGE_LIMIT}&orderBy=${orderBy}&order=${order}`;
   } else {
     if (user) {
-      url = `${process.env.NEXT_PUBLIC_API_URL}/api/reviews?user=${user}&page=${page}&limit=${limit}&orderBy=${orderBy}&order=${order}`;
+      url = `${process.env.NEXT_PUBLIC_API_URL}/api/reviews?user=${user}&page=${page}&limit=${REVIEW_PER_PAGE_LIMIT}&orderBy=${orderBy}&order=${order}`;
     }
   }
 
@@ -52,9 +55,9 @@ export default function ReviewsSection({
   if (
     data &&
     data.countReviews !== undefined &&
-    data.countReviews !== pageCount
+    data.countReviews !== totalReviews
   )
-    setPageCount(data.countReviews);
+    setTotalReviews(data.countReviews);
 
   useEffect(() => {
     if (revalidate) {
@@ -94,8 +97,7 @@ export default function ReviewsSection({
               admin={admin}
               reviews={data.reviews}
               page={page}
-              pageCount={pageCount}
-              limit={limit}
+              totalReviews={totalReviews}
               handlePage={handlePage}
               checkedReviewIds={checkedReviewIds}
               checkId={checkId}
@@ -110,8 +112,7 @@ export default function ReviewsSection({
               reviews={data.reviews}
               showDormNames
               page={page}
-              pageCount={pageCount}
-              limit={limit}
+              totalReviews={totalReviews}
               handlePage={handlePage}
             />
           ) : (

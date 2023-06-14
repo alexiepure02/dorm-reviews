@@ -33,15 +33,28 @@ export default function AuthLayout({
               >
                 Căminul Tău
               </Link>
-              <p className="hidden 2xl:block text-lg max-w-xl px-4">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of
-              </p>
+              <div className="hidden 2xl:flex 2xl:flex-col 2xl:gap-5 2xl:items-start px-4">
+                <p className="text-xl  max-w-xl">
+                  Bun venit pe cel mai complet site web de recenzii pentru
+                  căminele studențești ale universităților din România! Aici vei
+                  găsi informații detaliate și fotografii despre diverse cămine
+                  universitare din țară. Citește părerile autentice ale
+                  studenților care au fost sau sunt încă cazați în aceste cămine
+                  și citește despre viața pe care au avut-o și experiențele pe
+                  care le-au trăit pe durata șederii.
+                </p>
+                <p className="text-xl max-w-xl">
+                  De la atmosfera din camere și facilități, până la viața
+                  socială și de noapte, vei descoperi tot ce trebuie să știi
+                  pentru a lua o decizie informată în privința cazării tale. În
+                  plus, poți contribui și tu la comunitatea noastră prin
+                  adăugarea propriei tale recenzii.
+                </p>
+                <p className="text-xl max-w-xl">
+                  Alege cu încredere căminul potrivit și trăiește o experiență
+                  studențească de neuitat!
+                </p>
+              </div>
             </div>
           </div>
           <div className="w-full 2xl:max-w-[600px] flex justify-center px-4">

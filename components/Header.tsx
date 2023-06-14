@@ -37,7 +37,7 @@ export default () => {
           )}
           <Link
             href="/locations"
-            className={`flex gap-2 font-semibold text-gray-3 hover:text-primary-100 ${
+            className={`flex gap-2 font-semibold text-gray-4 hover:text-primary-100 ${
               pathname === "/locations" && "text-primary-100"
             }`}
           >
@@ -50,7 +50,7 @@ export default () => {
           </Link>
           <Link
             href="/universities"
-            className={`flex gap-2 font-semibold text-gray-3 hover:text-primary-100 ${
+            className={`flex gap-2 font-semibold text-gray-4 hover:text-primary-100 ${
               pathname === "/universities" && "text-primary-100"
             }`}
           >
@@ -64,7 +64,7 @@ export default () => {
 
           <Link
             href="/my-reviews"
-            className={`flex gap-2 font-semibold text-gray-3 hover:text-primary-100 ${
+            className={`flex gap-2 font-semibold text-gray-4 hover:text-primary-100 ${
               pathname === "/my-reviews" && "text-primary-100"
             }`}
           >
@@ -80,7 +80,7 @@ export default () => {
             session !== undefined ? (
               <Link
                 href="/account"
-                className={`flex items-center gap-2 font-semibold text-gray-3 hover:text-primary-100 ${
+                className={`flex items-center gap-2 font-semibold text-gray-4 hover:text-primary-100 ${
                   pathname === "/account" && "text-primary-100"
                 }`}
               >
@@ -92,7 +92,7 @@ export default () => {
                 Contul meu
               </Link>
             ) : (
-              <div className="flex items-center gap-2 font-semibold text-gray-3 hover:text-primary-100">
+              <div className="flex items-center gap-2 font-semibold text-gray-4 hover:text-primary-100">
                 <BiUserCircle
                   className={`w-6 h-6 ${
                     pathname === "/account" && "text-primary-100"

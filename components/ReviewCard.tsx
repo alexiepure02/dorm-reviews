@@ -1,10 +1,10 @@
 import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 import CustomRating from "./CustomRating";
 import OptionsButton from "./OptionsButton";
-import Avatar from "/public/avatar.svg";
-import Image from "next/image";
+// import Avatar from "/public/avatar.svg";
+// import Image from "next/image";
 import useSWR from "swr";
-import fetcher from "@/common/utils/functions";
+import fetcher, { displayDate } from "@/common/utils/functions";
 import ReviewImages from "./ReviewImages";
 
 interface ReviewCardProps {
@@ -41,17 +41,18 @@ export default ({
     <div className="relative flex flex-col shadow-lg rounded-2xl px-4 sm:px-9 py-6 gap-4">
       <div className="flex justify-between">
         <div className="flex gap-4">
-          <Image
+          {/* <Image
             src={Avatar}
             alt="Avatar"
             className="align-middle w-14 h-14 rounded-full"
-          />
+          /> */}
           <div>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-0 sm:gap-3">
               <h1 className="text-xl font-semibold">
                 {review.user.username}
                 {showDormName && " - " + review.dorm.name}
               </h1>
+              <h1 className="font-semibold text-gray-3">{displayDate(review.createdAt)}</h1>
             </div>
             <CustomRating rating={review.overallRating} decimals={1} />
           </div>

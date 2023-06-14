@@ -73,7 +73,7 @@ export default ({
         }`}
         onClick={handleToggle}
       >
-        <BiSortAlt2 className="w-8 h-8 text-gray-3" />
+        <BiSortAlt2 className="w-8 h-8 text-gray-4" />
         {value && <h1 className="hidden md:block">{value}</h1>}
       </button>
       {toggle && (

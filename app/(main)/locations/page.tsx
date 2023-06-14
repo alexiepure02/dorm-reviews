@@ -30,10 +30,21 @@ export default async function Page() {
           <BiMapAlt className="w-9 h-9" />
           <h1 className=" text-4xl font-medium">Hartă</h1>
         </div>
-        <p className=" max-w-lg">
-          Aici aveți o hartă interactivă a marilor orașe din România. Fiecare
-          oraș are un marcaj distinctiv. Selectează un marcaj pentru a vedea
-          universitățile din acea locație.
+        <p className="text-lg max-w-lg">
+          Explorează harta interactivă a României și descoperă principalele
+          orașe universitare ale țării. Fiecare oraș universitar este marcat pe
+          hartă, oferindu-ți o imagine de ansamblu asupra locațiilor în care
+          poți găsi cămine studențești. Indiferent dacă ești interesat de un
+        </p>
+        <p className="text-lg max-w-lg">
+          Indiferent dacă ești interesat de un anumit oraș sau vrei să explorezi
+          opțiuni în diferite regiuni ale țării, harta noastră interactivă îți
+          oferă o modalitate rapidă și intuitivă de a naviga prin diversele
+          locații universitare.
+        </p>
+        <p className="text-lg max-w-lg">
+          Alege cu încredere orașul universitar care te atrage și descoperă
+          căminul perfect pentru experiența ta studențească!
         </p>
       </div>
       <div className="flex justify-center">

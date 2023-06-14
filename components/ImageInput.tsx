@@ -1,5 +1,3 @@
-"use client";
-
 import { ChangeEvent, useRef } from "react";
 import { AiFillDelete } from "react-icons/ai";
 
@@ -43,7 +41,7 @@ export default function ImagesInput({
       <div className="relative">
         <button
           type="button"
-          className="relative z-2 bg-white cursor-pointer py-2 px-4 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-3 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-100"
+          className="relative z-2 bg-white cursor-pointer py-2 px-4 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-4 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-100"
           onClick={handleFileSelect}
         >
           Adaugă
@@ -63,7 +61,7 @@ export default function ImagesInput({
           newImages.map((image: File, index: number) => (
             <div key={index} className="relative">
               <AiFillDelete
-                className="absolute w-8 h-8 top-1 right-1 p-2 text-gray-3 bg-gray-1 bg-opacity-60 hover:bg-hover hover:bg-opacity-80 rounded-full cursor-pointer"
+                className="absolute w-8 h-8 top-1 right-1 p-2 text-gray-4 bg-gray-1 bg-opacity-60 hover:bg-hover hover:bg-opacity-80 rounded-full cursor-pointer"
                 onClick={() => {
                   removeImage(index);
                 }}

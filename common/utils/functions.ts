@@ -1,5 +1,12 @@
 import { AWSError, S3 } from "aws-sdk";
 import { PromiseResult } from "aws-sdk/lib/request";
+import dayjs from "dayjs";
+
+import updateLocale from "dayjs/plugin/updateLocale";
+import relativeTime from "dayjs/plugin/relativeTime";
+import calendar from "dayjs/plugin/calendar";
+import isToday from "dayjs/plugin/isToday";
+import utc from "dayjs/plugin/utc";
 
 export default async function fetcher<JSON = any>(
   input: RequestInfo,
@@ -54,4 +61,35 @@ export function getNextImageIndex(
   response: PromiseResult<S3.ListObjectsV2Output, AWSError>
 ) {
   return +response.Contents!.slice(-1)[0].Key!.split("-")[1] + 1;
+}
+
+dayjs.extend(updateLocale);
+dayjs.extend(calendar);
+dayjs.extend(isToday);
+dayjs.extend(relativeTime);
+dayjs.extend(utc);
+
+dayjs.updateLocale("en", {
+  relativeTime: {
+    past: "acum %s",
+    s: "câteva secunde",
+    m: "un minut",
+    mm: "%d minute",
+    h: "o oră",
+    hh: "%d ore",
+  },
+  calendar: {
+    lastDay: "[ieri]",
+    lastWeek: "[săptămâna trecută]",
+    sameElse: "DD/MM/YYYY",
+  },
+});
+
+export function displayDate(postDate: string) {
+  const date = dayjs.utc(postDate);
+
+  if (date.isToday()) {
+    return date.fromNow();
+  }
+  return date.calendar();
 }

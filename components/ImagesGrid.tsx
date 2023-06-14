@@ -48,7 +48,7 @@ export default function ImagesAdminUrl({
             ? images.map((url: string, index: number) => (
                 <div key={index} className="relative">
                   <AiFillDelete
-                    className="absolute w-8 h-8 top-1 right-1 p-2 text-gray-3 bg-gray-1 bg-opacity-60 hover:bg-hover hover:bg-opacity-80 rounded-full cursor-pointer"
+                    className="absolute w-8 h-8 top-1 right-1 p-2 text-gray-4 bg-gray-1 bg-opacity-60 hover:bg-hover hover:bg-opacity-80 rounded-full cursor-pointer"
                     onClick={() => {
                       setSelectedUrl(url);
                       handleOpenModal();

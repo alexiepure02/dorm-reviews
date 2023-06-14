@@ -19,8 +19,9 @@ export default async function Page() {
                 Căminul Tău
               </h1>
             </div>
-            <p className="max-w-2xl">
-              Some catchy phrase or like a slogan or something..
+            <p className="text-lg max-w-2xl">
+              Alege cu încredere căminul potrivit și trăiește o experiență
+              studențească de neuitat!
             </p>
             <SearchInput autoFocus />
           </div>

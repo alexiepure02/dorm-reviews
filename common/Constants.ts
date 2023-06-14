@@ -46,4 +46,4 @@ export const enum Role {
   admin = "admin",
 }
 
-export const REVIEW_PER_PAGE = 10;
+export const REVIEW_PER_PAGE_LIMIT = 5;
