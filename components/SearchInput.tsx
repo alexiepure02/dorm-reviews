@@ -170,7 +170,7 @@ export default ({
         if (pathname === "/" + selectedItem.type + "/" + selectedItem._id) {
           setTimeout(() => handleClear(), 250);
         } else {
-          router.push(selectedItem.type + "/" + selectedItem._id);
+          router.push("/" + selectedItem.type + "/" + selectedItem._id);
         }
       }
     }
