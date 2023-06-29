@@ -52,7 +52,9 @@ export default ({
                 {review.user.username}
                 {showDormName && " - " + review.dorm.name}
               </h1>
-              <h1 className="font-semibold text-gray-3">{displayDate(review.createdAt)}</h1>
+              <h1 className="font-semibold text-gray-3">
+                {displayDate(review.createdAt)}
+              </h1>
             </div>
             <CustomRating rating={review.overallRating} decimals={1} />
           </div>
@@ -71,7 +73,7 @@ export default ({
           <OptionsButton reviewId={review._id} userId={review.user._id} />
         </div>
       </div>
-      {review.comment}
+      <p className=" whitespace-pre-line">{review.comment}</p>
       {imageUrls.length !== 0 && <ReviewImages images={imageUrls} />}
       <div
         className={` overflow-hidden transition-[max-height] duration-300 ${
@@ -80,7 +82,7 @@ export default ({
         id="collapseExample"
         data-te-collapse-item
       >
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex flex-col gap-2 w-full whitespace-pre-line">
           <div className="w-64 flex items-center justify-between">
             <h1 className="text-lg font-bold">Cameră</h1>
             <CustomRating rating={review.roomRating} />
